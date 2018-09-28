@@ -16,6 +16,7 @@ public class News extends RealmObject {
     private String imageUrl;
     private String description;
     private String datePublished;
+    private boolean isBookmark;
 
     public News(JSONObject object) {
         try {
@@ -24,9 +25,19 @@ public class News extends RealmObject {
             imageUrl = object.getJSONObject("image").getJSONObject("thumbnail").getString("contentUrl");
             description = object.getString("description");
             datePublished = object.getString("datePublished");
+            isBookmark = false;
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public News(String url, String name, String imageUrl, String description, String datePublished, boolean isBookmark) {
+        this.url = url;
+        this.name = name;
+        this.imageUrl = imageUrl;
+        this.description = description;
+        this.datePublished = datePublished;
+        this.isBookmark = isBookmark;
     }
 
     public News() {
@@ -70,5 +81,13 @@ public class News extends RealmObject {
 
     public void setDatePublished(String datePublished) {
         this.datePublished = datePublished;
+    }
+
+    public boolean isBookmark() {
+        return isBookmark;
+    }
+
+    public void setBookmark(boolean bookmark) {
+        isBookmark = bookmark;
     }
 }
