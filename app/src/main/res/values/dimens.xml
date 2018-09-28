@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Dimensiones de texto -->
+    <dimen name="text_size_h1">24sp</dimen>
+    <dimen name="text_size_h2">21sp</dimen>
+    <dimen name="text_size_h3">18sp</dimen>
+    <dimen name="text_size_h4">15sp</dimen>
+    <dimen name="text_size_h5">12sp</dimen>
+    <dimen name="text_size_h6">10sp</dimen>
+
+    <!-- Dimensiones de material design -->
+    <dimen name="material_default_padding">12dp</dimen>
+    <dimen name="material_margin">16dp</dimen>
+    <dimen name="material_pushable">48dp</dimen>
+    <dimen name="material_avatar">40dp</dimen>
+    <dimen name="material_icon">24dp</dimen>
+    <dimen name="material_toolbar_height">56dp</dimen>
+    <dimen name="material_subtitle_height">48dp</dimen>
+    <dimen name="material_button_heigh">36dp</dimen>
+    <dimen name="material_list_item">72dp</dimen>
+    <dimen name="material_space_between">8dp</dimen></resources>
