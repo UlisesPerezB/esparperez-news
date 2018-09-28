@@ -5,28 +5,70 @@ import org.json.JSONObject;
 
 import java.util.Date;
 
-public class News {
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
-    public String name;
+public class News extends RealmObject {
+
+    @PrimaryKey
     public String url;
-//    public String imageUrl;
+    public String name;
+    public String imageUrl;
     public String description;
     public String datePublished;
-    public String category;
 
     public News(JSONObject object) {
         try {
             name = object.getString("name");
             url = object.getString("url");
-            //        imageUrl = object.getString("url");
+            imageUrl = object.getJSONObject("image").getJSONObject("thumbnail").getString("contentUrl");
             description = object.getString("description");
             datePublished = object.getString("datePublished");
-            category = object.getString("category");
         } catch (JSONException e) {
-            /*
-             * Me marcó una excepción aquí
-             */
+            e.printStackTrace();
         }
     }
 
+    public News() {
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDatePublished() {
+        return datePublished;
+    }
+
+    public void setDatePublished(String datePublished) {
+        this.datePublished = datePublished;
+    }
 }
