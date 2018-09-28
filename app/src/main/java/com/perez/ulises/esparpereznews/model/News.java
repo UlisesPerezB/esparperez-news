@@ -11,11 +11,11 @@ import io.realm.annotations.PrimaryKey;
 public class News extends RealmObject {
 
     @PrimaryKey
-    public String url;
-    public String name;
-    public String imageUrl;
-    public String description;
-    public String datePublished;
+    private String url;
+    private String name;
+    private String imageUrl;
+    private String description;
+    private String datePublished;
 
     public News(JSONObject object) {
         try {

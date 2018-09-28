@@ -25,7 +25,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     // Realm
-    compile 'io.realm:realm-android:0.82.1'
+    provided 'io.realm:realm-android:0.87.5'
+    annotationProcessor 'io.realm:realm-android:0.87.5'
     // CL
-    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
 }

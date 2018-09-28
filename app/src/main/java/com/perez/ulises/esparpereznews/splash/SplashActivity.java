@@ -24,5 +24,6 @@ public class SplashActivity extends AppCompatActivity implements ISplash.View {
     public void showTrendingNews() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        finish();
     }
 }
