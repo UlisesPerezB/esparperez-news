@@ -1,4 +1,4 @@
-package com.perez.ulises.esparpereznews.main.trending;
+package com.perez.ulises.esparpereznews.trending;
 
 import com.perez.ulises.esparpereznews.model.News;
 

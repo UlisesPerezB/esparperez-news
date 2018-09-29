@@ -1,4 +1,4 @@
-package com.perez.ulises.esparpereznews.main.trending;
+package com.perez.ulises.esparpereznews.trending;
 
 public class TrendingInteractor implements TrendingInterface.ITrendingInteractor {
     @Override

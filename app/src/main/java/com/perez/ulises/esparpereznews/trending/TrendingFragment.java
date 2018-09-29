@@ -1,4 +1,4 @@
-package com.perez.ulises.esparpereznews.main.trending;
+package com.perez.ulises.esparpereznews.trending;
 
 import android.support.v4.app.Fragment;
 import android.widget.Toast;
