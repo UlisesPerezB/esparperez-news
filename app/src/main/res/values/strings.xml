@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">Bing news</string>
     <string name="app_db">bing_bm_database</string>
+
+    <!--Navigation_Drawer-->
+    <string-array name="navigation_drawer_items_array">
+        <item>Home</item>
+        <item>Preferences</item>
+        <item>Search</item>
+        <item>Bookmarks</item>
+        <item>Terms and conditions</item>
+    </string-array>
+
 </resources>

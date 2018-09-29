@@ -1,4 +1,4 @@
-package com.perez.ulises.esparpereznews.main.trending;
+package com.perez.ulises.esparpereznews.trending;
 
 import android.app.ProgressDialog;
 import android.support.v4.app.Fragment;
