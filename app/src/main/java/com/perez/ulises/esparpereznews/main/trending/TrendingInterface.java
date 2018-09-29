@@ -25,5 +25,7 @@ public interface TrendingInterface {
         void hideLoader();
         void loadList(List<News> news);
         void changeBookmark(boolean isBookmark, int position);
+        void showEmptyState();
+        void hideEmptyState();
     }
 }
