@@ -2,13 +2,13 @@
     <string name="app_name">Bing news</string>
     <string name="app_db">bing_bm_database</string>
 
-    <!--Navigation_Drawer-->
-    <string-array name="navigation_drawer_items_array">
-        <item>Home</item>
-        <item>Preferences</item>
-        <item>Search</item>
-        <item>Bookmarks</item>
-        <item>Terms and conditions</item>
-    </string-array>
+    <!--Navigation_menu-->
+    <string name="menu_nav_home">Home</string>
+    <string name="menu_nav_preferences">Preferences</string>
+    <string name="menu_nav_search">Search</string>
+    <string name="menu_nav_bookmarks">Bookmarks</string>
+    <string name="menu_nav_terms">Terms and conditions</string>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
 
 </resources>
