@@ -9,9 +9,20 @@ import com.perez.ulises.esparpereznews.model.News;
 import java.util.List;
 
 public class TrendingFragment extends Fragment implements TrendingInterface.ITrendingView {
+
+    public TrendingFragment() { }
+
+    public static TrendingFragment newInstance() {
+        TrendingFragment fragment = new TrendingFragment();
+        return fragment;
+    }
+
     private TrendingInterface.ITrendingPresenter presenter;
     //TODO Se va a dejar de usar el progress dialog y utilizaremos el loader animado
     private ProgressDialog dialog;
+
+    
+
 
     @Override
     public void onResume() {

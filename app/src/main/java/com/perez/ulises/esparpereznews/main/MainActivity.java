@@ -1,22 +1,29 @@
 package com.perez.ulises.esparpereznews.main;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.perez.ulises.esparpereznews.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     @BindView(R.id.drawer_layout)
     DrawerLayout mDrawer;
     @BindView(R.id.toolbar_main)
-    Toolbar toolbar;
+    Toolbar mToolbar;
+    @BindView(R.id.navigation_view)
+    NavigationView mNavigation;
 
     private ActionBarDrawerToggle toggle;
 
@@ -24,10 +31,40 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
         ButterKnife.bind(this);
-        toggle = new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open,R.string.drawer_close);
+        toggle = new ActionBarDrawerToggle(this, mDrawer, mToolbar, R.string.drawer_open,R.string.drawer_close);
         mDrawer.addDrawerListener(toggle);
-        setSupportActionBar(toolbar);
+        setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mNavigation.setNavigationItemSelectedListener(this);
 //        getSupportActionBar().setHomeButtonEnabled(true);
+    }
+
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.menu_section_home:
+                Toast.makeText(this, "home", Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.menu_section_preferences:
+                Toast.makeText(this, "preferences", Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.menu_section_search:
+                Toast.makeText(this, "search", Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.menu_section_bookmarks:
+                Toast.makeText(this, "bookmarks", Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.menu_section_terms:
+                Toast.makeText(this, "T&C", Toast.LENGTH_SHORT).show();
+                break;
+        }
+        mDrawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }
