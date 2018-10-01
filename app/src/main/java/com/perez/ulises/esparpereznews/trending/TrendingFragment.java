@@ -1,10 +1,16 @@
 package com.perez.ulises.esparpereznews.trending;
 
 import android.app.ProgressDialog;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.perez.ulises.esparpereznews.R;
 import com.perez.ulises.esparpereznews.model.News;
+import com.perez.ulises.esparpereznews.splash.ISplash;
 
 import java.util.List;
 
@@ -21,8 +27,10 @@ public class TrendingFragment extends Fragment implements TrendingInterface.ITre
     //TODO Se va a dejar de usar el progress dialog y utilizaremos el loader animado
     private ProgressDialog dialog;
 
-    
-
+//    @Override
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+//        View view = inflater.inflate(R.layout.)
+//    }
 
     @Override
     public void onResume() {
