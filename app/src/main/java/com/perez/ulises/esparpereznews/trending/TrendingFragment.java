@@ -46,7 +46,7 @@ public class TrendingFragment extends Fragment implements TrendingInterface.ITre
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.trending_fragment, container, false);
         ButterKnife.bind(this, view);
-        realm = Realm.getDefaultInstance();
+//        realm = Realm.getDefaultInstance();
         return view;
     }
 
@@ -85,10 +85,9 @@ public class TrendingFragment extends Fragment implements TrendingInterface.ITre
 
         mRecycler.setHasFixedSize(true);
         mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
-
-
-
-
+        adapter = new TrendingAdapter(getContext());
+        mRecycler.setAdapter(adapter);
+        adapter.setValues(news);
     }
 
     @Override

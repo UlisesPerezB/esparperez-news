@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mNavigation.setNavigationItemSelectedListener(this);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-
         Fragment fragment = TrendingFragment.newInstance();
         inflateFragment(fragment);
 
@@ -77,7 +76,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
         }
         mDrawer.closeDrawer(GravityCompat.START);
-        inflateFragment(fragment);
+        if (fragment != null)
+            inflateFragment(fragment);
         return true;
     }
 

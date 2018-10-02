@@ -50,7 +50,7 @@ public class TrendingInteractor implements TrendingInterface.ITrendingInteractor
         newsList.add(newsTwo);
 
 //      Test empty
-        newsList.clear();
+
         if (newsList.isEmpty()) {
             listener.onNoNews();
         } else {
