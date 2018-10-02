@@ -19,7 +19,7 @@ public class TrendingPresenter implements TrendingInterface.ITrendingPresenter, 
     @Override
     public void getNews() {
         interactor.getNews();
-        view.showLoadeer(false);
+//        view.showLoadeer(false);
     }
 
     @Override
@@ -36,7 +36,7 @@ public class TrendingPresenter implements TrendingInterface.ITrendingPresenter, 
 
     @Override
     public void onNewsRetrieved(List<News> news) {
-        view.hideLoader();
+//        view.hideLoader();
         view.hideEmptyState();
         view.loadList(news);
     }
@@ -48,7 +48,7 @@ public class TrendingPresenter implements TrendingInterface.ITrendingPresenter, 
 
     @Override
     public void onNoNews() {
-        view.hideLoader();
+//        view.hideLoader();
         view.showEmptyState();
     }
 }

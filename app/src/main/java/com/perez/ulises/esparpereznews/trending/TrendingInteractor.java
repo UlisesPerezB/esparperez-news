@@ -48,7 +48,14 @@ public class TrendingInteractor implements TrendingInterface.ITrendingInteractor
         newsList.add(newsTwo);
         newsList.add(newsOne);
         newsList.add(newsTwo);
-        listener.onNewsRetrieved(newsList);
+
+//      Test empty
+        newsList.clear();
+        if (newsList.isEmpty()) {
+            listener.onNoNews();
+        } else {
+            listener.onNewsRetrieved(newsList);
+        }
     }
 
     @Override

@@ -3,6 +3,8 @@ package com.perez.ulises.esparpereznews.main;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -12,6 +14,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.perez.ulises.esparpereznews.R;
+import com.perez.ulises.esparpereznews.trending.TrendingFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,16 +39,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mNavigation.setNavigationItemSelectedListener(this);
-//        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+        Fragment fragment = TrendingFragment.newInstance();
+        inflateFragment(fragment);
     }
 
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
+        Fragment fragment = null;
+
         switch (item.getItemId()) {
             case R.id.menu_section_home:
-                Toast.makeText(this, "home", Toast.LENGTH_SHORT).show();
+                fragment = TrendingFragment.newInstance();
                 break;
 
             case R.id.menu_section_preferences:
@@ -65,6 +73,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
         }
         mDrawer.closeDrawer(GravityCompat.START);
+        inflateFragment(fragment);
         return true;
     }
+
+    private void inflateFragment(Fragment fragment) {
+        FragmentManager fm = getSupportFragmentManager();
+        fm.beginTransaction()
+                .replace(R.id.content_fragment, fragment)
+                .commit();
+    }
+
 }
