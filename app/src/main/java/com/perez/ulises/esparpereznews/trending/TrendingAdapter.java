@@ -1,6 +1,7 @@
 package com.perez.ulises.esparpereznews.trending;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -43,6 +44,7 @@ public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.Trendi
     @Override
     public void onBindViewHolder(@NonNull final TrendingAdapter.TrendingViewHolder holder, final int position) {
         News item = mValues.get(position);
+        int bookmarkColor;
 //      Imagen
         Glide
                 .with(mContext)
@@ -52,6 +54,8 @@ public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.Trendi
         holder.tvNewsSubHeader.setText(item.getDescription());
         holder.tvNewsUrl.setText(item.getUrl());
         holder.tvNewsDate.setText(item.getDatePublished());
+        bookmarkColor = item.isBookmark() ? bookmarkColor = Color.GREEN : Color.GRAY;
+        holder.imgBookmark.setColorFilter(bookmarkColor);
         //TODO pintar el ícono de bookmark verde si está en realm o gris si no está
         //TODO Si presiono el ícono y esta guardado, se elimina. Si no, se guarda
     }
