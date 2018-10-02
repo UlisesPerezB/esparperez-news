@@ -3,6 +3,7 @@ package com.perez.ulises.esparpereznews.trending;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.Realm;
 
 public class TrendingFragment extends Fragment implements TrendingInterface.ITrendingView {
 
@@ -34,6 +36,8 @@ public class TrendingFragment extends Fragment implements TrendingInterface.ITre
     @BindView(R.id.trending_recycler)
     RecyclerView mRecycler;
 
+    private Realm realm;
+
     private TrendingInterface.ITrendingPresenter presenter;
     //TODO Se va a dejar de usar el progress dialog y utilizaremos el loader animado
     private ProgressDialog dialog;
@@ -42,7 +46,7 @@ public class TrendingFragment extends Fragment implements TrendingInterface.ITre
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.trending_fragment, container, false);
         ButterKnife.bind(this, view);
-
+        realm = Realm.getDefaultInstance();
         return view;
     }
 
@@ -77,6 +81,14 @@ public class TrendingFragment extends Fragment implements TrendingInterface.ITre
     @Override
     public void loadList(List<News> news) {
         //TODO Aquí se debe usar el Recycler
+        TrendingAdapter adapter;
+
+        mRecycler.setHasFixedSize(true);
+        mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new TrendingAdapter(realm.where(News.class).findFirst().get)
+
+
+
     }
 
     @Override
