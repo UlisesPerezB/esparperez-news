@@ -3,21 +3,27 @@
     <item
         android:id="@+id/menu_section_home"
         android:title="@string/menu_nav_home"
-        android:icon="@drawable/ic_home" />
+        android:icon="@drawable/ic_home"
+        android:checkable="true"
+        android:checked="true"/>
     <item
         android:id="@+id/menu_section_preferences"
         android:title="@string/menu_nav_preferences"
-        android:icon="@drawable/ic_filter" />
+        android:icon="@drawable/ic_filter"
+        android:checkable="true"/>
     <item
         android:id="@+id/menu_section_search"
         android:title="@string/menu_nav_search"
-        android:icon="@drawable/ic_search" />
+        android:icon="@drawable/ic_search"
+        android:checkable="true"/>
     <item
         android:id="@+id/menu_section_bookmarks"
         android:title="@string/menu_nav_bookmarks"
-        android:icon="@drawable/ic_bookmark" />
+        android:icon="@drawable/ic_bookmark"
+        android:checkable="true"/>
     <item
         android:id="@+id/menu_section_terms"
         android:title="@string/menu_nav_terms"
-        android:icon="@drawable/ic_terms" />
+        android:icon="@drawable/ic_terms"
+        android:checkable="true"/>
 </menu>

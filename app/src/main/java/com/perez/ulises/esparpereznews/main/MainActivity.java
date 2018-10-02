@@ -38,11 +38,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDrawer.addDrawerListener(toggle);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
+        getSupportActionBar().setTitle(null);
         mNavigation.setNavigationItemSelectedListener(this);
         getSupportActionBar().setHomeButtonEnabled(true);
 
+
         Fragment fragment = TrendingFragment.newInstance();
         inflateFragment(fragment);
+
     }
 
 
@@ -61,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             case R.id.menu_section_search:
-                Toast.makeText(this, "search", Toast.LENGTH_SHORT).show();
+                loadSearchFragment();
                 break;
 
             case R.id.menu_section_bookmarks:
@@ -77,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+
     private void inflateFragment(Fragment fragment) {
         if (fragment != null) {
             
@@ -85,6 +90,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fm.beginTransaction()
                 .replace(R.id.content_fragment, fragment)
                 .commit();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawer.openDrawer(GravityCompat.START);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    void loadSearchFragment() {
+        Toast.makeText(this, "search", Toast.LENGTH_SHORT).show();
     }
 
 }
