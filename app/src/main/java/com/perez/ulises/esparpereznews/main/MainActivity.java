@@ -78,6 +78,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void inflateFragment(Fragment fragment) {
+        if (fragment != null) {
+            
+        }
         FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction()
                 .replace(R.id.content_fragment, fragment)
