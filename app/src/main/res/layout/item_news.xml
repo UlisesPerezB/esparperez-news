@@ -71,10 +71,11 @@
         app:layout_constraintTop_toBottomOf="@id/newsUrl"/>
 
     <ImageView
+        android:id="@+id/imgBookmark"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_bookmark"
-        android:tint="@color/colorPrimary"
+        android:tint="@color/colorSecondaryText"
         app:layout_constraintBottom_toBottomOf="@id/newsDate"
         app:layout_constraintRight_toRightOf="parent"/>
 

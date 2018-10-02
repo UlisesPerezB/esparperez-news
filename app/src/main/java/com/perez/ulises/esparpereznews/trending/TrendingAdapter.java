@@ -42,16 +42,18 @@ public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.Trendi
 
     @Override
     public void onBindViewHolder(@NonNull final TrendingAdapter.TrendingViewHolder holder, final int position) {
-        holder.mItem = mValues.get(position);
+        News item = mValues.get(position);
 //      Imagen
         Glide
                 .with(mContext)
-                .load(mValues.get(position).getImageUrl())
+                .load(item.getImageUrl())
                 .into(holder.newsImage);
-        holder.tvNewsHeader.setText(mValues.get(position).getName());
-        holder.tvNewsSubHeader.setText(mValues.get(position).getDescription());
-        holder.tvNewsUrl.setText(mValues.get(position).getUrl());
-        holder.tvNewsDate.setText(mValues.get(position).getDatePublished());
+        holder.tvNewsHeader.setText(item.getName());
+        holder.tvNewsSubHeader.setText(item.getDescription());
+        holder.tvNewsUrl.setText(item.getUrl());
+        holder.tvNewsDate.setText(item.getDatePublished());
+        //TODO pintar el ícono de bookmark verde si está en realm o gris si no está
+        //TODO Si presiono el ícono y esta guardado, se elimina. Si no, se guarda
     }
 
     @Override
@@ -66,9 +68,6 @@ public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.Trendi
 
     class TrendingViewHolder extends RecyclerView.ViewHolder {
 
-        public final View mView;
-        public News mItem;
-
         @BindView(R.id.newsImage)
         ImageView newsImage;
         @BindView(R.id.newsHeader)
@@ -79,11 +78,12 @@ public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.Trendi
         TextView tvNewsUrl;
         @BindView(R.id.newsDate)
         TextView tvNewsDate;
+        @BindView(R.id.imgBookmark)
+        ImageView imgBookmark;
 
         public TrendingViewHolder(View itemView) {
             super(itemView);
-            mView = itemView;
-            ButterKnife.bind(this, mView);
+            ButterKnife.bind(this, itemView);
         }
     }
 }
