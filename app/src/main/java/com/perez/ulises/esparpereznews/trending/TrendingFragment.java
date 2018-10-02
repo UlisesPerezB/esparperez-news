@@ -85,7 +85,7 @@ public class TrendingFragment extends Fragment implements TrendingInterface.ITre
 
         mRecycler.setHasFixedSize(true);
         mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new TrendingAdapter(realm.where(News.class).findFirst().get)
+
 
 
 
