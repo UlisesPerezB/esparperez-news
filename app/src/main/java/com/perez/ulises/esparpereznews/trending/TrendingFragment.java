@@ -20,6 +20,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.Realm;
+import io.realm.RealmResults;
 
 public class TrendingFragment extends Fragment implements TrendingInterface.ITrendingView {
 
@@ -46,7 +47,6 @@ public class TrendingFragment extends Fragment implements TrendingInterface.ITre
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.trending_fragment, container, false);
         ButterKnife.bind(this, view);
-//        realm = Realm.getDefaultInstance();
         return view;
     }
 

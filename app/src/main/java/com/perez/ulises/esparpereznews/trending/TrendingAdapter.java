@@ -4,12 +4,14 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.perez.ulises.esparpereznews.R;
@@ -21,12 +23,15 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.OrderedRealmCollection;
+import io.realm.Realm;
+import io.realm.RealmObject;
 import io.realm.RealmRecyclerViewAdapter;
 
 public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.TrendingViewHolder> {
 
     private List<News> mValues;
     private Context mContext;
+    private Realm realm;
 
     public TrendingAdapter(Context context) {
         mValues = new ArrayList<>();
@@ -43,9 +48,7 @@ public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.Trendi
 
     @Override
     public void onBindViewHolder(@NonNull final TrendingAdapter.TrendingViewHolder holder, final int position) {
-        News item = mValues.get(position);
-        int bookmarkColor;
-//      Imagen
+        final News item = mValues.get(position);
         Glide
                 .with(mContext)
                 .load(item.getImageUrl())
@@ -54,10 +57,39 @@ public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.Trendi
         holder.tvNewsSubHeader.setText(item.getDescription());
         holder.tvNewsUrl.setText(item.getUrl());
         holder.tvNewsDate.setText(item.getDatePublished());
-        bookmarkColor = item.isBookmark() ? bookmarkColor = Color.GREEN : Color.GRAY;
-        holder.imgBookmark.setColorFilter(bookmarkColor);
+
         //TODO pintar el ícono de bookmark verde si está en realm o gris si no está
+
         //TODO Si presiono el ícono y esta guardado, se elimina. Si no, se guarda
+
+        holder.imgBookmark.setOnClickListener(new View.OnClickListener() {
+
+
+            boolean bookmarkValue;
+
+            @Override
+            public void onClick(View v) {
+                // Guardar en realm
+
+                realm = Realm.getDefaultInstance();
+                realm.beginTransaction();
+                realm.insertOrUpdate(item);
+                realm.commitTransaction();
+                realm.close();
+            }
+        });
+
+        realm = Realm.getDefaultInstance();
+        boolean find = realm.where(News.class).equalTo("url", item.getUrl()).findFirst() != null;
+        realm.close();
+
+        int bookmarkColor;
+//        bookmarkColor = find ? bookmarkColor
+//                = ContextCompat.getColor(mContext, R.color.colorPrimary)
+//                : ContextCompat.getColor(mContext, R.color.colorSecondaryText);
+
+        bookmarkColor = ContextCompat.getColor(mContext, find ? R.color.colorPrimary : R.color.colorSecondaryText);
+        holder.imgBookmark.setColorFilter(bookmarkColor);
     }
 
     @Override
@@ -68,6 +100,25 @@ public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.Trendi
     public void setValues(List<News> values) {
         mValues = values;
         notifyDataSetChanged();
+    }
+
+    public void saveBookmark(final News news) {
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+//                realm.createObject(News.class, news);
+                realm.insertOrUpdate(news);
+            }
+        });
+    }
+
+    public void deleteBookmark(final News news) {
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+
+            }
+        });
     }
 
     class TrendingViewHolder extends RecyclerView.ViewHolder {
