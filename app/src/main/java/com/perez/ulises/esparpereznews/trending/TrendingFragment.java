@@ -80,9 +80,7 @@ public class TrendingFragment extends Fragment implements TrendingInterface.ITre
 
     @Override
     public void loadList(List<News> news) {
-        //TODO Aquí se debe usar el Recycler
         TrendingAdapter adapter;
-
         mRecycler.setHasFixedSize(true);
         mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new TrendingAdapter(getContext());
@@ -97,7 +95,6 @@ public class TrendingFragment extends Fragment implements TrendingInterface.ITre
 
     @Override
     public void showEmptyState() {
-        //TODO Aparecer un textview
         mTvEmpty.setVisibility(View.VISIBLE);
     }
 

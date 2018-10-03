@@ -58,37 +58,27 @@ public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.Trendi
         holder.tvNewsUrl.setText(item.getUrl());
         holder.tvNewsDate.setText(item.getDatePublished());
 
-        //TODO pintar el ícono de bookmark verde si está en realm o gris si no está
-
-        //TODO Si presiono el ícono y esta guardado, se elimina. Si no, se guarda
-
-        holder.imgBookmark.setOnClickListener(new View.OnClickListener() {
-
-
-            boolean bookmarkValue;
-
-            @Override
-            public void onClick(View v) {
-                // Guardar en realm
-
-                realm = Realm.getDefaultInstance();
-                realm.beginTransaction();
-                realm.insertOrUpdate(item);
-                realm.commitTransaction();
-                realm.close();
-            }
-        });
-
         realm = Realm.getDefaultInstance();
         boolean find = realm.where(News.class).equalTo("url", item.getUrl()).findFirst() != null;
         realm.close();
 
-        int bookmarkColor;
-//        bookmarkColor = find ? bookmarkColor
-//                = ContextCompat.getColor(mContext, R.color.colorPrimary)
-//                : ContextCompat.getColor(mContext, R.color.colorSecondaryText);
+        holder.imgBookmark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                realm = Realm.getDefaultInstance();
+                News toFind = realm.where(News.class).equalTo("url", item.getUrl()).findFirst();
+                realm.beginTransaction();
+                if (toFind != null)
+                    toFind.deleteFromRealm();
+                else
+                    realm.insertOrUpdate(item);
+                realm.commitTransaction();
+                realm.close();
+                notifyItemChanged(position);
+            }
+        });
 
-        bookmarkColor = ContextCompat.getColor(mContext, find ? R.color.colorPrimary : R.color.colorSecondaryText);
+        int bookmarkColor = ContextCompat.getColor(mContext, find ? R.color.colorPrimary : R.color.colorSecondaryText);
         holder.imgBookmark.setColorFilter(bookmarkColor);
     }
 
