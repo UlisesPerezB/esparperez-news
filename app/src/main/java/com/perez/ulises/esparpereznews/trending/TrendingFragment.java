@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,8 +38,6 @@ public class TrendingFragment extends Fragment implements TrendingInterface.ITre
     @BindView(R.id.trending_recycler)
     RecyclerView mRecycler;
 
-    private Realm realm;
-
     private TrendingInterface.ITrendingPresenter presenter;
     //TODO Se va a dejar de usar el progress dialog y utilizaremos el loader animado
     private ProgressDialog dialog;
@@ -47,6 +46,7 @@ public class TrendingFragment extends Fragment implements TrendingInterface.ITre
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.trending_fragment, container, false);
         ButterKnife.bind(this, view);
+        ((SimpleItemAnimator) mRecycler.getItemAnimator()).setSupportsChangeAnimations(false);
         return view;
     }
 
