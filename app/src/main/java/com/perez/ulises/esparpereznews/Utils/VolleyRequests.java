@@ -1,11 +1,9 @@
 package com.perez.ulises.esparpereznews.Utils;
 
-import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
@@ -30,7 +28,8 @@ public class VolleyRequests {
                             new String(response.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8
                     );
                     try {
-                        JSONObject jsonObject = new JSONObject(responseUTF8);
+//                        JSONObject jsonObject = new JSONObject(responseUTF8);
+                        JSONObject jsonObject = new JSONObject(response);
                         vrs.onResponse(jsonObject);
                     } catch (JSONException e) {
                         try {
@@ -54,7 +53,6 @@ public class VolleyRequests {
                 return params;
             }
         };
-
         RequestSingleton.getInstance(context).addToRequestQue(stringRequest);
     }
 }
