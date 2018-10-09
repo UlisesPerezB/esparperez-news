@@ -1,5 +1,6 @@
 package com.perez.ulises.esparpereznews.model;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 

@@ -11,13 +11,17 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.perez.ulises.esparpereznews.trending.RequestSingleton;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
 public class VolleyRequests {
 
-    public static void jsonRequest(Context context, final int method, final String url, final String header, final String token) {
+    public static void jsonRequest(Context context, final int method, final String url, final String header, final String token, final IRequest.VolleyResponseHandler vrs) {
         StringRequest stringRequest = new StringRequest(method, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -25,7 +29,17 @@ public class VolleyRequests {
                     String responseUTF8 =
                             new String(response.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8
                     );
-                    Log.i("Volley", responseUTF8);
+                    try {
+                        JSONObject jsonObject = new JSONObject(responseUTF8);
+                        vrs.onResponse(jsonObject);
+                    } catch (JSONException e) {
+                        try {
+                            JSONArray jsonArray = new JSONArray(responseUTF8);
+                            vrs.onResponse(jsonArray);
+                        }  catch (JSONException e2) {
+                            e2.printStackTrace();
+                        }
+                    }
                 }
             }}, new Response.ErrorListener() {
             @Override
