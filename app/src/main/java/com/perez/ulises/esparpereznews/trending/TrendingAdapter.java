@@ -1,6 +1,8 @@
 package com.perez.ulises.esparpereznews.trending;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -10,8 +12,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.perez.ulises.esparpereznews.R;
 import com.perez.ulises.esparpereznews.model.News;
@@ -73,6 +73,14 @@ public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.Trendi
                 realm.commitTransaction();
                 realm.close();
                 notifyItemChanged(position);
+            }
+        });
+
+        holder.newsImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(item.getUrl()));
+                mContext.startActivity(browserIntent);
             }
         });
 

@@ -1,11 +1,8 @@
 package com.perez.ulises.esparpereznews.trending;
 
 import android.content.Context;
-import android.util.JsonReader;
 
 import com.android.volley.Request;
-import com.google.gson.JsonIOException;
-import com.google.gson.JsonObject;
 import com.perez.ulises.esparpereznews.Utils.IRequest;
 import com.perez.ulises.esparpereznews.Utils.VolleyRequests;
 import com.perez.ulises.esparpereznews.model.News;
@@ -15,7 +12,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class TrendingInteractor implements TrendingInterface.ITrendingInteractor, IRequest.VolleyResponseHandler {
