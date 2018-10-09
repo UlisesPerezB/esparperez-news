@@ -1,9 +1,7 @@
 package com.perez.ulises.esparpereznews.trending;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,8 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.perez.ulises.esparpereznews.R;
 import com.perez.ulises.esparpereznews.model.News;
@@ -22,10 +21,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.realm.OrderedRealmCollection;
 import io.realm.Realm;
-import io.realm.RealmObject;
-import io.realm.RealmRecyclerViewAdapter;
 
 public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.TrendingViewHolder> {
 
@@ -43,6 +39,8 @@ public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.Trendi
     public TrendingViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_news, parent, false);
+
+
         return new TrendingViewHolder(view);
     }
 
@@ -90,25 +88,6 @@ public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.Trendi
     public void setValues(List<News> values) {
         mValues = values;
         notifyDataSetChanged();
-    }
-
-    public void saveBookmark(final News news) {
-        realm.executeTransactionAsync(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-//                realm.createObject(News.class, news);
-                realm.insertOrUpdate(news);
-            }
-        });
-    }
-
-    public void deleteBookmark(final News news) {
-        realm.executeTransactionAsync(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-
-            }
-        });
     }
 
     class TrendingViewHolder extends RecyclerView.ViewHolder {
