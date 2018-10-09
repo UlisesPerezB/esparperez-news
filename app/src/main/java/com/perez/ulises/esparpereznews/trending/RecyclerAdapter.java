@@ -23,13 +23,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.Realm;
 
-public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.TrendingViewHolder> {
+public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.TrendingViewHolder> {
 
     private List<News> mValues;
     private Context mContext;
     private Realm realm;
 
-    public TrendingAdapter(Context context) {
+    public RecyclerAdapter(Context context) {
         mValues = new ArrayList<>();
         this.mContext = context;
     }
@@ -45,7 +45,7 @@ public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.Trendi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final TrendingAdapter.TrendingViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final RecyclerAdapter.TrendingViewHolder holder, final int position) {
         final News item = mValues.get(position);
         Glide
                 .with(mContext)

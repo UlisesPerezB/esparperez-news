@@ -14,14 +14,11 @@ import android.widget.Toast;
 
 import com.perez.ulises.esparpereznews.R;
 import com.perez.ulises.esparpereznews.model.News;
-import com.perez.ulises.esparpereznews.splash.ISplash;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.realm.Realm;
-import io.realm.RealmResults;
 
 public class TrendingFragment extends Fragment implements TrendingInterface.ITrendingView {
 
@@ -80,10 +77,10 @@ public class TrendingFragment extends Fragment implements TrendingInterface.ITre
 
     @Override
     public void loadList(List<News> news) {
-        TrendingAdapter adapter;
+        RecyclerAdapter adapter;
         mRecycler.setHasFixedSize(true);
         mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new TrendingAdapter(getContext());
+        adapter = new RecyclerAdapter(getContext());
         mRecycler.setAdapter(adapter);
         adapter.setValues(news);
     }

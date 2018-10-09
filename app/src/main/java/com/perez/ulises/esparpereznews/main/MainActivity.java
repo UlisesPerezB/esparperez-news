@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.perez.ulises.esparpereznews.R;
+import com.perez.ulises.esparpereznews.bookmarks.BookmarksFragment;
 import com.perez.ulises.esparpereznews.trending.TrendingFragment;
 
 import butterknife.BindView;
@@ -68,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             case R.id.menu_section_bookmarks:
-                Toast.makeText(this, "bookmarks", Toast.LENGTH_SHORT).show();
+                fragment = BookmarksFragment.newInstance();
                 break;
 
             case R.id.menu_section_terms:

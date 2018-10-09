@@ -17,7 +17,7 @@
             android:layout_height="?android:actionBarSize">
 
             <TextView
-                android:id="@+id/txtTitle"
+                android:id="@+id/tv_title"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
