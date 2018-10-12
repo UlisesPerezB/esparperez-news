@@ -2,6 +2,7 @@ package com.perez.ulises.esparpereznews.search;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.perez.ulises.esparpereznews.R;
+import com.perez.ulises.esparpereznews.model.News;
+import com.perez.ulises.esparpereznews.model.Searches;
+import com.perez.ulises.esparpereznews.trending.RecyclerAdapter;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,7 +31,10 @@ public class SearchFragment extends Fragment implements SearchInterface.ISearchV
     public SearchFragment () { }
 
     @BindView(R.id.trending_recycler)
-    RecyclerView recyclerView;
+    RecyclerView recyclerNews;
+
+    @BindView(R.id.search_recycler)
+    RecyclerView recyclerSearch;
 
     @BindView(R.id.tv_title)
     TextView tvTitle;
@@ -62,12 +71,23 @@ public class SearchFragment extends Fragment implements SearchInterface.ISearchV
     }
 
     @Override
-    public void showSearchSuggestions() {
-
+    public void showSearchSuggestions(List<Searches> searches, List suggestions) {
+        SearchAdapter adapter;
+        recyclerSearch.setHasFixedSize(true);
+        recyclerSearch.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new SearchAdapter(getContext());
+        recyclerSearch.setAdapter(adapter);
+        adapter.setValues(searches, suggestions);
     }
 
     @Override
-    public void showNewsResults() {
-
+    public void showNewsResults(List<News> news) {
+        RecyclerAdapter adapter;
+        recyclerNews.setHasFixedSize(true);
+        recyclerNews.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new RecyclerAdapter(getContext());
+        recyclerNews.setAdapter(adapter);
+        adapter.setValues(news);
     }
+
 }

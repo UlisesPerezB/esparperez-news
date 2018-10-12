@@ -1,6 +1,7 @@
 package com.perez.ulises.esparpereznews.search;
 
 import com.perez.ulises.esparpereznews.model.News;
+import com.perez.ulises.esparpereznews.model.Searches;
 
 import java.util.List;
 
@@ -24,8 +25,8 @@ public interface SearchInterface {
     interface ISearchView {
         void showEmptyState();
         void hideEmptyState();
-        void showSearchSuggestions();
-        void showNewsResults();
+        void showSearchSuggestions(List<Searches> searches, List suggestions);
+        void showNewsResults(List<News> news);
     }
 
 }
