@@ -41,14 +41,21 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
 
     @Override
     public void onBindViewHolder(@NonNull final SearchViewHolder holder, final int position) {
-        final Searches item = mSearches.get(position);
+        final Searches itemSearches = mSearches.get(position);
 
+        if (position == mSearches.size()) {
+            holder.tvResult.setText(itemSearches.getWord());
+            holder.tvDate.setText(itemSearches.getDateSearch().toString());
+        } else {
 
+        }
     }
 
     @Override
     public int getItemCount() {
-        return mSearches.size();
+        int realCount;
+        realCount = mSearches.size() + mSuggestions.size();
+        return realCount;
     }
 
     public void setValues(List<Searches> searches, List suggestions) {
@@ -68,6 +75,15 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         public SearchViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+        }
+    }
+
+    class SuggestionsViewHolder extends RecyclerView.ViewHolder {
+
+
+
+        public SuggestionsViewHolder(View itemView) {
+            super(itemView);
         }
     }
 }

@@ -8,23 +8,23 @@ import io.realm.annotations.PrimaryKey;
 public class Searches extends RealmObject {
 
     @PrimaryKey
-    private String search;
+    private String word;
     private Date dateSearch;
 
     public Searches() {
     }
 
-    public Searches(String search, Date dateSearch) {
-        this.search = search;
+    public Searches(String word, Date dateSearch) {
+        this.word = word;
         this.dateSearch = dateSearch;
     }
 
-    public String getSearch() {
-        return search;
+    public String getWord() {
+        return word;
     }
 
-    public void setSearch(String search) {
-        this.search = search;
+    public void setWord(String word) {
+        this.word = word;
     }
 
     public Date getDateSearch() {
