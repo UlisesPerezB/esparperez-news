@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.perez.ulises.esparpereznews.R;
 import com.perez.ulises.esparpereznews.bookmarks.BookmarksFragment;
+import com.perez.ulises.esparpereznews.search.SearchFragment;
 import com.perez.ulises.esparpereznews.trending.TrendingFragment;
 
 import butterknife.BindView;
@@ -65,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             case R.id.menu_section_search:
-                loadSearchFragment();
+                fragment = SearchFragment.newInstance();
                 break;
 
             case R.id.menu_section_bookmarks:
@@ -101,9 +102,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         return super.onOptionsItemSelected(item);
     }
-
-    void loadSearchFragment() {
-        Toast.makeText(this, "search", Toast.LENGTH_SHORT).show();
-    }
-
 }

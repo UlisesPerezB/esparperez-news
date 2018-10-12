@@ -8,9 +8,15 @@
     <string name="menu_nav_search">Search</string>
     <string name="menu_nav_bookmarks">Bookmarks</string>
     <string name="menu_nav_terms">Terms and conditions</string>
+
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
+
     <string name="label_trending">Trending</string>
     <string name="label_bookmarks">Bookmarks</string>
+    <string name="label_search">Searches</string>
+
+    <string name="text_view_empty">No searches yet!</string>
+
 
 </resources>
