@@ -40,7 +40,8 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="end"
                 android:layout_marginEnd="@dimen/material_margin"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                tools:visibility="visible"/>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar_main"
