@@ -20,7 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class SearchFragment extends Fragment implements SearchInterface.ISearchView {
+public class SearchFragment extends Fragment implements SearchInterface.ISearchView, SearchInterface.ISearchInterface {
 
     public static SearchFragment newInstance() {
         SearchFragment fragment = new SearchFragment();
@@ -108,4 +108,8 @@ public class SearchFragment extends Fragment implements SearchInterface.ISearchV
         adapter.setValues(news);
     }
 
+    @Override
+    public void searchForWord(String word) {
+        //Todo aqupi deberás cargar la lista con la búsqueda en String word
+    }
 }

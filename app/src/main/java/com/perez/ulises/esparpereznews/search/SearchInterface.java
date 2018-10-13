@@ -29,4 +29,8 @@ public interface SearchInterface {
         void showNewsResults(List<News> news);
     }
 
+    interface ISearchInterface {
+        void searchForWord(String word);
+    }
+
 }

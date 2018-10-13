@@ -10,12 +10,19 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.perez.ulises.esparpereznews.R;
 import com.perez.ulises.esparpereznews.bookmarks.BookmarksFragment;
 import com.perez.ulises.esparpereznews.search.SearchFragment;
+import com.perez.ulises.esparpereznews.search.SearchInterface;
 import com.perez.ulises.esparpereznews.trending.TrendingFragment;
 
 import butterknife.BindView;
@@ -29,8 +36,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Toolbar mToolbar;
     @BindView(R.id.navigation_view)
     NavigationView mNavigation;
+    @BindView(R.id.imgSearch)
+    ImageView imgSearch;
+    @BindView(R.id.edtSearch)
+    EditText edtSearch;
+
 
     private ActionBarDrawerToggle toggle;
+    private SearchInterface.ISearchInterface searchInterface;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +60,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Fragment fragment = TrendingFragment.newInstance();
         inflateFragment(fragment);
+
+        imgSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment searchFragment = instanceSearchFragment();
+                inflateFragment(searchFragment);
+            }
+        });
 
     }
 
@@ -66,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             case R.id.menu_section_search:
-                fragment = SearchFragment.newInstance();
+                fragment = instanceSearchFragment();
                 break;
 
             case R.id.menu_section_bookmarks:
@@ -92,6 +113,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fm.beginTransaction()
                 .replace(R.id.content_fragment, fragment)
                 .commit();
+        if (!(fragment instanceof SearchFragment)) {
+            edtSearch.setVisibility(View.GONE);
+            imgSearch.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -101,5 +126,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 mDrawer.openDrawer(GravityCompat.START);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private Fragment instanceSearchFragment() {
+        SearchFragment fragment = SearchFragment.newInstance();
+        searchInterface = fragment;
+        imgSearch.setVisibility(View.GONE);
+        edtSearch.setVisibility(View.VISIBLE);
+        edtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                searchInterface.searchForWord(s.toString());
+            }
+        });
+        return fragment;
     }
 }
