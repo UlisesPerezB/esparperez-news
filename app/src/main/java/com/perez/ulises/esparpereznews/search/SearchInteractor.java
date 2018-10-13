@@ -18,7 +18,7 @@ public class SearchInteractor implements SearchInterface.ISearchInteractor {
     @Override
     public void getResults() {
         mRealm = Realm.getDefaultInstance();
-        
+
     }
 
     @Override

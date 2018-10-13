@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.perez.ulises.esparpereznews.R;
@@ -30,17 +29,14 @@ public class SearchFragment extends Fragment implements SearchInterface.ISearchV
 
     public SearchFragment () { }
 
-    @BindView(R.id.trending_recycler)
-    RecyclerView recyclerNews;
-
     @BindView(R.id.search_recycler)
-    RecyclerView recyclerSearch;
+    RecyclerView recyclerView;
 
     @BindView(R.id.tv_title)
     TextView tvTitle;
 
-    @BindView(R.id.edt_search)
-    EditText edtSearch;
+//    @BindView(R.id.edt_search)
+//    EditText edtSearch;
 
     @BindView(R.id.tv_news_empty)
     TextView tvEmpty;
@@ -49,9 +45,25 @@ public class SearchFragment extends Fragment implements SearchInterface.ISearchV
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.trending_fragment, container, false);
+        View view = inflater.inflate(R.layout.search_fragment, container, false);
         ButterKnife.bind(this, view);
         tvTitle.setText(getString(R.string.label_search));
+//        edtSearch.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                Log.i("SEARCH_TEST", s.toString());
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//
+//            }
+//        });
 
         return view;
     }
@@ -61,6 +73,7 @@ public class SearchFragment extends Fragment implements SearchInterface.ISearchV
         super.onResume();
         if (mPresenter == null)
             mPresenter = new SearchPresenter(this, getContext());
+        mPresenter.getNewsResults();
 
     }
 
@@ -78,20 +91,20 @@ public class SearchFragment extends Fragment implements SearchInterface.ISearchV
     @Override
     public void showSearchSuggestions(List<Searches> searches, List suggestions) {
         SearchAdapter adapter;
-        recyclerSearch.setHasFixedSize(true);
-        recyclerSearch.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new SearchAdapter(getContext());
-        recyclerSearch.setAdapter(adapter);
+        recyclerView.setAdapter(adapter);
         adapter.setValues(searches, suggestions);
     }
 
     @Override
     public void showNewsResults(List<News> news) {
         RecyclerAdapter adapter;
-        recyclerNews.setHasFixedSize(true);
-        recyclerNews.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new RecyclerAdapter(getContext());
-        recyclerNews.setAdapter(adapter);
+        recyclerView.setAdapter(adapter);
         adapter.setValues(news);
     }
 
