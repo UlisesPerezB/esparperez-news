@@ -19,7 +19,7 @@ public interface SearchInterface {
 
     interface ISearchListener {
         void onNewsRetrieved(List<News> newsResults);
-        void onSuggestionsRetrieved();
+        void onSuggestionsRetrieved(List<Searches> searches, List suggestions);
     }
 
     interface ISearchView {

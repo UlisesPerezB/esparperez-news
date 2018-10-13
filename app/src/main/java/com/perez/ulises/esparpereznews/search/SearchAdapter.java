@@ -6,7 +6,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.perez.ulises.esparpereznews.R;
 import com.perez.ulises.esparpereznews.model.Searches;
@@ -18,7 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.Realm;
 
-public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchViewHolder> {
+public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<Searches> mSearches;
     private List mSuggestions;
@@ -31,23 +33,44 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         this.mContext = context;
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        if (position <= mSearches.size()) {
+            return 0;
+        } else
+            return 1;
+    }
+
     @NonNull
     @Override
-    public SearchViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_searches, parent, false);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view;
+        if (viewType == 0) {
+            view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.item_searches, parent, false);
+        } else {
+            view =LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.item_suggestions, parent, false);
+        }
         return new SearchViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final SearchViewHolder holder, final int position) {
-        final Searches itemSearches = mSearches.get(position);
-
-        if (position == mSearches.size()) {
-            holder.tvResult.setText(itemSearches.getWord());
-            holder.tvDate.setText(itemSearches.getDateSearch().toString());
+    public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
+        if (holder.getItemViewType() == 0) {
+            final Searches itemSearches = mSearches.get(position);
+            SearchViewHolder searchHolder = (SearchViewHolder) holder;
+            searchHolder.tvResult.setText(itemSearches.getWord());
+            searchHolder.tvDate.setText(itemSearches.getDateSearch().toString());
+            searchHolder.btnDeleteSearch.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(mContext, "DELETED", Toast.LENGTH_SHORT).show();
+                }
+            });
         } else {
-
+            SuggestionsViewHolder suggestionsHolder = (SuggestionsViewHolder) holder;
+            suggestionsHolder.tvSuggestionsResult.setText(mSuggestions.get(position).toString());
         }
     }
 
@@ -72,6 +95,9 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         @BindView(R.id.tv_search_date)
         TextView tvDate;
 
+        @BindView(R.id.im_search_delete)
+        ImageView btnDeleteSearch;
+
         public SearchViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -80,10 +106,12 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
 
     class SuggestionsViewHolder extends RecyclerView.ViewHolder {
 
-
+        @BindView(R.id.tv_suggestions_result)
+        TextView tvSuggestionsResult;
 
         public SuggestionsViewHolder(View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

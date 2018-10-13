@@ -45,6 +45,8 @@ public class SearchFragment extends Fragment implements SearchInterface.ISearchV
     @BindView(R.id.tv_news_empty)
     TextView tvEmpty;
 
+    private SearchPresenter mPresenter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.trending_fragment, container, false);
@@ -57,6 +59,9 @@ public class SearchFragment extends Fragment implements SearchInterface.ISearchV
     @Override
     public void onResume(){
         super.onResume();
+        if (mPresenter == null)
+            mPresenter = new SearchPresenter(this, getContext());
+
     }
 
     @Override
