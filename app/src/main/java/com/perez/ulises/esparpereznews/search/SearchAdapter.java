@@ -35,7 +35,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public int getItemViewType(int position) {
-        if (position <= mSearches.size()) {
+        if (position < mSearches.size()) {
             return 0;
         } else
             return 1;
@@ -48,11 +48,12 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         if (viewType == 0) {
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.item_searches, parent, false);
+            return new SearchViewHolder(view);
         } else {
             view =LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.item_suggestions, parent, false);
+            return new SuggestionsViewHolder(view);
         }
-        return new SearchViewHolder(view);
     }
 
     @Override
@@ -70,7 +71,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             });
         } else {
             SuggestionsViewHolder suggestionsHolder = (SuggestionsViewHolder) holder;
-            suggestionsHolder.tvSuggestionsResult.setText(mSuggestions.get(position).toString());
+            suggestionsHolder.tvSuggestionsResult.setText(mSuggestions.get(position - mSearches.size()).toString());
         }
     }
 

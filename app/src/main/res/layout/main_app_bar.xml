@@ -25,20 +25,11 @@
                 android:textColor="@color/colorAccent"
                 android:textSize="@dimen/text_size_h2"/>
 
-            <ImageView
-                android:id="@+id/imgSearch"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:padding="@dimen/material_default_padding"
-                android:src="@drawable/ic_search"
-                android:layout_gravity="end"
-                />
-
-
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar_main"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:gravity="left"
                 app:layout_scrollFlags="scroll|enterAlways">
 
                 <EditText
@@ -51,7 +42,17 @@
                     android:imeOptions="actionSearch"
                     android:inputType="text"
                     tools:visibility="visible"/>
+
             </android.support.v7.widget.Toolbar>
+
+            <ImageView
+                android:id="@+id/imgSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:padding="@dimen/material_default_padding"
+                android:src="@drawable/ic_search"
+                android:layout_gravity="end"
+                />
 
         </FrameLayout>
 
