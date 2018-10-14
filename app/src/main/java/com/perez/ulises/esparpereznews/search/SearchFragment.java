@@ -35,9 +35,6 @@ public class SearchFragment extends Fragment implements SearchInterface.ISearchV
     @BindView(R.id.tv_title)
     TextView tvTitle;
 
-//    @BindView(R.id.edt_search)
-//    EditText edtSearch;
-
     @BindView(R.id.tv_news_empty)
     TextView tvEmpty;
 
@@ -48,23 +45,6 @@ public class SearchFragment extends Fragment implements SearchInterface.ISearchV
         View view = inflater.inflate(R.layout.search_fragment, container, false);
         ButterKnife.bind(this, view);
         tvTitle.setText(getString(R.string.label_search));
-//        edtSearch.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                Log.i("SEARCH_TEST", s.toString());
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-//            }
-//        });
-
         return view;
     }
 
@@ -110,6 +90,11 @@ public class SearchFragment extends Fragment implements SearchInterface.ISearchV
 
     @Override
     public void searchForWord(String word) {
-        //Todo aqupi deberás cargar la lista con la búsqueda en String word
+        mPresenter.getSuggestions(word);
+    }
+
+    @Override
+    public void addNewSearch(String word) {
+        mPresenter.updateSearches(word);
     }
 }

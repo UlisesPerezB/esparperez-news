@@ -12,11 +12,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.perez.ulises.esparpereznews.R;
@@ -40,6 +42,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ImageView imgSearch;
     @BindView(R.id.edtSearch)
     EditText edtSearch;
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
 
 
     private ActionBarDrawerToggle toggle;
@@ -115,6 +119,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .commit();
         if (!(fragment instanceof SearchFragment)) {
             edtSearch.setVisibility(View.GONE);
+            tvTitle.setVisibility(View.VISIBLE);
             imgSearch.setVisibility(View.VISIBLE);
         }
     }
@@ -132,6 +137,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         SearchFragment fragment = SearchFragment.newInstance();
         searchInterface = fragment;
         imgSearch.setVisibility(View.GONE);
+        tvTitle.setVisibility(View.GONE);
         edtSearch.setVisibility(View.VISIBLE);
         edtSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -145,8 +151,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
+            public void afterTextChanged(final Editable s) {
+
+                edtSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                    @Override
+                    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+                        if (actionId == EditorInfo.IME_ACTION_SEARCH)
+                            searchInterface.addNewSearch(s.toString());
+                        return false;
+                    }
+                });
+
                 searchInterface.searchForWord(s.toString());
+
             }
         });
         return fragment;

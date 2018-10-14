@@ -28,6 +28,11 @@ public class SearchPresenter implements SearchInterface.ISearchPresenter, Search
     }
 
     @Override
+    public void updateSearches(String search) {
+        mInteractor.updateSearches(search);
+    }
+
+    @Override
     public void onNewsRetrieved(List<News> news) {
         mView.showNewsResults(news);
     }
