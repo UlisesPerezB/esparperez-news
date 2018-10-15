@@ -3,7 +3,7 @@ package com.perez.ulises.esparpereznews.search;
 import android.content.Context;
 
 import com.perez.ulises.esparpereznews.model.News;
-import com.perez.ulises.esparpereznews.model.Searches;
+import com.perez.ulises.esparpereznews.model.Search;
 
 import java.util.List;
 
@@ -38,7 +38,7 @@ public class SearchPresenter implements SearchInterface.ISearchPresenter, Search
     }
 
     @Override
-    public void onSuggestionsRetrieved(List<Searches> searches, List suggestions) {
+    public void onSuggestionsRetrieved(List<Search> searches, List suggestions) {
         mView.showSearchSuggestions(searches, suggestions);
     }
 }

@@ -11,18 +11,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.perez.ulises.esparpereznews.R;
-import com.perez.ulises.esparpereznews.model.Searches;
+import com.perez.ulises.esparpereznews.model.Search;
+
+import com.perez.ulises.esparpereznews.utils.Util;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
 import io.realm.Realm;
 
 public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<Searches> mSearches;
+    private List<Search> mSearches;
     private List mSuggestions;
     private Context mContext;
     private Realm realm;
@@ -59,10 +62,10 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
         if (holder.getItemViewType() == 0) {
-            final Searches itemSearches = mSearches.get(position);
+            final Search itemSearch = mSearches.get(position);
             SearchViewHolder searchHolder = (SearchViewHolder) holder;
-            searchHolder.tvResult.setText(itemSearches.getWord());
-            searchHolder.tvDate.setText(itemSearches.getDateSearch().toString());
+            searchHolder.tvResult.setText(itemSearch.getWord());
+            searchHolder.tvDate.setText(Util.format(itemSearch.getDateSearch()));
             searchHolder.btnDeleteSearch.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -82,7 +85,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         return realCount;
     }
 
-    public void setValues(List<Searches> searches, List suggestions) {
+    public void setValues(List<Search> searches, List suggestions) {
         mSearches = searches;
         mSuggestions = suggestions;
         notifyDataSetChanged();

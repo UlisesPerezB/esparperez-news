@@ -1,4 +1,4 @@
-package com.perez.ulises.esparpereznews.Utils;
+package com.perez.ulises.esparpereznews.utils;
 
 import android.content.Context;
 import android.util.Log;

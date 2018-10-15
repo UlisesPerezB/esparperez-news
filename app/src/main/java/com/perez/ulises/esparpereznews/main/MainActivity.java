@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -152,19 +153,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             @Override
             public void afterTextChanged(final Editable s) {
-
                 edtSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                     @Override
                     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-
-                        if (actionId == EditorInfo.IME_ACTION_SEARCH)
-                            searchInterface.addNewSearch(s.toString());
+                        if (actionId == EditorInfo.IME_NULL) {
+                            Log.i("MAIN_EDT", "NULL");
+                        } else if (actionId == EditorInfo.IME_ACTION_SEARCH)
+                            if (!s.toString().isEmpty()) {
+                                searchInterface.addNewSearch(s.toString());
+                            } else {
+                                Toast.makeText(MainActivity.this, "Ingresa una palabra", Toast.LENGTH_SHORT).show();
+                            }
                         return false;
                     }
                 });
-
                 searchInterface.searchForWord(s.toString());
-
             }
         });
         return fragment;

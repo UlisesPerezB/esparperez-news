@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.perez.ulises.esparpereznews.R;
 import com.perez.ulises.esparpereznews.model.News;
-import com.perez.ulises.esparpereznews.model.Searches;
+import com.perez.ulises.esparpereznews.model.Search;
 import com.perez.ulises.esparpereznews.trending.RecyclerAdapter;
 
 import java.util.List;
@@ -69,7 +69,7 @@ public class SearchFragment extends Fragment implements SearchInterface.ISearchV
     }
 
     @Override
-    public void showSearchSuggestions(List<Searches> searches, List suggestions) {
+    public void showSearchSuggestions(List<Search> searches, List suggestions) {
         SearchAdapter adapter;
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

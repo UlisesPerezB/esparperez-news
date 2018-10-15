@@ -3,8 +3,8 @@ package com.perez.ulises.esparpereznews.trending;
 import android.content.Context;
 
 import com.android.volley.Request;
-import com.perez.ulises.esparpereznews.Utils.IRequest;
-import com.perez.ulises.esparpereznews.Utils.VolleyRequests;
+import com.perez.ulises.esparpereznews.utils.IRequest;
+import com.perez.ulises.esparpereznews.utils.VolleyRequests;
 import com.perez.ulises.esparpereznews.model.News;
 
 import org.json.JSONArray;

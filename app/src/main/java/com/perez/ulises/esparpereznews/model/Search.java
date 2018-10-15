@@ -5,16 +5,16 @@ import java.util.Date;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class Searches extends RealmObject {
+public class Search extends RealmObject {
 
     @PrimaryKey
     private String word;
     private Date dateSearch;
 
-    public Searches() {
+    public Search() {
     }
 
-    public Searches(String word, Date dateSearch) {
+    public Search(String word, Date dateSearch) {
         this.word = word;
         this.dateSearch = dateSearch;
     }
