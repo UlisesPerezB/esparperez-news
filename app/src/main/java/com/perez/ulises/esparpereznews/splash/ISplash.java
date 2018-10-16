@@ -10,6 +10,7 @@ public interface ISplash {
 //    Presenter
     interface Presenter {
         void getTrendingNews();
+
     }
 
 //    Interactor

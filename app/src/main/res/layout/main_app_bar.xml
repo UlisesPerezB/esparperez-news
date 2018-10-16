@@ -30,14 +30,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="left"
+                android:padding="4dp"
                 app:layout_scrollFlags="scroll|enterAlways">
 
                 <EditText
                     android:id="@+id/edtSearch"
-                    android:layout_width="300dp"
+                    android:layout_width="280dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="end"
                     android:layout_marginEnd="@dimen/material_margin"
+                    android:background="@drawable/edit_text_search"
+                    android:drawableStart="@drawable/ic_search"
+                    android:drawableEnd="@drawable/ic_close"
                     android:visibility="gone"
                     android:imeOptions="actionSearch"
                     android:inputType="text"

@@ -9,14 +9,12 @@ public interface SearchInterface {
 
     interface ISearchPresenter {
         void getNewsResults();
-        void getSuggestions(String search);
-        void updateSearches(String search);
+        void getSuggestions(String search, int action);
     }
 
     interface ISearchInteractor {
         void getResults();
-        void getSuggestions(String search);
-        void updateSearches(String search);
+        void getSuggestions(String search, int action);
     }
 
     interface ISearchListener {
@@ -32,9 +30,7 @@ public interface SearchInterface {
     }
 
     interface ISearchInterface {
-        void searchForWord(String word);
-        void addNewSearch(String word);
-
+        void searchForWord(String word, int action);
     }
 
 }

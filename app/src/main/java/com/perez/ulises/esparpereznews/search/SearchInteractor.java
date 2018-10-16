@@ -12,6 +12,8 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
+import static com.perez.ulises.esparpereznews.utils.Constants.INSERT_WORD;
+
 public class SearchInteractor implements SearchInterface.ISearchInteractor {
 
     private SearchInterface.ISearchListener mListener;
@@ -35,39 +37,39 @@ public class SearchInteractor implements SearchInterface.ISearchInteractor {
     }
 
     @Override
-    public void getSuggestions(String search) {
+    public void getSuggestions(String word, int action) {
         mRealm = Realm.getDefaultInstance();
-        if (!search.isEmpty()) {
-            RealmResults<Search> searchResults = mRealm.where(Search.class)
-                    .beginsWith("word", search).findAll();
-            searchList.addAll(mRealm.copyFromRealm(searchResults));
-            if (!searchList.isEmpty()) {
-                for (int i = 0; i < searchList.size(); i++) {
-                    suggestionsList.add(i, searchList.get(i).getWord());
-                    System.out.println("En posición " + i + ": "+ suggestionsList.get(i));
-                }
+        suggestionsList.clear();
+        searchList.clear();
+
+        if (action == INSERT_WORD) {
+            Search toFind = mRealm.where(Search.class).equalTo("word", word).findFirst();
+            if (toFind != null) {
+                mRealm.beginTransaction();
+                toFind.setDateSearch(Calendar.getInstance().getTime());
+                mRealm.commitTransaction();
+            } else {
+                mRealm.beginTransaction();
+                Search search = new Search();
+                search.setWord(word);
+                search.setDateSearch(Calendar.getInstance().getTime());
+                mRealm.insertOrUpdate(search);
+                mRealm.commitTransaction();
             }
-        } else {
+        }
+
+        if (word.isEmpty()) {
             RealmResults<Search> searchResults = mRealm.where(Search.class).findAll();
             searchList.addAll(mRealm.copyFromRealm(searchResults));
-        }
-        mRealm.close();
-        Log.i("INTERACTOR", "PALABRA: " + search);
-        mListener.onSuggestionsRetrieved(searchList, suggestionsList);
-    }
+        } else {
+            RealmResults<Search> searchResults = mRealm.where(Search.class)
+                    .beginsWith("word", word).findAll();
+            searchList.addAll(mRealm.copyFromRealm(searchResults));
 
-    @Override
-    public void updateSearches(String word) {
-        if (!word.isEmpty()) {
-            Search search = new Search();
-            search.setWord(word);
-            search.setDateSearch(Calendar.getInstance().getTime());
-            Log.i("INTERACTOR_UPDATE", "PALABRA: " + word);
-            mRealm = Realm.getDefaultInstance();
-            mRealm.beginTransaction();
-            mRealm.insertOrUpdate(search);
-            mRealm.commitTransaction();
-            mRealm.close();
+            Dictionary dictionary = new Dictionary(mContext);
+            suggestionsList = dictionary.readLine("dictionary.txt", word);
+            Log.i("TEST", "Palabras: " + suggestionsList.size());
         }
+        mListener.onSuggestionsRetrieved(searchList, suggestionsList);
     }
 }

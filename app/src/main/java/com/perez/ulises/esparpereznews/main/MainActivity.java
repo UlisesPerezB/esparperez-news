@@ -12,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,6 +29,9 @@ import com.perez.ulises.esparpereznews.trending.TrendingFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.perez.ulises.esparpereznews.utils.Constants.INSERT_WORD;
+import static com.perez.ulises.esparpereznews.utils.Constants.SEARCH_WORD;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -140,6 +142,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         imgSearch.setVisibility(View.GONE);
         tvTitle.setVisibility(View.GONE);
         edtSearch.setVisibility(View.VISIBLE);
+
+        edtSearch.getCompoundDrawables()[0].setTint(getResources().getColor(R.color.colorSecondaryText));
+        edtSearch.getCompoundDrawables()[2].setTint(getResources().getColor(R.color.colorSecondaryText));
+//        edtSearch.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//
+//                if (event.getAction() == MotionEvent.ACTION_UP) {
+//                    if (event.getRawX() <= (edtSearch.getCompoundDrawables()[0].getBounds().width())){
+//                        Toast.makeText(MainActivity.this, "Left", Toast.LENGTH_SHORT).show();
+//                        return true;
+//                    } else if (event.getRawX() >= (edtSearch.getRight() - edtSearch.getCompoundDrawables()[2].getBounds().width()))
+//                        Toast.makeText(MainActivity.this, "Right", Toast.LENGTH_SHORT).show();
+//                        return true;
+//                }
+//
+//                return false;
+//            }
+//        });
         edtSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -156,18 +177,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 edtSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                     @Override
                     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                        if (actionId == EditorInfo.IME_NULL) {
-                            Log.i("MAIN_EDT", "NULL");
-                        } else if (actionId == EditorInfo.IME_ACTION_SEARCH)
+                        if (actionId == EditorInfo.IME_ACTION_SEARCH)
                             if (!s.toString().isEmpty()) {
-                                searchInterface.addNewSearch(s.toString());
+                                searchInterface.searchForWord(s.toString(), INSERT_WORD);
                             } else {
                                 Toast.makeText(MainActivity.this, "Ingresa una palabra", Toast.LENGTH_SHORT).show();
                             }
                         return false;
                     }
                 });
-                searchInterface.searchForWord(s.toString());
+                searchInterface.searchForWord(s.toString(), SEARCH_WORD);
             }
         });
         return fragment;

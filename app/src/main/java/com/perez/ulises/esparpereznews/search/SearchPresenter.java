@@ -23,13 +23,8 @@ public class SearchPresenter implements SearchInterface.ISearchPresenter, Search
     }
 
     @Override
-    public void getSuggestions(String search) {
-        mInteractor.getSuggestions(search);
-    }
-
-    @Override
-    public void updateSearches(String search) {
-        mInteractor.updateSearches(search);
+    public void getSuggestions(String search, int action) {
+        mInteractor.getSuggestions(search, action);
     }
 
     @Override

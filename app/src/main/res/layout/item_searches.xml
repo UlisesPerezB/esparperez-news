@@ -9,26 +9,15 @@
     android:paddingRight="@dimen/material_margin"
     tools:layout_editor_absoluteY="81dp">
 
-    <ImageView
-        android:id="@+id/im_search_delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:tint="@color/colorSecondaryText"
-        app:layout_constraintBottom_toTopOf="@+id/viewDivider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_close" />
-
     <TextView
         android:id="@+id/tv_search_result"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/material_margin"
         android:maxLines="3"
         android:textColor="@color/colorPrimaryText"
         android:textSize="@dimen/text_size_h3"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/im_search_delete"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Lorem Ipsum Dolor Sic Amet Prop Conseqat" />
@@ -37,8 +26,7 @@
         android:id="@+id/tv_search_date"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/material_margin"
-        android:maxLines="3"
+        android:maxLines="1"
         android:textSize="@dimen/text_size_h4"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/tv_search_result"

@@ -32,9 +32,6 @@ public class SearchFragment extends Fragment implements SearchInterface.ISearchV
     @BindView(R.id.search_recycler)
     RecyclerView recyclerView;
 
-    @BindView(R.id.tv_title)
-    TextView tvTitle;
-
     @BindView(R.id.tv_news_empty)
     TextView tvEmpty;
 
@@ -44,7 +41,6 @@ public class SearchFragment extends Fragment implements SearchInterface.ISearchV
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.search_fragment, container, false);
         ButterKnife.bind(this, view);
-        tvTitle.setText(getString(R.string.label_search));
         return view;
     }
 
@@ -89,12 +85,8 @@ public class SearchFragment extends Fragment implements SearchInterface.ISearchV
     }
 
     @Override
-    public void searchForWord(String word) {
-        mPresenter.getSuggestions(word);
+    public void searchForWord(String word, int action) {
+        mPresenter.getSuggestions(word, action);
     }
 
-    @Override
-    public void addNewSearch(String word) {
-        mPresenter.updateSearches(word);
-    }
 }

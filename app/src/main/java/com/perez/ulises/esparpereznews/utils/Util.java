@@ -13,7 +13,7 @@ public class Util {
         if (date == null) {
             return "";
         }
-        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy hh:mm:ss", loc);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", loc);
         return sdf.format(date);
     }
 }
