@@ -145,9 +145,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         edtSearch.getCompoundDrawables()[0].setTint(getResources().getColor(R.color.colorSecondaryText));
         edtSearch.getCompoundDrawables()[2].setTint(getResources().getColor(R.color.colorSecondaryText));
-//        edtSearch.setOnTouchListener(new View.OnTouchListener() {
+//        edtSearch.setOnTouchListener(new ISplashView.OnTouchListener() {
 //            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
+//            public boolean onTouch(ISplashView v, MotionEvent event) {
 //
 //                if (event.getAction() == MotionEvent.ACTION_UP) {
 //                    if (event.getRawX() <= (edtSearch.getCompoundDrawables()[0].getBounds().width())){

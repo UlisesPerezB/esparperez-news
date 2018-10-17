@@ -3,11 +3,11 @@ package com.perez.ulises.esparpereznews.search;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.perez.ulises.esparpereznews.R;
 import com.perez.ulises.esparpereznews.model.Search;
@@ -63,11 +63,21 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             SearchViewHolder searchHolder = (SearchViewHolder) holder;
             searchHolder.tvResult.setText(itemSearch.getWord());
             searchHolder.tvDate.setText(Util.format(itemSearch.getDateSearch()));
-            Log.i("TEST", "fecha: " + Util.format(itemSearch.getDateSearch()));
-
+            searchHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(mContext, "TEST", Toast.LENGTH_SHORT).show();
+                }
+            });
         } else {
             SuggestionsViewHolder suggestionsHolder = (SuggestionsViewHolder) holder;
             suggestionsHolder.tvSuggestionsResult.setText(mSuggestions.get(position - mSearches.size()).toString());
+            suggestionsHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(mContext, "TEST", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 

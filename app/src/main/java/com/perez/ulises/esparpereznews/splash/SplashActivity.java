@@ -6,17 +6,16 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.perez.ulises.esparpereznews.main.MainActivity;
 
-public class SplashActivity extends AppCompatActivity implements ISplash.View {
+public class SplashActivity extends AppCompatActivity implements SplashInterface.ISplashView {
 
-    private ISplash.Presenter mPresenter;
+    private SplashInterface.ISplashPresenter mSplashPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.main_activity);
-
-        mPresenter = new Presenter(this);
-        mPresenter.getTrendingNews();
+        mSplashPresenter = new SplashPresenter(this, getApplicationContext());
+        mSplashPresenter.getTrendingNews();
+        mSplashPresenter.getDictionary();
     }
 
     @Override
