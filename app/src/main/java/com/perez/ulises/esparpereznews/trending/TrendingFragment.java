@@ -63,7 +63,7 @@ public class TrendingFragment extends Fragment implements TrendingInterface.ITre
     @Override
     public void showLoadeer(boolean cancelable) {
         if (dialog == null)
-            dialog = new ProgressDialog(getContext());
+            dialog = new ProgressDialog(getContext(), R.style.MyDialogTheme);
         dialog.setCancelable(cancelable);
         dialog.setMessage("");
         dialog.show();
