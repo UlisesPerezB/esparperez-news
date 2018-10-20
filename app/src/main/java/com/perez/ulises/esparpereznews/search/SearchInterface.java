@@ -21,6 +21,7 @@ public interface SearchInterface {
 
     interface ISearchListener {
         void onNewsRetrieved(List<News> newsResults);
+        void onNoNews();
         void onSuggestionsRetrieved(List<Search> searches, List suggestions);
         void onRecyclerRetrieved(String word);
     }

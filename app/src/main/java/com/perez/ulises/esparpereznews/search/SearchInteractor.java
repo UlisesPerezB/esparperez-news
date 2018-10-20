@@ -3,8 +3,16 @@ package com.perez.ulises.esparpereznews.search;
 import android.content.Context;
 import android.util.Log;
 
+import com.android.volley.Request;
+import com.perez.ulises.esparpereznews.model.News;
 import com.perez.ulises.esparpereznews.model.Search;
 import com.perez.ulises.esparpereznews.splash.SplashInteractor;
+import com.perez.ulises.esparpereznews.utils.IRequest;
+import com.perez.ulises.esparpereznews.utils.VolleyRequests;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -12,10 +20,14 @@ import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
+import static com.perez.ulises.esparpereznews.utils.Constants.BING_HEADER;
+import static com.perez.ulises.esparpereznews.utils.Constants.BING_SEARCH_URL;
+import static com.perez.ulises.esparpereznews.utils.Constants.BING_TOKEN;
 import static com.perez.ulises.esparpereznews.utils.Constants.INSERT_WORD;
 
-public class SearchInteractor implements SearchInterface.ISearchInteractor {
+public class SearchInteractor implements SearchInterface.ISearchInteractor, IRequest.VolleyResponseHandler {
 
     private SearchInterface.ISearchListener mListener;
     private Context mContext;
@@ -25,17 +37,30 @@ public class SearchInteractor implements SearchInterface.ISearchInteractor {
     private List<Search> searchList;
     private List suggestionsList;
 
+    private List<News> newsList;
+
     public SearchInteractor(SearchInterface.ISearchListener listener,Context context) {
         this.mListener = listener;
         this.mContext = context;
         this.searchList = new ArrayList<>();
         this.suggestionsList = new ArrayList();
+        this.newsList = new ArrayList<>();
         this.dictionary = SplashInteractor.mListSuggestions;
     }
 
     @Override
     public void getResults() {
         mRealm = Realm.getDefaultInstance();
+        String word;
+        Search lastSearch = mRealm.where(Search.class).sort("dateSearch", Sort.DESCENDING).findFirst();
+        System.out.println("Busqueda: " + lastSearch.getWord() + " fecha:" + lastSearch.getDateSearch().toString());
+        if (lastSearch != null) {
+            word = lastSearch.getWord();
+            requestNews(word);
+        } else {
+            mListener.onNoNews();
+        }
+        mRealm.close();
     }
 
     @Override
@@ -58,6 +83,7 @@ public class SearchInteractor implements SearchInterface.ISearchInteractor {
                 mRealm.insertOrUpdate(search);
                 mRealm.commitTransaction();
             }
+            requestNews(word);
         }
 
         if (word.isEmpty()) {
@@ -104,4 +130,52 @@ public class SearchInteractor implements SearchInterface.ISearchInteractor {
         return suggestions;
     }
 
+    private void requestNews(String word){
+//        ?q=Homicidio&cc=mx
+        String sUrl = BING_SEARCH_URL + "?q=" + word + "&cc=mx";
+        VolleyRequests.jsonRequest(mContext, Request.Method.GET, sUrl, BING_HEADER, BING_TOKEN, this);
+    }
+
+    @Override
+    public void onResponse(JSONObject jsonObject) {
+        if (jsonObject != null) {
+            JSONArray jsonArray = jsonObject.optJSONArray("value");
+            System.out.println(jsonArray);
+            for (int i=0; i<jsonArray.length();i++) {
+                try {
+                    News news = new News(jsonArray.getJSONObject(i));
+                    newsList.add(news);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        if (newsList.isEmpty()) {
+            mListener.onNoNews();
+        } else {
+            mListener.onNewsRetrieved(newsList);
+        }
+    }
+
+    @Override
+    public void onResponse(JSONArray jsonArray) {
+        if (jsonArray.length() > 0) {
+
+            for (int i = 0; i <= jsonArray.length(); i ++) {
+                try {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i).getJSONObject("value");
+                    News mNews = new News(jsonObject);
+                    newsList.add(mNews);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        if (newsList.isEmpty()) {
+            mListener.onNoNews();
+            System.out.print(newsList.get(1));
+        } else {
+            mListener.onNewsRetrieved(newsList);
+        }
+    }
 }

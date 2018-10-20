@@ -34,7 +34,13 @@ public class SearchPresenter implements SearchInterface.ISearchPresenter, Search
 
     @Override
     public void onNewsRetrieved(List<News> news) {
+        mView.hideEmptyState();
         mView.showNewsResults(news);
+    }
+
+    @Override
+    public void onNoNews() {
+        mView.showEmptyState();
     }
 
     @Override

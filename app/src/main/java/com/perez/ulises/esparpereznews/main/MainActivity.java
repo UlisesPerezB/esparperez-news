@@ -16,6 +16,7 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -186,7 +187,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         return false;
                     }
                 });
+                edtSearch.requestFocus();
+                edtSearch.setSelection(s.length());
                 searchInterface.searchForWord(s.toString(), SEARCH_WORD);
+
             }
         });
         return fragment;
