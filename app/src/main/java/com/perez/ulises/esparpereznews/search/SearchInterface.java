@@ -10,16 +10,19 @@ public interface SearchInterface {
     interface ISearchPresenter {
         void getNewsResults();
         void getSuggestions(String search, int action);
+        void getSearch(String word);
     }
 
     interface ISearchInteractor {
         void getResults();
         void getSuggestions(String search, int action);
+        void sendSearch(String word);
     }
 
     interface ISearchListener {
         void onNewsRetrieved(List<News> newsResults);
         void onSuggestionsRetrieved(List<Search> searches, List suggestions);
+        void onRecyclerRetrieved(String word);
     }
 
     interface ISearchView {
@@ -27,10 +30,15 @@ public interface SearchInterface {
         void hideEmptyState();
         void showSearchSuggestions(List<Search> searches, List suggestions);
         void showNewsResults(List<News> news);
+        void showRecyclerWord(String word);
     }
 
     interface ISearchInterface {
         void searchForWord(String word, int action);
+    }
+
+    interface ISearchAdapterInterface {
+        void setRecyclerText(String word);
     }
 
 }

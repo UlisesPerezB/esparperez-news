@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.perez.ulises.esparpereznews.R;
 import com.perez.ulises.esparpereznews.model.Search;
@@ -26,11 +25,13 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private List mSuggestions;
     private Context mContext;
     private Realm realm;
+    private SearchInterface.ISearchPresenter mPresenter;
 
-    public SearchAdapter(Context context) {
-        mSearches = new ArrayList<>();
-        mSuggestions = new ArrayList<>();
+    public SearchAdapter(Context context, SearchInterface.ISearchPresenter presenter) {
+        this.mSearches = new ArrayList<>();
+        this.mSuggestions = new ArrayList<>();
         this.mContext = context;
+        this.mPresenter = presenter;
     }
 
     @Override
@@ -58,6 +59,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
+
         if (holder.getItemViewType() == 0) {
             final Search itemSearch = mSearches.get(position);
             SearchViewHolder searchHolder = (SearchViewHolder) holder;
@@ -66,16 +68,17 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             searchHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(mContext, "TEST", Toast.LENGTH_SHORT).show();
+                    mPresenter.getSearch(itemSearch.getWord());
                 }
             });
         } else {
             SuggestionsViewHolder suggestionsHolder = (SuggestionsViewHolder) holder;
-            suggestionsHolder.tvSuggestionsResult.setText(mSuggestions.get(position - mSearches.size()).toString());
+            final String word = mSuggestions.get(position - mSearches.size()).toString();
+            suggestionsHolder.tvSuggestionsResult.setText(word);
             suggestionsHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(mContext, "TEST", Toast.LENGTH_SHORT).show();
+                    mPresenter.getSearch(word);
                 }
             });
         }
@@ -116,6 +119,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         public SuggestionsViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+
         }
     }
 }

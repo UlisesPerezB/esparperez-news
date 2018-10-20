@@ -28,6 +28,11 @@ public class SearchPresenter implements SearchInterface.ISearchPresenter, Search
     }
 
     @Override
+    public void getSearch(String word) {
+        mInteractor.sendSearch(word);
+    }
+
+    @Override
     public void onNewsRetrieved(List<News> news) {
         mView.showNewsResults(news);
     }
@@ -35,5 +40,10 @@ public class SearchPresenter implements SearchInterface.ISearchPresenter, Search
     @Override
     public void onSuggestionsRetrieved(List<Search> searches, List suggestions) {
         mView.showSearchSuggestions(searches, suggestions);
+    }
+
+    @Override
+    public void onRecyclerRetrieved(String word) {
+        mView.showRecyclerWord(word);
     }
 }

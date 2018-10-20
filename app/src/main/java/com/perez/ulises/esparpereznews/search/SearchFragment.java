@@ -1,6 +1,7 @@
 package com.perez.ulises.esparpereznews.search;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.perez.ulises.esparpereznews.R;
+import com.perez.ulises.esparpereznews.main.MainActivity;
 import com.perez.ulises.esparpereznews.model.News;
 import com.perez.ulises.esparpereznews.model.Search;
 import com.perez.ulises.esparpereznews.trending.RecyclerAdapter;
@@ -27,7 +29,9 @@ public class SearchFragment extends Fragment implements SearchInterface.ISearchV
         return fragment;
     }
 
-    public SearchFragment () { }
+    public SearchFragment (){
+
+    }
 
     @BindView(R.id.search_recycler)
     RecyclerView recyclerView;
@@ -36,6 +40,7 @@ public class SearchFragment extends Fragment implements SearchInterface.ISearchV
     TextView tvEmpty;
 
     private SearchPresenter mPresenter;
+    private MainActivity mainActivity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,6 +59,14 @@ public class SearchFragment extends Fragment implements SearchInterface.ISearchV
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        //getActivity() is fully created in onActivityCreated and instanceOf differentiate it between different Activities
+        if (getActivity() instanceof RecyclerWord)
+            mainActivity = (MainActivity) getActivity();
+    }
+
+    @Override
     public void showEmptyState() {
         tvEmpty.setText(getString(R.string.text_view_empty));
         tvEmpty.setVisibility(View.VISIBLE);
@@ -69,7 +82,7 @@ public class SearchFragment extends Fragment implements SearchInterface.ISearchV
         SearchAdapter adapter;
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new SearchAdapter(getContext());
+        adapter = new SearchAdapter(getContext(), mPresenter);
         recyclerView.setAdapter(adapter);
         adapter.setValues(searches, suggestions);
     }
@@ -85,8 +98,19 @@ public class SearchFragment extends Fragment implements SearchInterface.ISearchV
     }
 
     @Override
+    public void showRecyclerWord(String word) {
+        if (mainActivity != null){
+            mainActivity.setWord(word);
+        }
+    }
+
+    @Override
     public void searchForWord(String word, int action) {
         mPresenter.getSuggestions(word, action);
+    }
+
+    public interface RecyclerWord{
+        void setWord(String word);
     }
 
 }

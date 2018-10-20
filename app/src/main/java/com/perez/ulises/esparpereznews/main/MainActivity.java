@@ -33,7 +33,7 @@ import butterknife.ButterKnife;
 import static com.perez.ulises.esparpereznews.utils.Constants.INSERT_WORD;
 import static com.perez.ulises.esparpereznews.utils.Constants.SEARCH_WORD;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, SearchFragment.RecyclerWord {
 
     @BindView(R.id.drawer_layout)
     DrawerLayout mDrawer;
@@ -190,5 +190,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
         return fragment;
+    }
+
+
+    @Override
+    public void setWord(String word) {
+        edtSearch.setText(word);
     }
 }

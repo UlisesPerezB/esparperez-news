@@ -75,6 +75,11 @@ public class SearchInteractor implements SearchInterface.ISearchInteractor {
         mListener.onSuggestionsRetrieved(searchList, suggestionsList);
     }
 
+    @Override
+    public void sendSearch(String word) {
+        mListener.onRecyclerRetrieved(word);
+    }
+
     private List<String> searchSugggestions(String word) {
         List suggestions = new ArrayList();
         String temp;
