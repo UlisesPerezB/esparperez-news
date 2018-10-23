@@ -30,7 +30,7 @@
         app:layout_constraintTop_toBottomOf="@id/newsHeader"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toTopOf="@id/viewDivider"
-        tools:src="@mipmap/ic_launcher"/>
+        android:contentDescription="TODO" tools:src="@mipmap/ic_launcher"/>
 
     <TextView
         android:id="@+id/newsSubHeader"
@@ -76,7 +76,7 @@
         android:id="@+id/imgBookmark"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_bookmark"
+        android:contentDescription="TODO" android:src="@drawable/ic_bookmark"
         android:tint="@color/colorSecondaryText"
         app:layout_constraintBottom_toBottomOf="@id/newsDate"
         app:layout_constraintRight_toRightOf="parent"/>

@@ -53,7 +53,7 @@
                 android:id="@+id/imgSearch"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:padding="@dimen/material_default_padding"
+                android:contentDescription="TODO" android:padding="@dimen/material_default_padding"
                 android:src="@drawable/ic_search"
                 android:layout_gravity="end"
                 />
