@@ -3,6 +3,8 @@ package com.perez.ulises.esparpereznews.splash;
 import android.content.Context;
 import android.content.res.AssetManager;
 
+import com.perez.ulises.esparpereznews.model.Search;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,10 +12,14 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.Realm;
+import io.realm.Sort;
+
 public class SplashInteractor implements SplashInterface.ISplashInteractor {
 
     private SplashInterface.ISplashListener mSplashListener;
     private Context mContext;
+    private Realm mRealm;
     public static List mListSuggestions = new ArrayList();
 
     public SplashInteractor(SplashInterface.ISplashListener splashListener, Context context) {
@@ -24,6 +30,15 @@ public class SplashInteractor implements SplashInterface.ISplashInteractor {
     @Override
     public void getTrendingNews() {
         mSplashListener.onTrendingNews();
+//        mRealm = Realm.getDefaultInstance();
+//        Search lastSearch = mRealm.where(Search.class).sort("dateSearch", Sort.DESCENDING).findFirst();
+//        if (lastSearch != null) {
+//            System.out.println("Busqueda: " + lastSearch.getWord() + " fecha:" + lastSearch.getDateSearch().toString());
+//            mRealm.beginTransaction();
+//            mRealm.delete(Search.class);
+//            mRealm.commitTransaction();
+//            mRealm.close();
+//        }
     }
 
     @Override

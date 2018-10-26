@@ -23,14 +23,14 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     private List<Search> mSearches;
     private List mSuggestions;
-    private Context mContext;
-    private Realm realm;
+//    private Context mContext;
+//    private Realm realm;
     private SearchInterface.ISearchPresenter mPresenter;
 
     public SearchAdapter(Context context, SearchInterface.ISearchPresenter presenter) {
         this.mSearches = new ArrayList<>();
         this.mSuggestions = new ArrayList<>();
-        this.mContext = context;
+//        this.mContext = context;
         this.mPresenter = presenter;
     }
 
@@ -101,7 +101,6 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         @BindView(R.id.tv_search_result)
         TextView tvResult;
-
         @BindView(R.id.tv_search_date)
         TextView tvDate;
 
@@ -112,14 +111,11 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     class SuggestionsViewHolder extends RecyclerView.ViewHolder {
-
         @BindView(R.id.tv_suggestions_result)
         TextView tvSuggestionsResult;
-
         public SuggestionsViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-
         }
     }
 }

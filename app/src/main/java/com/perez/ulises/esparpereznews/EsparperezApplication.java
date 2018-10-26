@@ -13,7 +13,7 @@ public class EsparperezApplication extends Application {
         Realm.init(this);
         RealmConfiguration realmConfig = new RealmConfiguration.Builder()
                 .name(getString(R.string.app_db))
-                .schemaVersion(3)
+                .schemaVersion(1)
                 .deleteRealmIfMigrationNeeded()
                 .build();
         Realm.setDefaultConfiguration(realmConfig);

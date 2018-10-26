@@ -33,13 +33,11 @@ public class SearchInteractor implements SearchInterface.ISearchInteractor, IReq
     private Context mContext;
     private Realm mRealm;
     private List dictionary;
-
-    private List<Search> searchList;
     private List suggestionsList;
-
+    private List<Search> searchList;
     private List<News> newsList;
 
-    public SearchInteractor(SearchInterface.ISearchListener listener,Context context) {
+    public SearchInteractor(SearchInterface.ISearchListener listener, Context context) {
         this.mListener = listener;
         this.mContext = context;
         this.searchList = new ArrayList<>();
@@ -53,8 +51,8 @@ public class SearchInteractor implements SearchInterface.ISearchInteractor, IReq
         mRealm = Realm.getDefaultInstance();
         String word;
         Search lastSearch = mRealm.where(Search.class).sort("dateSearch", Sort.DESCENDING).findFirst();
-        System.out.println("Busqueda: " + lastSearch.getWord() + " fecha:" + lastSearch.getDateSearch().toString());
         if (lastSearch != null) {
+            System.out.println("Busqueda: " + lastSearch.getWord() + " fecha:" + lastSearch.getDateSearch().toString());
             word = lastSearch.getWord();
             requestNews(word);
         } else {
@@ -68,7 +66,6 @@ public class SearchInteractor implements SearchInterface.ISearchInteractor, IReq
         mRealm = Realm.getDefaultInstance();
         suggestionsList.clear();
         searchList.clear();
-
         if (action == INSERT_WORD) {
             Search toFind = mRealm.where(Search.class).equalTo("word", word).findFirst();
             if (toFind != null) {
@@ -95,8 +92,6 @@ public class SearchInteractor implements SearchInterface.ISearchInteractor, IReq
             searchList.addAll(mRealm.copyFromRealm(searchResults));
             mRealm.close();
             suggestionsList = searchSugggestions(word);
-
-            Log.i("TEST", "Palabras: " + suggestionsList.size());
         }
         mListener.onSuggestionsRetrieved(searchList, suggestionsList);
     }
@@ -110,7 +105,6 @@ public class SearchInteractor implements SearchInterface.ISearchInteractor, IReq
         List suggestions = new ArrayList();
         String temp;
         int i = 0;
-
         do {
             try {
                 if (word.length() <= dictionary.get(i).toString().length()) {
@@ -138,9 +132,13 @@ public class SearchInteractor implements SearchInterface.ISearchInteractor, IReq
 
     @Override
     public void onResponse(JSONObject jsonObject) {
+
+        if (!newsList.isEmpty()) {
+            newsList.clear();
+        }
+
         if (jsonObject != null) {
             JSONArray jsonArray = jsonObject.optJSONArray("value");
-            System.out.println(jsonArray);
             for (int i=0; i<jsonArray.length();i++) {
                 try {
                     News news = new News(jsonArray.getJSONObject(i));
@@ -159,8 +157,10 @@ public class SearchInteractor implements SearchInterface.ISearchInteractor, IReq
 
     @Override
     public void onResponse(JSONArray jsonArray) {
+        if (!newsList.isEmpty()) {
+            newsList.clear();
+        }
         if (jsonArray.length() > 0) {
-
             for (int i = 0; i <= jsonArray.length(); i ++) {
                 try {
                     JSONObject jsonObject = jsonArray.getJSONObject(i).getJSONObject("value");

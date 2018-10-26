@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.perez.ulises.esparpereznews.main.MainActivity;
+import com.perez.ulises.esparpereznews.model.Search;
+
+import io.realm.Sort;
 
 public class SplashActivity extends AppCompatActivity implements SplashInterface.ISplashView {
 
@@ -16,6 +19,7 @@ public class SplashActivity extends AppCompatActivity implements SplashInterface
         mSplashPresenter = new SplashPresenter(this, getApplicationContext());
         mSplashPresenter.getTrendingNews();
         mSplashPresenter.getDictionary();
+
     }
 
     @Override

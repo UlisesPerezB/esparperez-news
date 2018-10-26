@@ -21,7 +21,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-
 public class SearchFragment extends Fragment implements SearchInterface.ISearchView, SearchInterface.ISearchInterface {
 
     public static SearchFragment newInstance() {
@@ -29,13 +28,10 @@ public class SearchFragment extends Fragment implements SearchInterface.ISearchV
         return fragment;
     }
 
-    public SearchFragment (){
-
-    }
+    public SearchFragment (){ }
 
     @BindView(R.id.search_recycler)
     RecyclerView recyclerView;
-
     @BindView(R.id.tv_news_empty)
     TextView tvEmpty;
 
@@ -55,13 +51,11 @@ public class SearchFragment extends Fragment implements SearchInterface.ISearchV
         if (mPresenter == null)
             mPresenter = new SearchPresenter(this, getContext());
         mPresenter.getNewsResults();
-
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        //getActivity() is fully created in onActivityCreated and instanceOf differentiate it between different Activities
         if (getActivity() instanceof RecyclerWord)
             mainActivity = (MainActivity) getActivity();
     }
