@@ -2,8 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingTop="@dimen/material_margin"
+    android:layout_height="@dimen/search_item_height"
     android:paddingRight="@dimen/material_margin"
     android:paddingLeft="@dimen/material_margin"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -16,19 +15,20 @@
         android:textColor="@color/colorPrimaryText"
         android:textSize="@dimen/text_size_h3"
         android:textStyle="bold"
+        android:lines="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         tools:text="Lorem Ipsum Dolor Sic Amet Prop Conseqat" />
 
     <View
         android:id="@+id/viewDivider"
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:layout_marginTop="@dimen/material_margin"
         android:background="@color/colorDivider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_suggestions_result" />
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>
