@@ -26,6 +26,7 @@ import com.perez.ulises.esparpereznews.R;
 import com.perez.ulises.esparpereznews.bookmarks.BookmarksFragment;
 import com.perez.ulises.esparpereznews.search.SearchFragment;
 import com.perez.ulises.esparpereznews.search.SearchInterface;
+import com.perez.ulises.esparpereznews.terms.TermsFragment;
 import com.perez.ulises.esparpereznews.trending.TrendingFragment;
 
 import butterknife.BindView;
@@ -103,7 +104,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             case R.id.menu_section_terms:
-                Toast.makeText(this, "T&C", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "T&C", Toast.LENGTH_SHORT).show();
+                fragment = TermsFragment.newInstance();
                 break;
         }
         mDrawer.closeDrawer(GravityCompat.START);
