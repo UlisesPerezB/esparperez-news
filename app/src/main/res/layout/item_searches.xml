@@ -3,9 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/search_item_height"
     android:paddingLeft="@dimen/material_margin"
-    android:paddingTop="@dimen/material_margin"
     android:paddingRight="@dimen/material_margin"
     tools:layout_editor_absoluteY="81dp">
 
@@ -13,10 +12,11 @@
         android:id="@+id/tv_search_result"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:maxLines="3"
+        android:maxLines="1"
         android:textColor="@color/colorPrimaryText"
         android:textSize="@dimen/text_size_h3"
         android:textStyle="bold"
+        android:layout_marginTop="@dimen/material_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -27,14 +27,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:maxLines="1"
-        android:textSize="@dimen/text_size_h4"
+        android:textSize="@dimen/text_size_h5"
         android:textStyle="bold"
+        android:textColor="@color/colorSecondaryText"
+        android:layout_marginTop="@dimen/material_space_between"
         app:layout_constraintEnd_toEndOf="@+id/tv_search_result"
         app:layout_constraintStart_toStartOf="@+id/tv_search_result"
         app:layout_constraintTop_toBottomOf="@+id/tv_search_result"
-        tools:text="Lorem Ipsum Dolor Sic Amet Prop Conseqat" />
-
-
+        tools:text="dd-mm-yyyy" />
 
     <View
         android:id="@+id/viewDivider"
@@ -44,6 +44,6 @@
         android:background="@color/colorDivider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_search_date" />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

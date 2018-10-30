@@ -45,6 +45,7 @@ public class SearchPresenter implements SearchInterface.ISearchPresenter, Search
 
     @Override
     public void onSuggestionsRetrieved(List<Search> searches, List suggestions) {
+        mView.hideEmptyState();
         mView.showSearchSuggestions(searches, suggestions);
     }
 
