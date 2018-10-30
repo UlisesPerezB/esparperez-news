@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.perez.ulises.esparpereznews.R;
 import com.perez.ulises.esparpereznews.bookmarks.BookmarksFragment;
+import com.perez.ulises.esparpereznews.preferences.PreferenceFragment;
 import com.perez.ulises.esparpereznews.search.SearchFragment;
 import com.perez.ulises.esparpereznews.search.SearchInterface;
 import com.perez.ulises.esparpereznews.terms.TermsFragment;
@@ -92,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             case R.id.menu_section_preferences:
-                Toast.makeText(this, "preferences", Toast.LENGTH_SHORT).show();
+                fragment = PreferenceFragment.getInstance();
                 break;
 
             case R.id.menu_section_search:
