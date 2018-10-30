@@ -19,6 +19,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.perez.ulises.esparpereznews.R;
@@ -39,6 +40,7 @@ public class MapsFragment extends Fragment {
     private Geocoder mGeocoder;
     private SupportMapFragment mMapFragment;
     private List<Address> mAddresses = null;
+    private Marker mMarker;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -66,10 +68,13 @@ public class MapsFragment extends Fragment {
 
                             } else {
                                 Address address = mAddresses.get(0);
-//                                latLng = new LatLng(address.getLatitude(), address.getLongitude());
-                                googleMap.addMarker(new MarkerOptions().position(latLng)
+                                if (mMarker != null) {
+                                    mMarker.remove();
+                                }
+                                mMarker =  googleMap.addMarker(new MarkerOptions().position(latLng)
                                         .title(address.getCountryName()));
                                 googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+                                //                                latLng = new LatLng(address.getLatitude(), address.getLongitude());
                             }
                         }
                     });
