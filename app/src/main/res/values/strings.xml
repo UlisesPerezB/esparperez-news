@@ -20,5 +20,14 @@
     <string name="text_view_empty">No searches yet!</string>
     <string name="title_activity_maps">Map</string>
 
+    <!-- Preferences -->
+    <string name="preference_key_file">Preferences</string>
+    <string name="pref_key_category">Category</string>
+    <string name="pref_key_language">Language</string>
+    <string name="pref_key_freshnes">Freshnes</string>
+    <string name="pref_key_since">Since</string>
+    <string name="pref_key_cc">Location</string>
+    
+
 
 </resources>
