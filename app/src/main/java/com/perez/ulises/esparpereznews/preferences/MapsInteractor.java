@@ -54,7 +54,7 @@ public class MapsInteractor implements MapsInterfaces.IMapsInteractor {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (mAddresses != null || mAddresses.size() != 0) {
+        if (mAddresses != null && mAddresses.size() != 0) {
             Address address = mAddresses.get(0);
             String location = address.getCountryName();
             String cc = address.getCountryCode();

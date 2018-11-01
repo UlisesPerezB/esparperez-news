@@ -30,7 +30,25 @@
     <string name="pref_key_cc">Country code</string>
 
     <string name="pref_no_location">Select a country for the results on the map</string>
-    
+    <string name="pref_label_safe_search">Safe search</string>
 
+    <!-- Categories -->
+    <string name="cat_all">All</string>
+    <string name="cat_business">Business</string>
+    <string name="cat_entertainment">Entertainment</string>
+    <string name="cat_health">Health</string>
+    <string name="cat_lifestyle">LifeStyle</string>
+    <string name="cat_politics">Politics</string>
+    <string name="cat_science">Science</string>
+    <string name="cat_sports">Sports</string>
+    <string name="cat_world">World</string>
 
+    <!-- Languages -->
+    <string name="lang_english">English</string>
+    <string name="lang_spanish">Spanish</string>
+
+    <!-- Freshness -->
+    <string name="freshness_day">Day</string>
+    <string name="freshness_week">Week</string>
+    <string name="freshness_month">Month</string>
 </resources>

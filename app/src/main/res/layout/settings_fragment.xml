@@ -16,48 +16,46 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/edt_category"
-        style="@style/EditTextPreferences"
+    <Spinner
+        android:id="@+id/pref_category"
+        style="@style/Preferences"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pref_switch"
         tools:text="@string/app_name" />
 
-    <EditText
-        android:id="@+id/edt_freshnes"
-        style="@style/EditTextPreferences"
+    <Spinner
+        android:id="@+id/pref_freshnes"
+        style="@style/Preferences"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_category"
+        app:layout_constraintTop_toBottomOf="@+id/pref_category"
         tools:text="@string/app_name" />
 
-
-
-    <EditText
-        android:id="@+id/edt_language"
-        style="@style/EditTextPreferences"
+    <Spinner
+        android:id="@+id/pref_language"
+        style="@style/Preferences"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/pref_switch"
         tools:text="@string/app_name" />
 
 
-    <EditText
-        android:id="@+id/edt_since"
-        style="@style/EditTextPreferences"
+    <TextView
+        android:id="@+id/pref_since"
+        style="@style/Preferences"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/edt_language"
+        app:layout_constraintTop_toBottomOf="@+id/pref_language"
         tools:text="@string/app_name" />
 
-    <EditText
-        android:id="@+id/edt_location"
-        style="@style/EditTextPreferences"
+    <TextView
+        android:id="@+id/pref_location"
+        style="@style/Preferences"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_freshnes"
+        app:layout_constraintTop_toBottomOf="@+id/pref_since"
         tools:text="@string/app_name" />
 
     <FrameLayout
@@ -67,7 +65,7 @@
         android:layout_margin="@dimen/material_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_location">
+        app:layout_constraintTop_toBottomOf="@+id/pref_location">
 
     </FrameLayout>
 

@@ -5,7 +5,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorPrimary</item>
     </style>
 
     <style name="AppTheme.NoActionBar" parent="AppTheme">
@@ -23,11 +23,14 @@
         <item name="android:windowBackground">@drawable/splash_screen</item>
     </style>
 
-    <style name="EditTextPreferences" parent="Base.V7.Widget.AppCompat.EditText">
+    <style name="Preferences">
         <item name="android:background">@drawable/edit_text_preferences</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_margin">@dimen/material_margin</item>
+        <item name="android:textSize">@dimen/text_size_h4</item>
     </style>
+
+
 
 </resources>
