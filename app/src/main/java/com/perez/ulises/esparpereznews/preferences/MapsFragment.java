@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -46,10 +48,10 @@ public class MapsFragment extends Fragment implements MapsInterfaces.IMapsView {
                 }
             });
         }
-
         getChildFragmentManager()
                 .beginTransaction()
                 .replace(R.id.map, mMapFragment).commit();
+
         return view;
     }
 
@@ -59,10 +61,10 @@ public class MapsFragment extends Fragment implements MapsInterfaces.IMapsView {
         if (mPresenter == null) {
             mPresenter = new MapsPresenter(this, getContext());
         }
-        mPresenter.loadLocation();
     }
 
     void click(GoogleMap googleMap) {
+        mPresenter.loadLocation();
         googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
@@ -74,6 +76,7 @@ public class MapsFragment extends Fragment implements MapsInterfaces.IMapsView {
     @Override
     public void addMarker(double latitude, double longitud, String location) {
         LatLng latLng = new LatLng(latitude, longitud);
+        Log.i("MAPS", "map: " + mMap);
         if (mMap != null) {
             if (mMarker != null) {
                 mMarker.remove();
@@ -82,5 +85,10 @@ public class MapsFragment extends Fragment implements MapsInterfaces.IMapsView {
                     .title(location));
             mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
         }
+    }
+
+    @Override
+    public void showSetLocation(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 }

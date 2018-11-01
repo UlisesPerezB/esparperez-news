@@ -6,6 +6,8 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.util.Log;
 
+import com.perez.ulises.esparpereznews.R;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -24,12 +26,25 @@ public class MapsInteractor implements MapsInterfaces.IMapsInteractor {
         this.mListener = listener;
         this.mContext = context;
         this.mGeocoder = new Geocoder(context, Locale.getDefault());
-        this.pref = mContext.getSharedPreferences("prefs", Context.MODE_PRIVATE);
+        this.pref = mContext.getSharedPreferences(mContext.getString(R.string.preference_key_file), Context.MODE_PRIVATE);
     }
 
     @Override
     public void loadLocation() {
-        
+
+        String location = pref.getString(mContext.getString(R.string.pref_key_location),"");
+        Log.i("MAPS", "Location: "+ location);
+        if (!location.isEmpty()) {
+            try {
+                mAddresses = mGeocoder.getFromLocationName(location, 1);
+                Address address = mAddresses.get(0);
+                mListener.onSavedLocation(address.getLatitude(), address.getLongitude(), address.getCountryName());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            mListener.onNoLocationSaved(mContext.getString(R.string.pref_no_location));
+        }
     }
 
     @Override
@@ -39,50 +54,19 @@ public class MapsInteractor implements MapsInterfaces.IMapsInteractor {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         if (mAddresses != null || mAddresses.size() != 0) {
-            //TODO guardar en el shared preferences
             Address address = mAddresses.get(0);
             String location = address.getCountryName();
             String cc = address.getCountryCode();
-            saveLocation(cc);
+            storeLocation(location, cc);
             mListener.onSavedLocation(latitude, longitud, location);
         }
     }
 
-    private void saveLocation(String cc) {
+    private void storeLocation(String location, String cc) {
         SharedPreferences.Editor editor = pref.edit();
-        editor.putString("cc",cc);
+        editor.putString(mContext.getString(R.string.pref_key_location),location);
+        editor.putString(mContext.getString(R.string.pref_key_cc), cc);
         editor.commit();
     }
-
 }
-
-
-
-//                    googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-//                        @Override
-//                        public void onMapClick(LatLng latLng) {
-//
-//
-//
-//                            try {
-//                                mAddresses = mGeocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
-//                            } catch (IOException e) {
-//                                e.printStackTrace();
-//                            }
-//
-//                            if (mAddresses == null || mAddresses.size() == 0) {
-//
-//                            } else {
-//                                Address address = mAddresses.get(0);
-//                                if (mMarker != null) {
-//                                    mMarker.remove();
-//                                }
-//                                mMarker =  googleMap.addMarker(new MarkerOptions().position(latLng)
-//                                        .title(address.getCountryName()));
-//                                googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-//                                //                                latLng = new LatLng(address.getLatitude(), address.getLongitude());
-//                            }
-//                        }
-//                    });

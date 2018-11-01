@@ -14,7 +14,7 @@ public class MapsPresenter implements MapsInterfaces.IMapsPresenter, MapsInterfa
 
     @Override
     public void loadLocation() {
-
+        mInteractor.loadLocation();
     }
 
     @Override
@@ -23,12 +23,12 @@ public class MapsPresenter implements MapsInterfaces.IMapsPresenter, MapsInterfa
     }
 
     @Override
-    public void onRetrievedLocation() {
-
+    public void onSavedLocation(double latitude, double longitud, String location) {
+        mView.addMarker(latitude, longitud, location);
     }
 
     @Override
-    public void onSavedLocation(double latitude, double longitud, String location) {
-        mView.addMarker(latitude, longitud, location);
+    public void onNoLocationSaved(String message) {
+        mView.showSetLocation(message);
     }
 }

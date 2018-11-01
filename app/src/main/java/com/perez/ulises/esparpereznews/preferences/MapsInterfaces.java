@@ -13,11 +13,12 @@ public interface MapsInterfaces {
     }
 
     interface IMapsListener {
-        void onRetrievedLocation();
         void onSavedLocation(double latitude, double longitud, String location);
+        void onNoLocationSaved(String message);
     }
 
     interface IMapsView {
         void addMarker(double latitude, double longitud, String location);
+        void showSetLocation(String message);
     }
 }
