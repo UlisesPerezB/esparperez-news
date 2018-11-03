@@ -115,7 +115,7 @@ public class PreferenceFragment extends Fragment implements PreferenceInterfaces
                 DatePickerDialog datePickerDialog =
                         new DatePickerDialog(getContext(), (view1, year, monthOfYear, dayOfMonth) -> {
                             {
-                                tvSince.setText(dayOfMonth + "-" + (monthOfYear) + "-" + year);
+                                tvSince.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
                             }
                         }, mYear, mMonth, mDay);
                 datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis() - 1000);

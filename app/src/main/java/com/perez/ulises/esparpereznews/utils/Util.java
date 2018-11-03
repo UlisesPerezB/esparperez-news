@@ -14,9 +14,7 @@ import java.util.Locale;
 public class Util {
 
     public static String format(Date date) {
-
         Locale loc = new Locale("es","MX");
-
         if (date == null) {
             return "";
         }
@@ -26,7 +24,6 @@ public class Util {
 
     public static String format(long milis) {
         Locale loc = new Locale("es","MX");
-
         if (milis == 0) {
             return "";
         }
@@ -38,7 +35,7 @@ public class Util {
         if (!date.isEmpty()) {
             String segments[] = date.split("-");
             int dd = Integer.parseInt(segments[0]);
-            int mm = Integer.parseInt(segments[1]);
+            int mm = Integer.parseInt(segments[1]) - 1;
             int yyyy = Integer.parseInt(segments[2]);
             Calendar calendar = Calendar.getInstance();
             calendar.set(Calendar.YEAR, yyyy);
