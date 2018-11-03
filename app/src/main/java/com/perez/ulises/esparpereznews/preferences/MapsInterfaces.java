@@ -9,7 +9,7 @@ public interface MapsInterfaces {
 
     interface IMapsInteractor {
         void loadLocation();
-        void saveLocation(double latitude, double longitud);
+        void addNewMarker(double latitude, double longitud);
     }
 
     interface IMapsListener {

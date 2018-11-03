@@ -3,44 +3,33 @@ package com.perez.ulises.esparpereznews.preferences;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.Address;
-import android.location.Geocoder;
-import android.util.Log;
 
 import com.perez.ulises.esparpereznews.R;
+import com.perez.ulises.esparpereznews.utils.Util;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
-
-public class MapsInteractor implements MapsInterfaces.IMapsInteractor {
+public class MapsInteractor implements MapsInterfaces.IMapsInteractor, PreferenceInteractor.onLocationChanged {
 
     private MapsInterfaces.IMapsListener mListener;
     private Context mContext;
+    private SharedPreferences mPref;
 
-    private Geocoder mGeocoder;
-    private List<Address> mAddresses = null;
-    private SharedPreferences pref;
-
+    public MapsInteractor(){
+    }
 
     public MapsInteractor(MapsInterfaces.IMapsListener listener, Context context) {
         this.mListener = listener;
         this.mContext = context;
-        this.mGeocoder = new Geocoder(context, Locale.getDefault());
-        this.pref = mContext.getSharedPreferences(mContext.getString(R.string.preference_key_file), Context.MODE_PRIVATE);
+        this.mPref = mContext.getSharedPreferences(mContext.getString(R.string.preference_key_file), Context.MODE_PRIVATE);
     }
 
     @Override
     public void loadLocation() {
-
-        String location = pref.getString(mContext.getString(R.string.pref_key_location),"");
-        Log.i("MAPS", "Location: "+ location);
+        String location = mPref.getString(mContext.getString(R.string.pref_key_location),"");
         if (!location.isEmpty()) {
-            try {
-                mAddresses = mGeocoder.getFromLocationName(location, 1);
-                Address address = mAddresses.get(0);
+            Address address;
+            address = Util.location(mContext, location);
+            if (address != null) {
                 mListener.onSavedLocation(address.getLatitude(), address.getLongitude(), address.getCountryName());
-            } catch (IOException e) {
-                e.printStackTrace();
             }
         } else {
             mListener.onNoLocationSaved(mContext.getString(R.string.pref_no_location));
@@ -48,25 +37,27 @@ public class MapsInteractor implements MapsInterfaces.IMapsInteractor {
     }
 
     @Override
-    public void saveLocation(double latitude, double longitud) {
-        try {
-            mAddresses = mGeocoder.getFromLocation(latitude, longitud, 1);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if (mAddresses != null && mAddresses.size() != 0) {
-            Address address = mAddresses.get(0);
+    public void addNewMarker(double latitude, double longitud) {
+        Address address;
+        address = Util.location(mContext, latitude, longitud);
+        if (address != null) {
             String location = address.getCountryName();
-            String cc = address.getCountryCode();
-            storeLocation(location, cc);
-            mListener.onSavedLocation(latitude, longitud, location);
+            mListener.onSavedLocation(latitude,longitud, location);
         }
     }
 
-    private void storeLocation(String location, String cc) {
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putString(mContext.getString(R.string.pref_key_location),location);
-        editor.putString(mContext.getString(R.string.pref_key_cc), cc);
-        editor.commit();
+    @Override
+    public void saveCountryCode(Context context, String location) {
+        if (!location.isEmpty()) {
+            Address address = Util.location(context, location);
+            if (address != null) {
+                SharedPreferences pref =
+                        context.getSharedPreferences(context.getString(R.string.preference_key_file), Context.MODE_PRIVATE);
+                String cc = address.getCountryCode();
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putString(context.getString(R.string.pref_key_cc), cc);
+                editor.commit();
+            }
+        }
     }
 }

@@ -32,6 +32,7 @@ public class MapsFragment extends Fragment implements MapsInterfaces.IMapsView {
     private GoogleMap mMap;
 
     private MapsPresenter mPresenter;
+    private PreferenceFragment mPrefecence;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -56,10 +57,19 @@ public class MapsFragment extends Fragment implements MapsInterfaces.IMapsView {
     }
 
     @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         if (mPresenter == null) {
             mPresenter = new MapsPresenter(this, getContext());
+        }
+        if (getParentFragment() instanceof PreferenceFragment) {
+            mPrefecence = (PreferenceFragment) getParentFragment();
         }
     }
 
@@ -76,7 +86,7 @@ public class MapsFragment extends Fragment implements MapsInterfaces.IMapsView {
     @Override
     public void addMarker(double latitude, double longitud, String location) {
         LatLng latLng = new LatLng(latitude, longitud);
-        Log.i("MAPS", "map: " + mMap);
+//        Log.i("MAPS", "map: " + mMap);
         if (mMap != null) {
             if (mMarker != null) {
                 mMarker.remove();
@@ -84,11 +94,17 @@ public class MapsFragment extends Fragment implements MapsInterfaces.IMapsView {
             mMarker =  mMap.addMarker(new MarkerOptions().position(latLng)
                     .title(location));
             mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+            mPrefecence.showLocation(location);
         }
     }
 
     @Override
     public void showSetLocation(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+
+    public interface setLocation {
+        void showLocation(String location);
     }
 }

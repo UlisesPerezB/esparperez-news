@@ -19,7 +19,7 @@ public class MapsPresenter implements MapsInterfaces.IMapsPresenter, MapsInterfa
 
     @Override
     public void saveLocation(double latitude, double longitud) {
-        mInteractor.saveLocation(latitude, longitud);
+        mInteractor.addNewMarker(latitude, longitud);
     }
 
     @Override

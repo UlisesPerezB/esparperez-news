@@ -20,35 +20,51 @@
     <string name="text_view_empty">No searches yet!</string>
     <string name="title_activity_maps">Map</string>
 
-    <!-- Preferences -->
+    <!-- SharedPreferences -->
     <string name="preference_key_file">Preferences</string>
+    <string name="pref_key_safe">Safe</string>
     <string name="pref_key_category">Category</string>
     <string name="pref_key_language">Language</string>
-    <string name="pref_key_freshnes">Freshnes</string>
+    <string name="pref_key_freshness">Freshnes</string>
     <string name="pref_key_since">Since</string>
     <string name="pref_key_location">Location</string>
     <string name="pref_key_cc">Country code</string>
 
+    <!-- Labels & texts -->
     <string name="pref_no_location">Select a country for the results on the map</string>
     <string name="pref_label_safe_search">Safe search</string>
+    <string name="pref_label_since">Since</string>
+    <string name="pref_label_location">Location</string>
+    <string name="pref_label_reset">Reset</string>
+    <string name="pref_label_save">Save</string>
 
     <!-- Categories -->
-    <string name="cat_all">All</string>
-    <string name="cat_business">Business</string>
-    <string name="cat_entertainment">Entertainment</string>
-    <string name="cat_health">Health</string>
-    <string name="cat_lifestyle">LifeStyle</string>
-    <string name="cat_politics">Politics</string>
-    <string name="cat_science">Science</string>
-    <string name="cat_sports">Sports</string>
-    <string name="cat_world">World</string>
+    <string-array name="pref_categories">
+        <item>Category</item>
+        <item>All</item>
+        <item>Business</item>
+        <item>Entertainment</item>
+        <item>Health</item>
+        <item>LifeStyle</item>
+        <item>Politics</item>
+        <item>Science</item>
+        <item>Sports</item>
+        <item>World</item>
+    </string-array>
 
     <!-- Languages -->
-    <string name="lang_english">English</string>
-    <string name="lang_spanish">Spanish</string>
+    <string-array name="pref_langs">
+        <item>Language</item>
+        <item>English</item>
+        <item>Spanish</item>
+    </string-array>
 
     <!-- Freshness -->
-    <string name="freshness_day">Day</string>
-    <string name="freshness_week">Week</string>
-    <string name="freshness_month">Month</string>
+    <string-array name="pref_freshness">
+        <item>Freshness</item>
+        <item>Day</item>
+        <item>Week</item>
+        <item>Month</item>
+    </string-array>
+
 </resources>
