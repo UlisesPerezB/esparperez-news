@@ -57,6 +57,7 @@ public class BookmarksFragment extends Fragment implements BookmarksInterface.IB
     @Override
     public void showEmptyState() {
         tvEmpty.setVisibility(View.VISIBLE);
+        tvEmpty.setText(R.string.no_bookmarks);
     }
 
     @Override

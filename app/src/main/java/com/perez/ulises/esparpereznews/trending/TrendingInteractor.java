@@ -1,6 +1,7 @@
 package com.perez.ulises.esparpereznews.trending;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.perez.ulises.esparpereznews.utils.IRequest;
@@ -15,27 +16,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.perez.ulises.esparpereznews.utils.Constants.BING_HEADER;
+import static com.perez.ulises.esparpereznews.utils.Constants.BING_NEWS_URL;
 import static com.perez.ulises.esparpereznews.utils.Constants.BING_SEARCH_URL;
 import static com.perez.ulises.esparpereznews.utils.Constants.BING_TOKEN;
+import static com.perez.ulises.esparpereznews.utils.Util.urlFormat;
 
 public class TrendingInteractor implements TrendingInterface.ITrendingInteractor, IRequest.VolleyResponseHandler {
     private TrendingInterface.ITrendingListener listener;
-    private Context context;
+    private Context mContext;
     private List<News> newsList;
     
 
     public TrendingInteractor(TrendingInterface.ITrendingListener listener, Context context) {
         this.listener = listener;
-        this.context = context;
+        this.mContext = context;
         this.newsList = new ArrayList<>();
     }
 
     @Override
     public void getNews() {
-//        String url = "https://api.cognitive.microsoft.com/bing/v7.0/news/search";
-//        String header = "Ocp-Apim-Subscription-Key";
-//        String token = "6dc03acb5ff6466687c063d3b857c15f";
-        VolleyRequests.jsonRequest(context, Request.Method.GET, BING_SEARCH_URL, BING_HEADER, BING_TOKEN, this);
+        String url = BING_NEWS_URL.concat(urlFormat(mContext));
+        VolleyRequests.jsonRequest(mContext, Request.Method.GET, url, BING_HEADER, BING_TOKEN, this);
     }
 
     @Override

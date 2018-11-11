@@ -8,6 +8,7 @@ import com.perez.ulises.esparpereznews.model.News;
 import com.perez.ulises.esparpereznews.model.Search;
 import com.perez.ulises.esparpereznews.splash.SplashInteractor;
 import com.perez.ulises.esparpereznews.utils.IRequest;
+import com.perez.ulises.esparpereznews.utils.Util;
 import com.perez.ulises.esparpereznews.utils.VolleyRequests;
 
 import org.json.JSONArray;
@@ -125,8 +126,7 @@ public class SearchInteractor implements SearchInterface.ISearchInteractor, IReq
     }
 
     private void requestNews(String word){
-//        ?q=Homicidio&cc=mx
-        String sUrl = BING_SEARCH_URL + "?q=" + word + "&cc=mx";
+        String sUrl = BING_SEARCH_URL.concat(word).concat("&").concat(Util.urlFormat(mContext));
         VolleyRequests.jsonRequest(mContext, Request.Method.GET, sUrl, BING_HEADER, BING_TOKEN, this);
     }
 

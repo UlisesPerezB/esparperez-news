@@ -17,7 +17,8 @@
     <string name="label_search">Searches</string>
     <string name="label_terms">Terms and conditions</string>
 
-    <string name="text_view_empty">No searches yet!</string>
+    <string name="no_searches">No results</string>
+    <string name="no_bookmarks">No bookmarks yet!</string>
     <string name="title_activity_maps">Map</string>
 
     <!-- SharedPreferences -->
@@ -38,7 +39,7 @@
     <string name="pref_label_reset">Reset</string>
     <string name="pref_label_save">Save</string>
 
-    <!-- Categories -->
+    <!-- Categories labels-->
     <string-array name="pref_categories">
         <item>Category</item>
         <item>All</item>
@@ -51,6 +52,19 @@
         <item>Sports</item>
         <item>World</item>
     </string-array>
+    <!-- Values -->
+    <string-array name="pref_cat_values">
+        <item></item>
+        <item></item>
+        <item>Business</item>
+        <item>Entertainment</item>
+        <item>Health</item>
+        <item>LifeStyle</item>
+        <item>Politics</item>
+        <item>ScienceAndTechnology</item>
+        <item>Sports</item>
+        <item>World</item>
+    </string-array>
 
     <!-- Languages -->
     <string-array name="pref_langs">
@@ -59,9 +73,24 @@
         <item>Spanish</item>
     </string-array>
 
+    <!-- Values -->
+    <string-array name="pref_langs_values">
+        <item></item>
+        <item>en</item>
+        <item>es</item>
+    </string-array>
+
     <!-- Freshness -->
     <string-array name="pref_freshness">
         <item>Freshness</item>
+        <item>Day</item>
+        <item>Week</item>
+        <item>Month</item>
+    </string-array>
+
+    <!-- Values -->
+    <string-array name="pref_freshness_values">
+        <item></item>
         <item>Day</item>
         <item>Week</item>
         <item>Month</item>

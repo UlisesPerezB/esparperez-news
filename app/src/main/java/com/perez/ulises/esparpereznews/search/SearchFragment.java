@@ -62,13 +62,15 @@ public class SearchFragment extends Fragment implements SearchInterface.ISearchV
 
     @Override
     public void showEmptyState() {
-        tvEmpty.setText(getString(R.string.text_view_empty));
+        recyclerView.setVisibility(View.GONE);
         tvEmpty.setVisibility(View.VISIBLE);
+        tvEmpty.setText(getString(R.string.no_searches));
     }
 
     @Override
     public void hideEmptyState() {
         tvEmpty.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
     }
 
     @Override

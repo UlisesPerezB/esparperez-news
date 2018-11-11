@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Bing News</string>
+    <string name="app_db">bing_bm_database</string>
+    <!--Navigation_menu-->
+    <string name="menu_nav_home">Inicio</string>
+    <string name="menu_nav_preferences">Preferencias</string>
+    <string name="menu_nav_search">Buscar</string>
+    <string name="menu_nav_bookmarks">Favoritos</string>
+    <string name="menu_nav_terms">Términos y condiciones</string>
+
+    <string name="drawer_open">Abrir</string>
+    <string name="drawer_close">Cerrar</string>
+
+    <string name="label_trending">Tendencias</string>
+    <string name="label_bookmarks">Favoritos</string>
+    <string name="label_search">Búsqueda</string>
+    <string name="label_terms">Términos y condiciones</string>
+
+    <string name="no_searches">No se encontraron resultados</string>
+    <string name="no_bookmarks">No tienes favoritos</string>
+    <string name="title_activity_maps">Mapa</string>
+
+    <!-- Labels & texts -->
+    <string name="pref_no_location">Selecciona un país en el mapa</string>
+    <string name="pref_label_safe_search">Búsqueda segura</string>
+    <string name="pref_label_since">Desde</string>
+    <string name="pref_label_location">Ubicación</string>
+    <string name="pref_label_reset">Restablecer</string>
+    <string name="pref_label_save">Guardar</string>
+
+    <!-- Categories labels-->
+    <string-array name="pref_categories">
+        <item>Categoría</item>
+        <item>Todo</item>
+        <item>Negocios</item>
+        <item>Entretenimiento</item>
+        <item>Salud</item>
+        <item>Estilo de vida</item>
+        <item>Política</item>
+        <item>Ciencia</item>
+        <item>Deportes</item>
+        <item>El mundo</item>
+    </string-array>
+
+    <!-- Languages -->
+    <string-array name="pref_langs">
+        <item>Idioma</item>
+        <item>Inglés</item>
+        <item>Español</item>
+    </string-array>
+
+    <!-- Freshness -->
+    <string-array name="pref_freshness">
+        <item>Noticias</item>
+        <item>Del día</item>
+        <item>De la semana</item>
+        <item>Del mes</item>
+    </string-array>
+
+    <!-- SharedPreferences -->
+    <string name="preference_key_file">Preferences</string>
+    <string name="pref_key_safe">Safe</string>
+    <string name="pref_key_category">Category</string>
+    <string name="pref_key_language">Language</string>
+    <string name="pref_key_freshness">Freshnes</string>
+    <string name="pref_key_since">Since</string>
+    <string name="pref_key_location">Location</string>
+    <string name="pref_key_cc">Country code</string>
+</resources>

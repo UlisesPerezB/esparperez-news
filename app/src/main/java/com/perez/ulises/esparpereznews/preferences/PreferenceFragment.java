@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.perez.ulises.esparpereznews.R;
 import com.perez.ulises.esparpereznews.utils.Util;
 
+import java.lang.reflect.Array;
 import java.util.Calendar;
 
 import butterknife.BindView;
@@ -87,11 +88,9 @@ public class PreferenceFragment extends Fragment implements PreferenceInterfaces
     }
 
     private void initSpinners() {
-
         String [] category = getResources().getStringArray(R.array.pref_categories);
         String [] language = getResources().getStringArray(R.array.pref_langs);
         String [] freshness = getResources().getStringArray(R.array.pref_freshness);
-
         ArrayAdapter<String> categoryAdapter =
                 new SpinnerAdapter(getContext(), R.layout.item_spinner_preferences, category);
         spCategory.setAdapter(categoryAdapter);
@@ -101,7 +100,6 @@ public class PreferenceFragment extends Fragment implements PreferenceInterfaces
         ArrayAdapter<String> freshnessAdapter =
                 new SpinnerAdapter(getContext(), R.layout.item_spinner_preferences, freshness);
         spFreshnes.setAdapter(freshnessAdapter);
-
     }
 
     private void calendarDialog() {
@@ -175,8 +173,9 @@ public class PreferenceFragment extends Fragment implements PreferenceInterfaces
             }
         }
 
+
         @Override
-        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+        public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
             View view = super.getDropDownView(position, convertView, parent);
             TextView tv = (TextView) view;
             if (position == 0) {
