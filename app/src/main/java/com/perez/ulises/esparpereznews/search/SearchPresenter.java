@@ -39,6 +39,12 @@ public class SearchPresenter implements SearchInterface.ISearchPresenter, Search
     }
 
     @Override
+    public void onNetworkError(String error) {
+        mView.hideEmptyState();
+        mView.showErrorMessage(error);
+    }
+
+    @Override
     public void onNoNews() {
         mView.showEmptyState();
     }

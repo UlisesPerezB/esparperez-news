@@ -14,14 +14,13 @@ public interface TrendingInterface {
         void changeBookmark(int position);
     }
     interface ITrendingListener {
-        void onNetworkError();
+        void onNetworkError(String error);
         void onNewsRetrieved(List<News> news);
         void onBookmarkChanged(boolean isBookmark, int position);
         void onNoNews();
     }
     interface ITrendingView {
         void showErrorMessage(String error);
-        void showMessage(int resource);
         void showLoadeer(boolean cancelable);
         void hideLoader();
         void loadList(List<News> news);

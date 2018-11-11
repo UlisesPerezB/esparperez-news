@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.Request;
+import com.perez.ulises.esparpereznews.R;
 import com.perez.ulises.esparpereznews.model.News;
 import com.perez.ulises.esparpereznews.model.Search;
 import com.perez.ulises.esparpereznews.splash.SplashInteractor;
@@ -176,6 +177,18 @@ public class SearchInteractor implements SearchInterface.ISearchInteractor, IReq
             System.out.print(newsList.get(1));
         } else {
             mListener.onNewsRetrieved(newsList);
+        }
+    }
+
+    @Override
+    public void onError(int error) {
+        switch (error) {
+            case 500:
+                mListener.onNetworkError(mContext.getString(R.string.error_network));
+                break;
+            default:
+                mListener.onNetworkError(mContext.getString(R.string.error_consult));
+                break;
         }
     }
 }

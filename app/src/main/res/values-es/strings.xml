@@ -67,4 +67,8 @@
     <string name="pref_key_since">Since</string>
     <string name="pref_key_location">Location</string>
     <string name="pref_key_cc">Country code</string>
+
+    <!-- Error Strings-->
+    <string name="error_network">El servicio no está disponible actualmente, inténtelo más tarde</string>
+    <string name="error_consult">Algo ocurrió, inténtelo más tarde</string>
 </resources>

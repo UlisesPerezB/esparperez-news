@@ -96,4 +96,9 @@
         <item>Month</item>
     </string-array>
 
+    <!-- Error Strings-->
+    <string name="error_network">Service is not available now, please try again later</string>
+    <string name="error_consult">Something happened, please try again later</string>
+
+
 </resources>

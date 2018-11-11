@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.Request;
+import com.perez.ulises.esparpereznews.R;
 import com.perez.ulises.esparpereznews.utils.IRequest;
 import com.perez.ulises.esparpereznews.utils.VolleyRequests;
 import com.perez.ulises.esparpereznews.model.News;
@@ -92,16 +93,11 @@ public class TrendingInteractor implements TrendingInterface.ITrendingInteractor
     @Override
     public void onError(int error) {
         switch (error) {
-            case 400:
-
-                break;
-            case 401:
-                break;
-            case 403:
-                break;
-            case 429:
-                break;
             case 500:
+                listener.onNetworkError(mContext.getString(R.string.error_network));
+                break;
+            default:
+                listener.onNetworkError(mContext.getString(R.string.error_consult));
                 break;
         }
     }

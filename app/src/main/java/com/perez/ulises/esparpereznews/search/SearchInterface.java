@@ -21,6 +21,7 @@ public interface SearchInterface {
 
     interface ISearchListener {
         void onNewsRetrieved(List<News> newsResults);
+        void onNetworkError(String error);
         void onNoNews();
         void onSuggestionsRetrieved(List<Search> searches, List suggestions);
         void onRecyclerRetrieved(String word);
@@ -29,6 +30,7 @@ public interface SearchInterface {
     interface ISearchView {
         void showEmptyState();
         void hideEmptyState();
+        void showErrorMessage(String error);
         void showSearchSuggestions(List<Search> searches, List suggestions);
         void showNewsResults(List<News> news);
         void showRecyclerWord(String word);

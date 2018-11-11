@@ -56,8 +56,8 @@ public class TrendingFragment extends Fragment implements TrendingInterface.ITre
     }
 
     @Override
-    public void showMessage(int resource) {
-        Toast.makeText(getContext(), resource, Toast.LENGTH_SHORT).show();
+    public void showErrorMessage(String error) {
+        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
     }
 
     @Override

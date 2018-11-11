@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.perez.ulises.esparpereznews.R;
 import com.perez.ulises.esparpereznews.main.MainActivity;
@@ -71,6 +72,11 @@ public class SearchFragment extends Fragment implements SearchInterface.ISearchV
     public void hideEmptyState() {
         tvEmpty.setVisibility(View.GONE);
         recyclerView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showErrorMessage(String error) {
+        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
     }
 
     @Override
