@@ -22,4 +22,8 @@ public interface PreferenceInterfaces {
         void showSettings(boolean safe, int category, int language, int freshness, String since, String location);
     }
 
+    interface ILoadMap {
+        void loadLocation();
+    }
+
 }

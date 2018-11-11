@@ -20,6 +20,7 @@ public interface TrendingInterface {
         void onNoNews();
     }
     interface ITrendingView {
+        void showErrorMessage(String error);
         void showMessage(int resource);
         void showLoadeer(boolean cancelable);
         void hideLoader();

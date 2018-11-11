@@ -19,7 +19,9 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.perez.ulises.esparpereznews.R;
 
-public class MapsFragment extends Fragment implements MapsInterfaces.IMapsView {
+import butterknife.BindView;
+
+public class MapsFragment extends Fragment implements MapsInterfaces.IMapsView, PreferenceInterfaces.ILoadMap{
 
     public MapsFragment getInstance() {
         MapsFragment fragment = new MapsFragment();
@@ -38,7 +40,6 @@ public class MapsFragment extends Fragment implements MapsInterfaces.IMapsView {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         View view = inflater.inflate(R.layout.maps_fragment, container, false);
-
         if (mMapFragment == null) {
             mMapFragment = SupportMapFragment.newInstance();
             mMapFragment.getMapAsync(new OnMapReadyCallback() {
@@ -59,7 +60,6 @@ public class MapsFragment extends Fragment implements MapsInterfaces.IMapsView {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
     }
 
     @Override
@@ -86,21 +86,38 @@ public class MapsFragment extends Fragment implements MapsInterfaces.IMapsView {
     @Override
     public void addMarker(double latitude, double longitud, String location) {
         LatLng latLng = new LatLng(latitude, longitud);
-//        Log.i("MAPS", "map: " + mMap);
         if (mMap != null) {
             if (mMarker != null) {
                 mMarker.remove();
             }
-            mMarker =  mMap.addMarker(new MarkerOptions().position(latLng)
-                    .title(location));
+            if (!location.isEmpty()) {
+                mMarker =  mMap.addMarker(new MarkerOptions().position(latLng)
+                        .title(location));
+                mPrefecence.showLocation(location);
+            }
             mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-            mPrefecence.showLocation(location);
         }
     }
 
     @Override
     public void showSetLocation(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void loadLocation() {
+        if (mPresenter == null) {
+            mPresenter = new MapsPresenter(this, getContext());
+        }
+        if (mMapFragment != null) {
+            mMapFragment.getMapAsync(new OnMapReadyCallback() {
+                @Override
+                public void onMapReady(final GoogleMap googleMap) {
+                    mMap = googleMap;
+                    mPresenter.loadLocation();
+                }
+            });
+        }
     }
 
 

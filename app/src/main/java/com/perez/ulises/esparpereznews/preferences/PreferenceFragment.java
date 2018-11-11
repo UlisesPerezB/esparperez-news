@@ -52,6 +52,7 @@ public class PreferenceFragment extends Fragment implements PreferenceInterfaces
 
     private int mDay, mMonth, mYear;
     private PreferenceInterfaces.IPreferencePresenter mPresenter;
+    private MapsFragment mapsFragment;
 
     @Nullable
     @Override
@@ -77,13 +78,14 @@ public class PreferenceFragment extends Fragment implements PreferenceInterfaces
             mPresenter = new PreferencePresenter(this, getContext());
         }
         mPresenter.loadSettings();
+        mapsFragment.loadLocation();
     }
 
     private void inflateMaps() {
-        Fragment fragment = new MapsFragment().getInstance();
+        mapsFragment = new MapsFragment().getInstance();
         FragmentManager fm = getChildFragmentManager();
         fm.beginTransaction()
-                .replace(R.id.map_container, fragment)
+                .replace(R.id.map_container, mapsFragment)
                 .commit();
     }
 
@@ -136,11 +138,12 @@ public class PreferenceFragment extends Fragment implements PreferenceInterfaces
         spFreshnes.setSelection(freshness);
         tvSince.setText(since);
         tvLocation.setText(location);
+        mapsFragment.loadLocation();
     }
 
     @OnClick (R.id.btn_reset)
     public void resetSettings() {
-
+        mPresenter.resetSettings();
     }
 
     @OnClick (R.id.btn_save)

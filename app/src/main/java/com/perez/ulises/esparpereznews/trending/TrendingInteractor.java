@@ -88,4 +88,21 @@ public class TrendingInteractor implements TrendingInterface.ITrendingInteractor
             listener.onNewsRetrieved(newsList);
         }
     }
+
+    @Override
+    public void onError(int error) {
+        switch (error) {
+            case 400:
+
+                break;
+            case 401:
+                break;
+            case 403:
+                break;
+            case 429:
+                break;
+            case 500:
+                break;
+        }
+    }
 }

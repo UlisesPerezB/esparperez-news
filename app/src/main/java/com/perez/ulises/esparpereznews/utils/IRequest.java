@@ -8,6 +8,7 @@ public interface IRequest {
     interface VolleyResponseHandler {
         void onResponse(JSONObject jsonObject);
         void onResponse(JSONArray jsonArray);
+        void onError(int error);
     }
 
 }

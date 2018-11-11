@@ -19,7 +19,7 @@ import java.util.Map;
 
 public class VolleyRequests {
 
-    public static void jsonRequest(Context context, final int method, final String url, final String header, final String token, final IRequest.VolleyResponseHandler vrs) {
+    public static void jsonRequest(Context context, final int method, final String url, final String header, final String token, final IRequest.VolleyResponseHandler vrh) {
         StringRequest stringRequest = new StringRequest(method, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -30,11 +30,11 @@ public class VolleyRequests {
                     try {
 //                        JSONObject jsonObject = new JSONObject(responseUTF8);
                         JSONObject jsonObject = new JSONObject(response);
-                        vrs.onResponse(jsonObject);
+                        vrh.onResponse(jsonObject);
                     } catch (JSONException e) {
                         try {
                             JSONArray jsonArray = new JSONArray(responseUTF8);
-                            vrs.onResponse(jsonArray);
+                            vrh.onResponse(jsonArray);
                         }  catch (JSONException e2) {
                             e2.printStackTrace();
                         }
@@ -43,7 +43,7 @@ public class VolleyRequests {
             }}, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.i("Volley", "no furula " + error);
+                vrh.onError(error.networkResponse.statusCode);
             }
         }) {
             @Override

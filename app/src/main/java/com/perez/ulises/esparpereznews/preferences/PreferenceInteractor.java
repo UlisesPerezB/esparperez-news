@@ -50,10 +50,20 @@ public class PreferenceInteractor implements PreferenceInterfaces.IPreferenceInt
 
     @Override
     public void resetSettings() {
-
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean(mContext.getString(R.string.pref_key_safe), false);
+        editor.putInt(mContext.getString(R.string.pref_key_category), 0);
+        editor.putInt(mContext.getString(R.string.pref_key_language), 0);
+        editor.putInt(mContext.getString(R.string.pref_key_freshness), 0);
+        editor.putLong(mContext.getString(R.string.pref_key_since), 0);
+        editor.putString(mContext.getString(R.string.pref_key_location), "");
+        editor.commit();
+        mapsInteractor.saveCountryCode(mContext, "");
+        loadSettings();
     }
 
     public interface onLocationChanged {
         void saveCountryCode(Context context, String location);
     }
+
 }
