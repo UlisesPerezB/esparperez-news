@@ -1,12 +1,13 @@
 package com.perez.ulises.esparpereznews.terms;
 
-
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
@@ -41,6 +42,7 @@ public class TermsFragment extends Fragment{
         View view = inflater.inflate(R.layout.terms_fragment, container, false);
         ButterKnife.bind(this, view);
         tvTitle.setText(R.string.label_terms);
+        setHasOptionsMenu(true);
         return view;
     }
 
@@ -49,9 +51,6 @@ public class TermsFragment extends Fragment{
         super.onViewCreated(view, savedInstanceState);
         webView.setWebViewClient(new WebViewClient());
         webView.loadUrl(url);
-
-
-
         webView.setOnKeyListener((view1, keyCode, event) -> {
             if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()){
                 webView.goBack();
@@ -61,5 +60,11 @@ public class TermsFragment extends Fragment{
             }
             return false;
         });
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.findItem(R.id.search).setVisible(false);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 }

@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">Bing News</string>
     <string name="app_db">bing_bm_database</string>
+    <string name="search_hint">Busca noticias</string>
     <!--Navigation_menu-->
     <string name="menu_nav_home">Inicio</string>
     <string name="menu_nav_preferences">Preferencias</string>
