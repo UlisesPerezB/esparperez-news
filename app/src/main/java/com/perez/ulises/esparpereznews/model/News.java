@@ -1,10 +1,8 @@
 package com.perez.ulises.esparpereznews.model;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import android.util.Log;
 
-import java.util.Date;
+import org.json.JSONObject;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -21,14 +19,15 @@ public class News extends RealmObject {
 
     public News(JSONObject object) {
         try {
-            name = object.getString("name");
-            url = object.getString("url");
-            imageUrl = object.getJSONObject("image").getJSONObject("thumbnail").getString("contentUrl");
-            description = object.getString("description");
-            datePublished = object.getString("datePublished");
+            name = object.has("name") ? object.optString("name") : "" ;
+            url = object.has("url") ? object.optString("url") : "";
+            imageUrl = object.has("image") ? object.optJSONObject("image").optJSONObject("thumbnail").optString("contentUrl"): "";
+            description = object.has("description") ? object.optString("description") : "";
+            datePublished = object.has("datePublished") ? object.optString("datePublished") : "";
             isBookmark = false;
-        } catch (JSONException e) {
-            e.printStackTrace();
+        } catch (NullPointerException e) {
+//            e.printStackTrace();
+            Log.e("TEST", "TESTETETETETET");
         }
     }
 

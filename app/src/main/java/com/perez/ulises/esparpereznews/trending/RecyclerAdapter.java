@@ -23,6 +23,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.Realm;
 
+import static com.perez.ulises.esparpereznews.utils.Util.recyclerDate;
+
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.TrendingViewHolder> {
 
     private List<News> mValues;
@@ -39,30 +41,40 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Trendi
     public TrendingViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_news, parent, false);
-
-
         return new TrendingViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final RecyclerAdapter.TrendingViewHolder holder, final int position) {
         final News item = mValues.get(position);
-        Glide
-                .with(mContext)
-                .load(item.getImageUrl())
-                .into(holder.newsImage);
+
+        holder.itemView.setOnClickListener( v -> {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(item.getUrl()));
+            mContext.startActivity(browserIntent);
+            });
+
+        if (!item.getImageUrl().isEmpty()) {
+            Glide
+                    .with(mContext)
+                    .load(item.getImageUrl())
+                    .into(holder.newsImage);
+        } else {
+            Glide
+                    .with(mContext)
+                    .load(R.drawable.ic_no_picture)
+                    .into(holder.newsImage);
+        }
+
         holder.tvNewsHeader.setText(item.getName());
         holder.tvNewsSubHeader.setText(item.getDescription());
         holder.tvNewsUrl.setText(item.getUrl());
-        holder.tvNewsDate.setText(item.getDatePublished());
+        holder.tvNewsDate.setText(recyclerDate(item.getDatePublished()));
 
         realm = Realm.getDefaultInstance();
         boolean find = realm.where(News.class).equalTo("url", item.getUrl()).findFirst() != null;
         realm.close();
 
-        holder.imgBookmark.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        holder.imgBookmark.setOnClickListener(v -> {
                 realm = Realm.getDefaultInstance();
                 News toFind = realm.where(News.class).equalTo("url", item.getUrl()).findFirst();
                 realm.beginTransaction();
@@ -73,15 +85,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Trendi
                 realm.commitTransaction();
                 realm.close();
                 notifyItemChanged(position);
-            }
-        });
-
-        holder.newsImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(item.getUrl()));
-                mContext.startActivity(browserIntent);
-            }
         });
 
         int bookmarkColor = ContextCompat.getColor(mContext, find ? R.color.colorPrimary : R.color.colorSecondaryText);

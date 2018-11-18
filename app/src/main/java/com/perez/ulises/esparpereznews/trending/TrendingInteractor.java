@@ -1,13 +1,12 @@
 package com.perez.ulises.esparpereznews.trending;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.android.volley.Request;
 import com.perez.ulises.esparpereznews.R;
+import com.perez.ulises.esparpereznews.model.News;
 import com.perez.ulises.esparpereznews.utils.IRequest;
 import com.perez.ulises.esparpereznews.utils.VolleyRequests;
-import com.perez.ulises.esparpereznews.model.News;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,7 +17,6 @@ import java.util.List;
 
 import static com.perez.ulises.esparpereznews.utils.Constants.BING_HEADER;
 import static com.perez.ulises.esparpereznews.utils.Constants.BING_NEWS_URL;
-import static com.perez.ulises.esparpereznews.utils.Constants.BING_SEARCH_URL;
 import static com.perez.ulises.esparpereznews.utils.Constants.BING_TOKEN;
 import static com.perez.ulises.esparpereznews.utils.Util.urlFormat;
 
@@ -26,7 +24,6 @@ public class TrendingInteractor implements TrendingInterface.ITrendingInteractor
     private TrendingInterface.ITrendingListener listener;
     private Context mContext;
     private List<News> newsList;
-    
 
     public TrendingInteractor(TrendingInterface.ITrendingListener listener, Context context) {
         this.listener = listener;
@@ -52,6 +49,7 @@ public class TrendingInteractor implements TrendingInterface.ITrendingInteractor
             // .opt (JSONArray) devuelve el objeto mapeado con el nombre de la etiqueta
             JSONArray jsonArray = jsonObject.optJSONArray("value");
             // Se buscan todos los objetos JSON de la etiqueta value dentro del JSONarray
+            newsList.clear();
             for (int i=0; i<jsonArray.length();i++) {
                 try {
                     News news = new News(jsonArray.getJSONObject(i));
@@ -71,7 +69,6 @@ public class TrendingInteractor implements TrendingInterface.ITrendingInteractor
     @Override
     public void onResponse(JSONArray jsonArray) {
         if (jsonArray.length() > 0) {
-
             for (int i = 0; i <= jsonArray.length(); i ++) {
                 try {
                     JSONObject jsonObject = jsonArray.getJSONObject(i).getJSONObject("value");

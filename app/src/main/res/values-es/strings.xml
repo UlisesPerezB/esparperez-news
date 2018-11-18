@@ -16,6 +16,7 @@
     <string name="label_trending">Tendencias</string>
     <string name="label_bookmarks">Favoritos</string>
     <string name="label_search">Búsqueda</string>
+    <string name="label_results">Resultados</string>
     <string name="label_terms">Términos y condiciones</string>
 
     <string name="no_searches">No se encontraron resultados</string>

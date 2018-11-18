@@ -12,6 +12,7 @@
         <!-- Customize your theme here. -->
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
+        <item name="searchViewStyle">@style/SearchView</item>
     </style>
 
     <style name="MyDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
@@ -32,6 +33,13 @@
         <item name="android:textSize">@dimen/text_size_h4</item>
     </style>
 
+    <style name="toolbarStyle" parent="AppTheme.NoActionBar">
+        <item name="android:textColorPrimary">@color/colorPrimaryText</item>
+        <item name="colorControlNormal">@color/colorAccent</item>
+    </style>
 
+    <style name="SearchView" parent="Widget.AppCompat.SearchView">
+        <item name="queryBackground">@drawable/edit_text_search</item>
+    </style>
 
 </resources>

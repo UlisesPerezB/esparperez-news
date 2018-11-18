@@ -1,7 +1,6 @@
 package com.perez.ulises.esparpereznews.search;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.android.volley.Request;
 import com.perez.ulises.esparpereznews.R;
@@ -133,11 +132,9 @@ public class SearchInteractor implements SearchInterface.ISearchInteractor, IReq
 
     @Override
     public void onResponse(JSONObject jsonObject) {
-
         if (!newsList.isEmpty()) {
             newsList.clear();
         }
-
         if (jsonObject != null) {
             JSONArray jsonArray = jsonObject.optJSONArray("value");
             for (int i=0; i<jsonArray.length();i++) {

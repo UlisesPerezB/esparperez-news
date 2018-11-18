@@ -17,20 +17,16 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.realm.Realm;
 
 public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<Search> mSearches;
     private List mSuggestions;
-//    private Context mContext;
-//    private Realm realm;
     private SearchInterface.ISearchPresenter mPresenter;
 
     public SearchAdapter(Context context, SearchInterface.ISearchPresenter presenter) {
         this.mSearches = new ArrayList<>();
         this.mSuggestions = new ArrayList<>();
-//        this.mContext = context;
         this.mPresenter = presenter;
     }
 
@@ -65,21 +61,15 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             SearchViewHolder searchHolder = (SearchViewHolder) holder;
             searchHolder.tvResult.setText(itemSearch.getWord());
             searchHolder.tvDate.setText(Util.format(itemSearch.getDateSearch()));
-            searchHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            searchHolder.itemView.setOnClickListener(v -> {
                     mPresenter.getSearch(itemSearch.getWord());
-                }
             });
         } else {
             SuggestionsViewHolder suggestionsHolder = (SuggestionsViewHolder) holder;
             final String word = mSuggestions.get(position - mSearches.size()).toString();
             suggestionsHolder.tvSuggestionsResult.setText(word);
-            suggestionsHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            suggestionsHolder.itemView.setOnClickListener(v -> {
                     mPresenter.getSearch(word);
-                }
             });
         }
     }
@@ -98,12 +88,10 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     class SearchViewHolder extends RecyclerView.ViewHolder {
-
         @BindView(R.id.tv_search_result)
         TextView tvResult;
         @BindView(R.id.tv_search_date)
         TextView tvDate;
-
         public SearchViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

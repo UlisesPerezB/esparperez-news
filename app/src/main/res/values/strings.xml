@@ -16,6 +16,7 @@
     <string name="label_trending">Trending</string>
     <string name="label_bookmarks">Bookmarks</string>
     <string name="label_search">Searches</string>
+    <string name="label_results">Results</string>
     <string name="label_terms">Terms and conditions</string>
 
     <string name="no_searches">No results</string>

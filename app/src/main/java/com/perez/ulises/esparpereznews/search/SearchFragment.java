@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -42,6 +41,8 @@ public class SearchFragment extends Fragment implements SearchInterface.ISearchV
     RecyclerView recyclerView;
     @BindView(R.id.tv_news_empty)
     TextView tvEmpty;
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
 
     private SearchPresenter mPresenter;
     private MainActivity mainActivity;
@@ -76,6 +77,7 @@ public class SearchFragment extends Fragment implements SearchInterface.ISearchV
         mSearchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         mSearchView.setOnQueryTextListener(searchListener);
         mSearchView.setQueryHint(getString(R.string.search_hint));
+        mSearchView.addOnAttachStateChangeListener(closeListener);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -94,6 +96,19 @@ public class SearchFragment extends Fragment implements SearchInterface.ISearchV
         public boolean onQueryTextChange(String newText) {
             mPresenter.getSuggestions(newText, SEARCH_WORD);
             return false;
+        }
+    };
+
+    private View.OnAttachStateChangeListener closeListener = new View.OnAttachStateChangeListener() {
+        @Override
+        public void onViewAttachedToWindow(View v) {
+            tvTitle.setVisibility(View.GONE);
+        }
+
+        @Override
+        public void onViewDetachedFromWindow(View v) {
+            tvTitle.setVisibility(View.VISIBLE);
+            mPresenter.getNewsResults();
         }
     };
 

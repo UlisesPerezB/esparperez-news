@@ -8,16 +8,11 @@ import android.location.Geocoder;
 import com.perez.ulises.esparpereznews.R;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
-import static com.perez.ulises.esparpereznews.utils.Constants.BING_NEWS_URL;
-import static com.perez.ulises.esparpereznews.utils.Constants.BING_SEARCH_URL;
-import static com.perez.ulises.esparpereznews.utils.Constants.URL_NEWS;
 
 public class Util {
 
@@ -51,6 +46,13 @@ public class Util {
         } else {
             return 0;
         }
+    }
+
+    public static String recyclerDate(String date) {
+        date = date.substring(0,10);
+        String segments[] = date.split("-");
+        date = segments[2].concat("-").concat(segments[1]).concat("-").concat(segments[0]);
+        return date;
     }
 
     public static String urlFormat(Context context) {
@@ -115,5 +117,6 @@ public class Util {
         }
         return address;
     }
+
 }
 

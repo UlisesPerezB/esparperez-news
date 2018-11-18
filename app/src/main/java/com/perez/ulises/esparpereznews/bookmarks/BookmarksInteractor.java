@@ -27,10 +27,7 @@ public class BookmarksInteractor implements BookmarksInterface.IBookmarksInterac
 
     @Override
     public void getBookmarks() {
-//        realm = Realm.getDefaultInstance();
-//        boolean find = realm.where(News.class).findAll() == null;
-//        realm.close();
-
+        newsList.clear();
         realm = Realm.getDefaultInstance();
         RealmResults<News> results = realm.where(News.class).findAll();
         if (results.size()>0) {
