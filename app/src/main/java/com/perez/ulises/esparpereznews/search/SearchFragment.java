@@ -41,8 +41,6 @@ public class SearchFragment extends Fragment implements SearchInterface.ISearchV
     RecyclerView recyclerView;
     @BindView(R.id.tv_news_empty)
     TextView tvEmpty;
-    @BindView(R.id.tv_title)
-    TextView tvTitle;
 
     private SearchPresenter mPresenter;
     private MainActivity mainActivity;
@@ -102,12 +100,10 @@ public class SearchFragment extends Fragment implements SearchInterface.ISearchV
     private View.OnAttachStateChangeListener closeListener = new View.OnAttachStateChangeListener() {
         @Override
         public void onViewAttachedToWindow(View v) {
-            tvTitle.setVisibility(View.GONE);
         }
 
         @Override
         public void onViewDetachedFromWindow(View v) {
-            tvTitle.setVisibility(View.VISIBLE);
             mPresenter.getNewsResults();
         }
     };

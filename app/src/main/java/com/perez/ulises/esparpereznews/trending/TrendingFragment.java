@@ -1,7 +1,9 @@
 package com.perez.ulises.esparpereznews.trending;
 
 import android.app.ProgressDialog;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +11,7 @@ import android.support.v7.widget.SimpleItemAnimator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,15 +38,21 @@ public class TrendingFragment extends Fragment implements TrendingInterface.ITre
     @BindView(R.id.trending_recycler)
     RecyclerView mRecycler;
 
+    @BindView(R.id.loader)
+    ImageView mImvLoader;
+
     private TrendingInterface.ITrendingPresenter presenter;
     //TODO Se va a dejar de usar el progress dialog y utilizaremos el loader animado
-    private ProgressDialog dialog;
+//    private ProgressDialog dialog;
+      private AnimatedVectorDrawableCompat avd;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.trending_fragment, container, false);
         ButterKnife.bind(this, view);
         ((SimpleItemAnimator) mRecycler.getItemAnimator()).setSupportsChangeAnimations(false);
+        avd = AnimatedVectorDrawableCompat.create(getContext(), R.drawable.anim_bing);
         return view;
     }
 
@@ -62,17 +71,25 @@ public class TrendingFragment extends Fragment implements TrendingInterface.ITre
 
     @Override
     public void showLoadeer(boolean cancelable) {
-        if (dialog == null)
-            dialog = new ProgressDialog(getContext(), R.style.MyDialogTheme);
-        dialog.setCancelable(cancelable);
-        dialog.setMessage("");
-        dialog.show();
+//        if (dialog == null)
+//            dialog = new ProgressDialog(getContext(), R.style.MyDialogTheme);
+//        dialog.setCancelable(cancelable);
+//        dialog.setMessage("");
+//        dialog.show();
+        if (mImvLoader.getVisibility() == View.GONE) {
+            mImvLoader.setVisibility(View.VISIBLE);
+            avd.start();
+        }
     }
 
     @Override
     public void hideLoader() {
-        if (dialog != null)
-            dialog.dismiss();
+//        if (dialog != null)
+//            dialog.dismiss();
+        if (mImvLoader.getVisibility() == View.VISIBLE) {
+            avd.start();
+            mImvLoader.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -80,6 +97,7 @@ public class TrendingFragment extends Fragment implements TrendingInterface.ITre
         RecyclerAdapter adapter;
         mRecycler.setHasFixedSize(true);
         mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecycler.setNestedScrollingEnabled(false);
         adapter = new RecyclerAdapter(getContext());
         mRecycler.setAdapter(adapter);
         adapter.setValues(news);

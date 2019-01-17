@@ -52,6 +52,7 @@ public class PreferenceFragment extends Fragment implements PreferenceInterfaces
     Spinner spLanguage;
     @BindView(R.id.pref_since)
     TextView tvSince;
+    TextView tvTitle;
 
     private int mDay, mMonth, mYear;
     private PreferenceInterfaces.IPreferencePresenter mPresenter;

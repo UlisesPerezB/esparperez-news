@@ -1,9 +1,9 @@
 package com.perez.ulises.esparpereznews.utils;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
@@ -43,7 +43,15 @@ public class VolleyRequests {
             }}, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                vrh.onError(error.networkResponse.statusCode);
+                if (error instanceof NoConnectionError) {
+                    vrh.onError(100);
+                } else {
+                    try {
+                        vrh.onError(error.networkResponse.statusCode);
+                    } catch (NullPointerException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }) {
             @Override

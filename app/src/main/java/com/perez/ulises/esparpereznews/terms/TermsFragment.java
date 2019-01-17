@@ -28,8 +28,6 @@ public class TermsFragment extends Fragment{
 
     public TermsFragment(){}
 
-    @BindView(R.id.tv_terms_title)
-    TextView tvTitle;
     @BindView(R.id.wv_terms)
     WebView webView;
 
@@ -41,7 +39,6 @@ public class TermsFragment extends Fragment{
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.terms_fragment, container, false);
         ButterKnife.bind(this, view);
-        tvTitle.setText(R.string.label_terms);
         setHasOptionsMenu(true);
         return view;
     }

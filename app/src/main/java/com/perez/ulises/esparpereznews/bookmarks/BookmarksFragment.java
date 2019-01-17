@@ -27,9 +27,6 @@ public class BookmarksFragment extends Fragment implements BookmarksInterface.IB
         return fragment;
     }
 
-    @BindView(R.id.tv_title)
-    TextView tvTitle;
-
     @BindView(R.id.tv_news_empty)
     TextView tvEmpty;
 
@@ -41,7 +38,6 @@ public class BookmarksFragment extends Fragment implements BookmarksInterface.IB
     public View onCreateView(LayoutInflater layoutInflater, ViewGroup container, Bundle savedInstanceState) {
         View view = layoutInflater.inflate(R.layout.trending_fragment, container, false);
         ButterKnife.bind(this, view);
-        tvTitle.setText(getString(R.string.label_bookmarks));
         return view;
     }
 
@@ -70,6 +66,7 @@ public class BookmarksFragment extends Fragment implements BookmarksInterface.IB
         RecyclerAdapter adapter;
         mRecycler.setHasFixedSize(true);
         mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecycler.setNestedScrollingEnabled(false);
         adapter = new RecyclerAdapter(getContext());
         mRecycler.setAdapter(adapter);
         adapter.setValues(bookmarks);

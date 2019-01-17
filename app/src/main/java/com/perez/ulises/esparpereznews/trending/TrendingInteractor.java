@@ -93,6 +93,8 @@ public class TrendingInteractor implements TrendingInterface.ITrendingInteractor
             case 500:
                 listener.onNetworkError(mContext.getString(R.string.error_network));
                 break;
+            case 100:
+                listener.onNetworkError("Verifica tu conexión a Internet");
             default:
                 listener.onNetworkError(mContext.getString(R.string.error_consult));
                 break;

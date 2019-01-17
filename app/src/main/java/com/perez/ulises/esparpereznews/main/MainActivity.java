@@ -12,6 +12,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.perez.ulises.esparpereznews.R;
 import com.perez.ulises.esparpereznews.bookmarks.BookmarksFragment;
@@ -24,7 +27,7 @@ import com.perez.ulises.esparpereznews.trending.TrendingFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, SearchFragment.RecyclerWord {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     @BindView(R.id.drawer_layout)
     DrawerLayout mDrawer;
@@ -32,6 +35,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Toolbar mToolbar;
     @BindView(R.id.navigation_view)
     NavigationView mNavigation;
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+    @BindView(R.id.ll_title)
+    LinearLayout linearTitle;
+
+    private String mTitle = "";
 
     private ActionBarDrawerToggle toggle;
     private SearchInterface.ISearchInterface searchInterface;
@@ -47,7 +56,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
         mNavigation.setNavigationItemSelectedListener(this);
         Fragment fragment = TrendingFragment.newInstance();
-        inflateFragment(fragment);
+        mTitle = getString(R.string.label_trending);
+        inflateFragment(fragment, mTitle);
     }
 
     @Override
@@ -56,27 +66,46 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (item.getItemId()) {
             case R.id.menu_section_home:
                 fragment = TrendingFragment.newInstance();
+                mTitle = getString(R.string.label_trending);
                 break;
             case R.id.menu_section_preferences:
                 fragment = PreferenceFragment.getInstance();
+                mTitle = "";
                 break;
             case R.id.menu_section_search:
                 fragment = instanceSearchFragment();
+                mTitle = getString(R.string.label_search);
                 break;
             case R.id.menu_section_bookmarks:
                 fragment = BookmarksFragment.newInstance();
+                mTitle = getString(R.string.label_bookmarks);
                 break;
             case R.id.menu_section_terms:
                 fragment = TermsFragment.newInstance();
+                mTitle = getString(R.string.label_terms);
                 break;
         }
         mDrawer.closeDrawer(GravityCompat.START);
-        if (fragment != null)
-            inflateFragment(fragment);
+        if (fragment != null) {
+            if (fragment == PreferenceFragment.getInstance()) {
+                linearTitle.setVisibility(View.GONE);
+            } else {
+                linearTitle.setVisibility(View.VISIBLE);
+                tvTitle.setText(mTitle);
+            }
+            inflateFragment(fragment, mTitle);
+        }
         return true;
     }
 
-    private void inflateFragment(Fragment fragment) {
+    private void inflateFragment(Fragment fragment, String title) {
+        if (title.isEmpty()) {
+            linearTitle.setVisibility(View.GONE);
+        } else {
+            linearTitle.setVisibility(View.VISIBLE);
+            tvTitle.setText(title);
+        }
+
         FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction()
                 .replace(R.id.content_fragment, fragment)
@@ -100,7 +129,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.search:
                 mNavigation.getMenu().findItem(R.id.menu_section_search).setChecked(true);
                 Fragment searchFragment = instanceSearchFragment();
-                inflateFragment(searchFragment);
+                String title = getString(R.string.label_search);
+                inflateFragment(searchFragment, title);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -112,8 +142,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return fragment;
     }
 
-    @Override
-    public void setWord(String word) {
-//        mSearchView.setQuery(word,false);
-    }
+//    @Override
+//    public void setWord(String word) {
+//        tvTitle.setText(word);
+////        mSearchView.setQuery(word,false);
+//    }
 }

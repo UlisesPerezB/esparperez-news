@@ -8,6 +8,9 @@ import android.location.Geocoder;
 import com.perez.ulises.esparpereznews.R;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.SocketAddress;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -53,6 +56,19 @@ public class Util {
         String segments[] = date.split("-");
         date = segments[2].concat("-").concat(segments[1]).concat("-").concat(segments[0]);
         return date;
+    }
+
+    public static boolean isOnline() {
+        try {
+            int timeoutMs = 1500;
+            Socket sock = new Socket();
+            SocketAddress sockaddr = new InetSocketAddress("8.8.8.8", 53);
+
+            sock.connect(sockaddr, timeoutMs);
+            sock.close();
+
+            return true;
+        } catch (IOException e) { return false; }
     }
 
     public static String urlFormat(Context context) {
