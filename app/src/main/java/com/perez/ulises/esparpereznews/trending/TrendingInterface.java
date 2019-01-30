@@ -21,7 +21,7 @@ public interface TrendingInterface {
     }
     interface ITrendingView {
         void showErrorMessage(String error);
-        void showLoadeer(boolean cancelable);
+        void showLoader(boolean cancelable);
         void hideLoader();
         void loadList(List<News> news);
         void changeBookmark(boolean isBookmark, int position);

@@ -3,19 +3,11 @@
     android:width="24dp"
     android:viewportHeight="560"
     android:viewportWidth="560">
-
-    <group
-        android:name="rotationGroup"
-        android:pivotX="300.0"
-        android:pivotY="300.0"
-        android:rotation="45.0" >
-        <path
-            android:name="a1"
-            android:fillAlpha="1" android:fillColor="#008080"
-            android:pathData="M0,0.014h561.464v562.941h-561.464z"
-            android:strokeAlpha="1" android:strokeColor="#00000000" android:strokeWidth="0.75"/>
-    </group>
-
+    <path
+        android:name="a1"
+        android:fillAlpha="1" android:fillColor="#008080"
+        android:pathData="M0,0.014h561.464v562.941h-561.464z"
+        android:strokeAlpha="1" android:strokeColor="#00000000" android:strokeWidth="0.75"/>
     <path
         android:name="a2"
         android:fillAlpha="1" android:fillColor="#ffffff"
@@ -35,5 +27,4 @@
         android:pathData="m489.7,228.9 l-254.402,-80.025 50.975,110.631 77.802,36.661z"
         android:strokeAlpha="1" android:strokeColor="#00000000"
         android:strokeLineCap="butt" android:strokeLineJoin="miter" android:strokeWidth="0.75"/>
-
 </vector>

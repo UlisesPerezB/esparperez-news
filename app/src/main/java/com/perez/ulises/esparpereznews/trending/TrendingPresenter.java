@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.perez.ulises.esparpereznews.model.News;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TrendingPresenter implements TrendingInterface.ITrendingPresenter, TrendingInterface.ITrendingListener {
@@ -19,7 +18,7 @@ public class TrendingPresenter implements TrendingInterface.ITrendingPresenter, 
     @Override
     public void getNews() {
         interactor.getNews();
-        view.showLoadeer(false);
+        view.showLoader(false);
     }
 
     @Override
