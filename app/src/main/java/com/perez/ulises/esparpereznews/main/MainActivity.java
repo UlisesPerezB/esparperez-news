@@ -2,6 +2,8 @@ package com.perez.ulises.esparpereznews.main;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,10 +12,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.perez.ulises.esparpereznews.R;
@@ -37,8 +41,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView mNavigation;
     @BindView(R.id.tv_title)
     TextView tvTitle;
-    @BindView(R.id.ll_title)
-    LinearLayout linearTitle;
+    @BindView(R.id.title_container)
+    LinearLayout titleContainer;
+    @BindView(R.id.appbar)
+    AppBarLayout appBarLayout;
 
     private String mTitle = "";
 
@@ -54,8 +60,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle = new ActionBarDrawerToggle(this, mDrawer, mToolbar, R.string.drawer_open,R.string.drawer_close);
         mDrawer.addDrawerListener(toggle);
         toggle.syncState();
+
         mNavigation.setNavigationItemSelectedListener(this);
-        Fragment fragment = TrendingFragment.newInstance();
+        Fragment fragment = SearchFragment.newInstance();
         mTitle = getString(R.string.label_trending);
         inflateFragment(fragment, mTitle);
     }
@@ -69,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 mTitle = getString(R.string.label_trending);
                 break;
             case R.id.menu_section_preferences:
-                fragment = PreferenceFragment.getInstance();
+                fragment = PreferenceFragment.newInstance();
                 mTitle = "";
                 break;
             case R.id.menu_section_search:
@@ -87,12 +94,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         mDrawer.closeDrawer(GravityCompat.START);
         if (fragment != null) {
-            if (fragment == PreferenceFragment.getInstance()) {
-                linearTitle.setVisibility(View.GONE);
+            if (fragment instanceof PreferenceFragment) {
+                titleContainer.setVisibility(View.GONE);
+                Log.d("MAIN", "GONE");
             } else {
-                linearTitle.setVisibility(View.VISIBLE);
+                Log.d("MAIN", "VISIBLE: " + fragment);
+                titleContainer.setVisibility(View.VISIBLE);
                 tvTitle.setText(mTitle);
             }
+            appBarLayout.setExpanded(true);
             inflateFragment(fragment, mTitle);
         }
         return true;
@@ -100,9 +110,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void inflateFragment(Fragment fragment, String title) {
         if (title.isEmpty()) {
-            linearTitle.setVisibility(View.GONE);
+//            linearTitle.setVisibility(View.GONE);
         } else {
-            linearTitle.setVisibility(View.VISIBLE);
+//            linearTitle.setVisibility(View.VISIBLE);
             tvTitle.setText(title);
         }
 
@@ -116,6 +126,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_activity_toolbar,menu);
+        menu.findItem(R.id.action_search).setVisible(false);
         return true;
     }
 

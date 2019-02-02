@@ -5,6 +5,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,11 +13,13 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,13 +44,12 @@ public class TrendingFragment extends Fragment implements TrendingInterface.ITre
     TextView mTvEmpty;
     @BindView(R.id.trending_recycler)
     RecyclerView mRecycler;
+    @BindView(R.id.loader_container)
+    ConstraintLayout mLoaderLayout;
     @BindView(R.id.loader)
     ImageView mLoader;
 
     private TrendingInterface.ITrendingPresenter presenter;
-    //TODO Se va a dejar de usar el progress dialog y utilizaremos el loader animado
-//    private ProgressDialog dialog;
-//    private AnimationDrawable animLoader;
     private Animation animLoader;
 
 
@@ -55,7 +57,8 @@ public class TrendingFragment extends Fragment implements TrendingInterface.ITre
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.trending_fragment, container, false);
         ButterKnife.bind(this, view);
-        ((SimpleItemAnimator) mRecycler.getItemAnimator()).setSupportsChangeAnimations(false);
+        setHasOptionsMenu(true);
+//        ((SimpleItemAnimator) mRecycler.getItemAnimator()).setSupportsChangeAnimations(false);
         animLoader = AnimationUtils.loadAnimation(getContext(), R.anim.rotation);
 
 //        mLoader.setBackgroundResource(R.drawable.change_loader);
@@ -78,6 +81,11 @@ public class TrendingFragment extends Fragment implements TrendingInterface.ITre
     }
 
     @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public void showErrorMessage(String error) {
         Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
     }
@@ -94,9 +102,9 @@ public class TrendingFragment extends Fragment implements TrendingInterface.ITre
 //            mLoader.setVisibility(View.VISIBLE);
 //            animLoader.start();
 //            Log.d("LOADER","Start Loader");
-//        }
-        if (mLoader.getVisibility() == View.GONE) {
-            mLoader.setVisibility(View.VISIBLE);
+////        }
+        if (mLoaderLayout.getVisibility() == View.GONE) {
+            mLoaderLayout.setVisibility(View.VISIBLE);
             mLoader.setAnimation(animLoader);
             Log.d("LOADER","Start Loader");
         }
@@ -111,10 +119,10 @@ public class TrendingFragment extends Fragment implements TrendingInterface.ITre
 //            mLoader.setVisibility(View.GONE);
 //            Log.d("LOADER","Stop Loader");
 //        }
-
-        if (mLoader.getVisibility() == View.VISIBLE) {
+//        Log.d("LOADER","Visible?" + mLoader.getVisibility());
+        if (mLoaderLayout.getVisibility() == View.VISIBLE) {
             mLoader.clearAnimation();
-            mLoader.setVisibility(View.GONE);
+            mLoaderLayout.setVisibility(View.GONE);
             Log.d("LOADER","Stop Loader");
         }
     }
@@ -124,7 +132,7 @@ public class TrendingFragment extends Fragment implements TrendingInterface.ITre
         RecyclerAdapter adapter;
         mRecycler.setHasFixedSize(true);
         mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecycler.setNestedScrollingEnabled(false);
+//        mRecycler.setNestedScrollingEnabled(false);
         adapter = new RecyclerAdapter(getContext());
         mRecycler.setAdapter(adapter);
         adapter.setValues(news);

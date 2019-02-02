@@ -31,7 +31,7 @@ public class TermsFragment extends Fragment{
     @BindView(R.id.wv_terms)
     WebView webView;
 
-    private String url = "https://www.google.com/";
+    private String url = "https://developer.android.com/studio/terms";
 
     @Nullable
     @Override
@@ -48,6 +48,7 @@ public class TermsFragment extends Fragment{
         super.onViewCreated(view, savedInstanceState);
         webView.setWebViewClient(new WebViewClient());
         webView.loadUrl(url);
+
         webView.setOnKeyListener((view1, keyCode, event) -> {
             if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()){
                 webView.goBack();

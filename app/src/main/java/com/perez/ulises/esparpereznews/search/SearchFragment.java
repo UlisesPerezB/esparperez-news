@@ -61,22 +61,24 @@ public class SearchFragment extends Fragment implements SearchInterface.ISearchV
         mPresenter.getNewsResults();
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        if (getActivity() instanceof RecyclerWord)
-            mainActivity = (MainActivity) getActivity();
-    }
+//    @Override
+//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+//        super.onActivityCreated(savedInstanceState);
+//        if (getActivity() instanceof RecyclerWord)
+//            mainActivity = (MainActivity) getActivity();
+//    }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.clear();
-        inflater.inflate(R.menu.search_toolbar, menu);
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        menu.findItem(R.id.search).setVisible(false);
+        menu.findItem(R.id.action_search).setVisible(true);
         mSearchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        mSearchView.setIconified(false);
+        mSearchView.clearFocus();
         mSearchView.setOnQueryTextListener(searchListener);
         mSearchView.setQueryHint(getString(R.string.search_hint));
         mSearchView.addOnAttachStateChangeListener(closeListener);
-        super.onCreateOptionsMenu(menu, inflater);
     }
 
     private SearchView.OnQueryTextListener searchListener = new SearchView.OnQueryTextListener() {

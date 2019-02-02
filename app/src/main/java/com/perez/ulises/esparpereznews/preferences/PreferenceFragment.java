@@ -32,7 +32,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class PreferenceFragment extends Fragment implements PreferenceInterfaces.IPreferenceView, MapsFragment.setLocation {
-    public static PreferenceFragment getInstance() {
+    public static PreferenceFragment newInstance() {
         PreferenceFragment fragment = new PreferenceFragment();
         return fragment;
     }
@@ -52,6 +52,7 @@ public class PreferenceFragment extends Fragment implements PreferenceInterfaces
     Spinner spLanguage;
     @BindView(R.id.pref_since)
     TextView tvSince;
+
     TextView tvTitle;
 
     private int mDay, mMonth, mYear;
@@ -88,9 +89,9 @@ public class PreferenceFragment extends Fragment implements PreferenceInterfaces
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
         menu.findItem(R.id.search).setVisible(false);
-        super.onCreateOptionsMenu(menu, inflater);
     }
 
     private void inflateMaps() {

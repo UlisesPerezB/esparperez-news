@@ -19,7 +19,8 @@ import java.util.Map;
 
 public class VolleyRequests {
 
-    public static void jsonRequest(Context context, final int method, final String url, final String header, final String token, final IRequest.VolleyResponseHandler vrh) {
+    public static void jsonRequest(Context context, final int method, final String url,
+                                   final String header, final String token, final IRequest.VolleyResponseHandler vrh) {
         StringRequest stringRequest = new StringRequest(method, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

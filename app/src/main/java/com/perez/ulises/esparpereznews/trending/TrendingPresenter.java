@@ -28,7 +28,7 @@ public class TrendingPresenter implements TrendingInterface.ITrendingPresenter, 
 
     @Override
     public void onNetworkError(String error) {
-//        view.hideLoader();
+        view.hideLoader();
         view.showEmptyState();
         view.showErrorMessage(error);
     }

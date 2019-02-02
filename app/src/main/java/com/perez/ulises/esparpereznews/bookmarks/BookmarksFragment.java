@@ -66,7 +66,7 @@ public class BookmarksFragment extends Fragment implements BookmarksInterface.IB
         RecyclerAdapter adapter;
         mRecycler.setHasFixedSize(true);
         mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecycler.setNestedScrollingEnabled(false);
+//        mRecycler.setNestedScrollingEnabled(false);
         adapter = new RecyclerAdapter(getContext());
         mRecycler.setAdapter(adapter);
         adapter.setValues(bookmarks);

@@ -13,8 +13,6 @@ public final class RequestSingleton {
 
     private RequestQueue requestQueue;
 
-
-
     private RequestSingleton(Context context) {
         RequestSingleton.mContext = context;
         requestQueue = getRequestQueue();

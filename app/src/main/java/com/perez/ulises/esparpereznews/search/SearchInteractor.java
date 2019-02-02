@@ -181,7 +181,7 @@ public class SearchInteractor implements SearchInterface.ISearchInteractor, IReq
     public void onError(int error) {
         switch (error) {
             case 500:
-                mListener.onNetworkError(mContext.getString(R.string.error_network));
+                mListener.onNetworkError(mContext.getString(R.string.error_network_service));
                 break;
             default:
                 mListener.onNetworkError(mContext.getString(R.string.error_consult));

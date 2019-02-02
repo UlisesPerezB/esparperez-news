@@ -71,6 +71,7 @@
     <string name="pref_key_cc">Country code</string>
 
     <!-- Error Strings-->
-    <string name="error_network">El servicio no está disponible actualmente, inténtelo más tarde</string>
+    <string name="error_network_connection">Verifica tu conexión de Internet</string>
+    <string name="error_network_service">El servicio no está disponible actualmente, inténtelo más tarde</string>
     <string name="error_consult">Algo ocurrió, inténtelo más tarde</string>
 </resources>
