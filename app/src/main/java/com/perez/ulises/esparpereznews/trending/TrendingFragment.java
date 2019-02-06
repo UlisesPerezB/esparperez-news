@@ -1,25 +1,20 @@
 package com.perez.ulises.esparpereznews.trending;
 
-import android.app.ProgressDialog;
-import android.graphics.drawable.AnimationDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
-import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SimpleItemAnimator;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,28 +43,22 @@ public class TrendingFragment extends Fragment implements TrendingInterface.ITre
     ConstraintLayout mLoaderLayout;
     @BindView(R.id.loader)
     ImageView mLoader;
+    @BindView(R.id.swipe_layout)
+    SwipeRefreshLayout mRefreshLayout;
 
     private TrendingInterface.ITrendingPresenter presenter;
     private Animation animLoader;
-
+    private int mOffset;
+    private RecyclerAdapter mAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.trending_fragment, container, false);
         ButterKnife.bind(this, view);
         setHasOptionsMenu(true);
-//        ((SimpleItemAnimator) mRecycler.getItemAnimator()).setSupportsChangeAnimations(false);
         animLoader = AnimationUtils.loadAnimation(getContext(), R.anim.rotation);
-
-//        mLoader.setBackgroundResource(R.drawable.change_loader);
-//        animLoader = (AnimationDrawable) mLoader.getBackground();
-
+        mRefreshLayout.setOnRefreshListener(refreshListener);
         return view;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
     }
 
     @Override
@@ -77,12 +66,8 @@ public class TrendingFragment extends Fragment implements TrendingInterface.ITre
         super.onResume();
         if (presenter == null)
             presenter = new TrendingPresenter(this, getContext());
-        presenter.getNews();
-    }
-
-    @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
+        mOffset = 0;
+        presenter.getNews(mOffset);
     }
 
     @Override
@@ -92,17 +77,6 @@ public class TrendingFragment extends Fragment implements TrendingInterface.ITre
 
     @Override
     public void showLoader(boolean cancelable) {
-//        if (dialog == null)
-//            dialog = new ProgressDialog(getContext(), R.style.MyDialogTheme);
-//        dialog.setCancelable(cancelable);
-//        dialog.setMessage("");
-//        dialog.show();
-// Metodo list drawable
-//        if (mLoader.getVisibility() == View.GONE) {
-//            mLoader.setVisibility(View.VISIBLE);
-//            animLoader.start();
-//            Log.d("LOADER","Start Loader");
-////        }
         if (mLoaderLayout.getVisibility() == View.GONE) {
             mLoaderLayout.setVisibility(View.VISIBLE);
             mLoader.setAnimation(animLoader);
@@ -112,14 +86,6 @@ public class TrendingFragment extends Fragment implements TrendingInterface.ITre
 
     @Override
     public void hideLoader() {
-//        if (dialog != null)
-//            dialog.dismiss();
-//        if (mLoader.getVisibility() == View.VISIBLE) {
-//            animLoader.stop();
-//            mLoader.setVisibility(View.GONE);
-//            Log.d("LOADER","Stop Loader");
-//        }
-//        Log.d("LOADER","Visible?" + mLoader.getVisibility());
         if (mLoaderLayout.getVisibility() == View.VISIBLE) {
             mLoader.clearAnimation();
             mLoaderLayout.setVisibility(View.GONE);
@@ -128,19 +94,18 @@ public class TrendingFragment extends Fragment implements TrendingInterface.ITre
     }
 
     @Override
-    public void loadList(List<News> news) {
-        RecyclerAdapter adapter;
+    public void showNews(List<News> news) {
         mRecycler.setHasFixedSize(true);
         mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
-//        mRecycler.setNestedScrollingEnabled(false);
-        adapter = new RecyclerAdapter(getContext());
-        mRecycler.setAdapter(adapter);
-        adapter.setValues(news);
+        mAdapter = new RecyclerAdapter(getContext());
+        mRecycler.setAdapter(mAdapter);
+        mRecycler.addOnScrollListener(onScrollListener);
+        mAdapter.setValues(news);
     }
 
     @Override
-    public void changeBookmark(boolean isBookmark, int position) {
-
+    public void showMoreNews(List<News> news) {
+        mAdapter.setValues(news);
     }
 
     @Override
@@ -151,5 +116,44 @@ public class TrendingFragment extends Fragment implements TrendingInterface.ITre
     @Override
     public void hideEmptyState() {
         mTvEmpty.setVisibility(View.GONE);
+    }
+
+    private RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+            if (newState == RecyclerView.SCROLL_STATE_SETTLING) {
+                LinearLayoutManager lm = LinearLayoutManager.class.cast(recyclerView.getLayoutManager());
+                int numItems = lm.getItemCount()-1;
+                int lastVisible = lm.findLastVisibleItemPosition();
+                boolean endReached = lastVisible == numItems;
+                if (numItems > 0 && endReached) {
+                    mOffset += 10;
+                    presenter.getNews(mOffset);
+                }
+            }
+        }
+    };
+
+    private SwipeRefreshLayout.OnRefreshListener refreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+           new refreshNews().execute();
+        }
+    };
+
+    private class refreshNews extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            presenter.getNews(0);
+            mRefreshLayout.setRefreshing(false);
+        }
     }
 }

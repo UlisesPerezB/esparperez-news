@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         mNavigation.setNavigationItemSelectedListener(this);
-        Fragment fragment = SearchFragment.newInstance();
+        Fragment fragment = TrendingFragment.newInstance();
         mTitle = getString(R.string.label_trending);
         inflateFragment(fragment, mTitle);
     }

@@ -1,6 +1,7 @@
 package com.perez.ulises.esparpereznews.trending;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.perez.ulises.esparpereznews.R;
@@ -17,6 +18,7 @@ import java.util.List;
 
 import static com.perez.ulises.esparpereznews.utils.Constants.BING_HEADER;
 import static com.perez.ulises.esparpereznews.utils.Constants.BING_NEWS_URL;
+import static com.perez.ulises.esparpereznews.utils.Constants.BING_SEARCH_URL;
 import static com.perez.ulises.esparpereznews.utils.Constants.BING_TOKEN;
 import static com.perez.ulises.esparpereznews.utils.Util.urlFormat;
 
@@ -24,6 +26,7 @@ public class TrendingInteractor implements TrendingInterface.ITrendingInteractor
     private TrendingInterface.ITrendingListener listener;
     private Context mContext;
     private List<News> newsList;
+    private int mOffset;
 
     public TrendingInteractor(TrendingInterface.ITrendingListener listener, Context context) {
         this.listener = listener;
@@ -32,14 +35,16 @@ public class TrendingInteractor implements TrendingInterface.ITrendingInteractor
     }
 
     @Override
-    public void getNews() {
-        String url = BING_NEWS_URL.concat(urlFormat(mContext));
+    public void getNews(int offset) {
+        String url = BING_NEWS_URL.concat(urlFormat(mContext, offset));
+        this.mOffset = offset;
+//          String url = "https://api.cognitive.microsoft.com/bing/v7.0/news/?Category=Business&count=10&offset=10";
+//        String url =  "https://api.cognitive.microsoft.com/bing/v7.0/news/?freshness=Day&setLang=es&since=1546668000&sortBy=Date&cc=MX&safeSearch=Off&count=10&offset=0";
+        Log.i("URL", url);
+        if (offset == 0) {
+            newsList.clear();
+        }
         VolleyRequests.jsonRequest(mContext, Request.Method.GET, url, BING_HEADER, BING_TOKEN, this);
-    }
-
-    @Override
-    public void changeBookmark(int position) {
-        listener.onBookmarkChanged(true, position);
     }
 
     @Override
@@ -49,7 +54,6 @@ public class TrendingInteractor implements TrendingInterface.ITrendingInteractor
             // .opt (JSONArray) devuelve el objeto mapeado con el nombre de la etiqueta
             JSONArray jsonArray = jsonObject.optJSONArray("value");
             // Se buscan todos los objetos JSON de la etiqueta value dentro del JSONarray
-            newsList.clear();
             for (int i=0; i<jsonArray.length();i++) {
                 try {
                     News news = new News(jsonArray.getJSONObject(i));
@@ -62,7 +66,7 @@ public class TrendingInteractor implements TrendingInterface.ITrendingInteractor
         if (newsList.isEmpty()) {
             listener.onNoNews();
         } else {
-            listener.onNewsRetrieved(newsList);
+            listener.onNewsRetrieved(newsList, mOffset);
         }
     }
 
@@ -83,7 +87,7 @@ public class TrendingInteractor implements TrendingInterface.ITrendingInteractor
             listener.onNoNews();
             System.out.print(newsList.get(1));
         } else {
-            listener.onNewsRetrieved(newsList);
+            listener.onNewsRetrieved(newsList, mOffset);
         }
     }
 

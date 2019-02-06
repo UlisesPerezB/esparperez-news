@@ -126,7 +126,7 @@ public class SearchInteractor implements SearchInterface.ISearchInteractor, IReq
     }
 
     private void requestNews(String word){
-        String sUrl = BING_SEARCH_URL.concat(word).concat("&").concat(Util.urlFormat(mContext));
+        String sUrl = BING_SEARCH_URL.concat(word).concat("&").concat(Util.urlFormat(mContext,0));
         VolleyRequests.jsonRequest(mContext, Request.Method.GET, sUrl, BING_HEADER, BING_TOKEN, this);
     }
 

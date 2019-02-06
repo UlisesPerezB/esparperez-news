@@ -16,14 +16,9 @@ public class TrendingPresenter implements TrendingInterface.ITrendingPresenter, 
     }
 
     @Override
-    public void getNews() {
-        interactor.getNews();
+    public void getNews(int offset) {
+        interactor.getNews(offset);
         view.showLoader(false);
-    }
-
-    @Override
-    public void changeBookmark(int position) {
-        interactor.changeBookmark(position);
     }
 
     @Override
@@ -34,16 +29,16 @@ public class TrendingPresenter implements TrendingInterface.ITrendingPresenter, 
     }
 
     @Override
-    public void onNewsRetrieved(List<News> news) {
+    public void onNewsRetrieved(List<News> news, int offset) {
         view.hideLoader();
         view.hideEmptyState();
-        view.loadList(news);
+        if (offset > 0) {
+            view.showMoreNews(news);
+        } else {
+            view.showNews(news);
+        }
     }
 
-    @Override
-    public void onBookmarkChanged(boolean isBookmark, int position) {
-        view.changeBookmark(isBookmark, position);
-    }
 
     @Override
     public void onNoNews() {

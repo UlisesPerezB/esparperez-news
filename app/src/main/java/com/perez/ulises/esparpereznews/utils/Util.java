@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
+import android.util.Log;
 
 import com.perez.ulises.esparpereznews.R;
 
@@ -71,7 +72,8 @@ public class Util {
         } catch (IOException e) { return false; }
     }
 
-    public static String urlFormat(Context context) {
+    public static String urlFormat(Context context, int offset) {
+        String sOffset = String.valueOf(offset);
         String [] catVal = context.getResources().getStringArray(R.array.pref_cat_values);
         String [] langVal = context.getResources().getStringArray(R.array.pref_langs_values);
         String [] freshnessVal = context.getResources().getStringArray(R.array.pref_freshness_values);
@@ -98,9 +100,15 @@ public class Util {
         String [] values = {category,freshness,language,since,cc,sSafe};
         for (int i = 0; i< values.length; i++) {
             if (!values[i].isEmpty()) {
-                url = url.concat("&").concat(values[i]);
+                if (i != values.length-1) {
+                    url = url.concat(values[i]).concat("&");
+                } else {
+                    url = url.concat(values[i]);
+                }
             }
         }
+
+        url = url.concat("&count=3&offset=").concat(sOffset);
         return url;
     }
 

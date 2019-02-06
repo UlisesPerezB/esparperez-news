@@ -6,25 +6,22 @@ import java.util.List;
 
 public interface TrendingInterface {
     interface ITrendingPresenter {
-        void getNews();
-        void changeBookmark(int position);
+        void getNews(int offset);
     }
     interface ITrendingInteractor {
-        void getNews();
-        void changeBookmark(int position);
+        void getNews(int offset);
     }
     interface ITrendingListener {
         void onNetworkError(String error);
-        void onNewsRetrieved(List<News> news);
-        void onBookmarkChanged(boolean isBookmark, int position);
+        void onNewsRetrieved(List<News> news, int offset);
         void onNoNews();
     }
     interface ITrendingView {
         void showErrorMessage(String error);
         void showLoader(boolean cancelable);
         void hideLoader();
-        void loadList(List<News> news);
-        void changeBookmark(boolean isBookmark, int position);
+        void showNews(List<News> news);
+        void showMoreNews(List<News> news);
         void showEmptyState();
         void hideEmptyState();
     }
