@@ -1,30 +1,35 @@
 package com.perez.ulises.esparpereznews.preferences;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.SearchView;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.perez.ulises.esparpereznews.R;
+import com.perez.ulises.esparpereznews.trending.TrendingFragment;
 import com.perez.ulises.esparpereznews.utils.Util;
 
-import java.lang.reflect.Array;
 import java.util.Calendar;
 
 import butterknife.BindView;
@@ -53,6 +58,13 @@ public class PreferenceFragment extends Fragment implements PreferenceInterfaces
     @BindView(R.id.pref_since)
     TextView tvSince;
 
+    @OnClick(R.id.pref_since)
+    void setDate() {
+        EditDateDialogFragment fragment = new EditDateDialogFragment();
+        fragment.setTargetFragment(this,0);
+        fragment.show(getFragmentManager(),"");
+    }
+
     TextView tvTitle;
 
     private int mDay, mMonth, mYear;
@@ -75,7 +87,6 @@ public class PreferenceFragment extends Fragment implements PreferenceInterfaces
         tvSwitch.setText(getString(R.string.pref_label_safe_search));
         inflateMaps();
         initSpinners();
-        calendarDialog();
     }
 
     @Override
@@ -106,6 +117,7 @@ public class PreferenceFragment extends Fragment implements PreferenceInterfaces
         String [] category = getResources().getStringArray(R.array.pref_categories);
         String [] language = getResources().getStringArray(R.array.pref_langs);
         String [] freshness = getResources().getStringArray(R.array.pref_freshness);
+        String [] since = getResources().getStringArray(R.array.pref_since);
         ArrayAdapter<String> categoryAdapter =
                 new SpinnerAdapter(getContext(), R.layout.item_spinner_preferences, category);
         spCategory.setAdapter(categoryAdapter);
@@ -115,11 +127,17 @@ public class PreferenceFragment extends Fragment implements PreferenceInterfaces
         ArrayAdapter<String> freshnessAdapter =
                 new SpinnerAdapter(getContext(), R.layout.item_spinner_preferences, freshness);
         spFreshnes.setAdapter(freshnessAdapter);
+//        ArrayAdapter<String> sinceAdapter =
+//                new SpinnerAdapter(getContext(), R.layout.item_spinner_preferences, since);
+//        spSince.setAdapter(sinceAdapter);
     }
 
     private void calendarDialog() {
-        tvSince.setOnClickListener(view -> {
-            {
+//        SpinnerAdapter adapter = (SpinnerAdapter) spSince.getAdapter();
+//        String [] temp = {getResources().getStringArray(R.array.pref_since)[0],"",getResources().getStringArray(R.array.pref_since)[1]};
+
+//        tvSince.setOnClickListener(view ->{
+//            {
                 Calendar c = Calendar.getInstance();
                 mYear = c.get(Calendar.YEAR);
                 mMonth = c.get(Calendar.MONTH);
@@ -129,13 +147,15 @@ public class PreferenceFragment extends Fragment implements PreferenceInterfaces
                         new DatePickerDialog(getContext(), (view1, year, monthOfYear, dayOfMonth) -> {
                             {
                                 tvSince.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+//                                adapter.clear();
+//                                adapter.add(temp);
+//                                adapter.notifyDataSetChanged();
                             }
                         }, mYear, mMonth, mDay);
                 datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis() - 1000);
                 datePickerDialog.show();
-            }
-        });
-
+//            }
+//        });
     }
 
     @Override
@@ -169,6 +189,12 @@ public class PreferenceFragment extends Fragment implements PreferenceInterfaces
         long since = Util.format(sSince);
         String location = tvLocation.getText().toString();
         mPresenter.saveSettings(safe, category, language, freshness, since, location );
+        Fragment fragment = TrendingFragment.newInstance();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.content_fragment,fragment)
+                .commit();
+
+        Toast.makeText(getContext(), R.string.pref_label_saved_successful, Toast.LENGTH_SHORT).show();
     }
 
     public static class SpinnerAdapter extends ArrayAdapter {
@@ -189,6 +215,12 @@ public class PreferenceFragment extends Fragment implements PreferenceInterfaces
             }
         }
 
+        @Override
+        public View getView(int position, @NonNull View convertView, @NonNull ViewGroup parent) {
+            View view = super.getView(position, convertView, parent);
+            view.setPadding(0,0,0,0);
+            return view;
+        }
 
         @Override
         public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
@@ -196,10 +228,45 @@ public class PreferenceFragment extends Fragment implements PreferenceInterfaces
             TextView tv = (TextView) view;
             if (position == 0) {
                 tv.setTextColor(Color.GRAY);
+
             } else {
                 tv.setTextColor(mCompatcontext.getColor(mContext, R.color.colorPrimaryText));
             }
             return view;
+        }
+    }
+
+    public static class EditDateDialogFragment extends DialogFragment {
+
+        PreferenceFragment parent = PreferenceFragment.newInstance();
+
+        @Override
+        public void onCreate(@Nullable Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            parent = (PreferenceFragment) getTargetFragment();
+        }
+
+        @NonNull
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setTitle(getString(R.string.pref_date_title));
+
+            builder.setPositiveButton(getString(R.string.pref_date_edit), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    parent.calendarDialog();
+                }
+            });
+
+            builder.setNegativeButton(getString(R.string.pref_date_reset), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    parent.tvSince.setText("");
+                }
+            });
+            return builder.create();
         }
     }
 }

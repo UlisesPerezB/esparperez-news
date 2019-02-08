@@ -22,6 +22,11 @@ public class TrendingPresenter implements TrendingInterface.ITrendingPresenter, 
     }
 
     @Override
+    public void refreshNews(int offset) {
+        interactor.getNews(offset);
+    }
+
+    @Override
     public void onNetworkError(String error) {
         view.hideLoader();
         view.showEmptyState();
@@ -39,10 +44,15 @@ public class TrendingPresenter implements TrendingInterface.ITrendingPresenter, 
         }
     }
 
-
     @Override
     public void onNoNews() {
         view.hideLoader();
         view.showEmptyState();
+    }
+
+    @Override
+    public void onNoMoreNews(String message) {
+        view.hideLoader();
+        view.showNoMoreNews(message);
     }
 }

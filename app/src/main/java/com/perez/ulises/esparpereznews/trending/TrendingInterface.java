@@ -7,6 +7,7 @@ import java.util.List;
 public interface TrendingInterface {
     interface ITrendingPresenter {
         void getNews(int offset);
+        void refreshNews(int offset);
     }
     interface ITrendingInteractor {
         void getNews(int offset);
@@ -15,6 +16,7 @@ public interface TrendingInterface {
         void onNetworkError(String error);
         void onNewsRetrieved(List<News> news, int offset);
         void onNoNews();
+        void onNoMoreNews(String message);
     }
     interface ITrendingView {
         void showErrorMessage(String error);
@@ -22,6 +24,7 @@ public interface TrendingInterface {
         void hideLoader();
         void showNews(List<News> news);
         void showMoreNews(List<News> news);
+        void showNoMoreNews(String message);
         void showEmptyState();
         void hideEmptyState();
     }

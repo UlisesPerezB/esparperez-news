@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Bing News</string>
-    <string name="app_db">bing_bm_database</string>
+    <string name="app_name" translatable="false">Bing News</string>
+    <string name="app_db" translatable="false">bing_bm_database</string>
     <string name="search_hint">Search news</string>
 
     <!--Navigation_menu-->
@@ -24,20 +24,20 @@
     <string name="title_activity_maps">Map</string>
 
     <!-- SharedPreferences -->
-    <string name="preference_key_file">Preferences</string>
-    <string name="pref_key_safe">Safe</string>
-    <string name="pref_key_category">Category</string>
-    <string name="pref_key_language">Language</string>
-    <string name="pref_key_freshness">Freshnes</string>
-    <string name="pref_key_since">Since</string>
-    <string name="pref_key_location">Location</string>
-    <string name="pref_key_cc">Country code</string>
+    <string name="preference_key_file" translatable="false">Preferences</string>
+    <string name="pref_key_safe" translatable="false">Safe</string>
+    <string name="pref_key_category" translatable="false">Category</string>
+    <string name="pref_key_language" translatable="false">Language</string>
+    <string name="pref_key_freshness" translatable="false">Freshnes</string>
+    <string name="pref_key_since" translatable="false">Since</string>
+    <string name="pref_key_location" translatable="false">Location</string>
+    <string name="pref_key_cc" translatable="false">Country code</string>
 
     <!-- Labels & texts -->
     <string name="pref_no_location">Select a country for the results on the map</string>
     <string name="pref_label_safe_search">Safe search</string>
-    <string name="pref_label_since">Since</string>
     <string name="pref_label_location">Location</string>
+    <string name="pref_label_since">Since</string>
     <string name="pref_label_reset">Reset</string>
     <string name="pref_label_save">Save</string>
 
@@ -98,10 +98,21 @@
         <item>Month</item>
     </string-array>
 
+    <!-->Since<-->
+    <string-array name="pref_since">
+        <item>Since</item>
+        <item>Choose your date</item>
+    </string-array>
+
     <!-- Error Strings-->
     <string name="error_network_connection">Check your Internet connection</string>
     <string name="error_network_service">Service is not available now, please try again later</string>
     <string name="error_consult">Something happened, please try again later</string>
+    <string name="pref_label_saved_successful">Saved successfull</string>
+    <string name="pref_date_title">Change date</string>
+    <string name="pref_date_reset">Reset date</string>
+    <string name="pref_date_edit">Set date</string>
+    <string name="trending_no_more_news">No more news</string>
 
 
 </resources>

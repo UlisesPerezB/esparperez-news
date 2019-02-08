@@ -108,7 +108,7 @@ public class Util {
             }
         }
 
-        url = url.concat("&count=3&offset=").concat(sOffset);
+        url = url.concat("&count=2&offset=").concat(sOffset);
         return url;
     }
 

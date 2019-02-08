@@ -25,13 +25,18 @@
         <item name="android:windowBackground">@drawable/splash_screen</item>
     </style>
 
-    <style name="Preferences">
+    <style name="EditTextPreferences">
         <item name="android:background">@drawable/edit_text_preferences</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_margin">@dimen/material_margin</item>
         <item name="android:padding">@dimen/material_default_padding</item>
         <item name="android:textSize">@dimen/text_size_h4</item>
+    </style>
+
+    <style name="ButtonPreferences" parent="Base.TextAppearance.AppCompat.Button">
+        <item name="android:background">@drawable/button_preferences</item>
+        <item name="android:textColor">@color/colorAccent</item>
     </style>
 
     <!--<style name="toolbarStyle" parent="AppTheme.NoActionBar">-->

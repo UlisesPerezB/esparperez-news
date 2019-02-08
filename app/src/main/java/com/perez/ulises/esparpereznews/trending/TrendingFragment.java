@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -25,6 +26,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class TrendingFragment extends Fragment implements TrendingInterface.ITrendingView {
 
@@ -80,7 +82,6 @@ public class TrendingFragment extends Fragment implements TrendingInterface.ITre
         if (mLoaderLayout.getVisibility() == View.GONE) {
             mLoaderLayout.setVisibility(View.VISIBLE);
             mLoader.setAnimation(animLoader);
-            Log.d("LOADER","Start Loader");
         }
     }
 
@@ -89,23 +90,36 @@ public class TrendingFragment extends Fragment implements TrendingInterface.ITre
         if (mLoaderLayout.getVisibility() == View.VISIBLE) {
             mLoader.clearAnimation();
             mLoaderLayout.setVisibility(View.GONE);
-            Log.d("LOADER","Stop Loader");
         }
     }
 
     @Override
     public void showNews(List<News> news) {
-        mRecycler.setHasFixedSize(true);
-        mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        mAdapter = new RecyclerAdapter(getContext());
-        mRecycler.setAdapter(mAdapter);
-        mRecycler.addOnScrollListener(onScrollListener);
+        if (mAdapter == null) {
+            mRecycler.setHasFixedSize(true);
+            mAdapter = new RecyclerAdapter(getContext());
+            mRecycler.setAdapter(mAdapter);
+            mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+            mRecycler.addOnScrollListener(onScrollListener);
+        }
+        if (mRefreshLayout.isRefreshing()) {
+            mRefreshLayout.setRefreshing(false);
+            mRecycler.setEnabled(true);
+            mOffset = 0;
+        }
         mAdapter.setValues(news);
     }
 
     @Override
     public void showMoreNews(List<News> news) {
         mAdapter.setValues(news);
+        mRefreshLayout.setEnabled(true);
+    }
+
+    @Override
+    public void showNoMoreNews(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        mRefreshLayout.setEnabled(true);
     }
 
     @Override
@@ -119,17 +133,33 @@ public class TrendingFragment extends Fragment implements TrendingInterface.ITre
     }
 
     private RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
+        int y;
+        @Override
+        public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            y = dy;
+        }
+
         @Override
         public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
-            if (newState == RecyclerView.SCROLL_STATE_SETTLING) {
-                LinearLayoutManager lm = LinearLayoutManager.class.cast(recyclerView.getLayoutManager());
-                int numItems = lm.getItemCount()-1;
-                int lastVisible = lm.findLastVisibleItemPosition();
-                boolean endReached = lastVisible == numItems;
-                if (numItems > 0 && endReached) {
+            LinearLayoutManager lm = LinearLayoutManager.class.cast(recyclerView.getLayoutManager());
+            int numItems = lm.getItemCount()-1;
+            int lastVisible = lm.findLastCompletelyVisibleItemPosition();
+            int firstVisible = lm.findFirstVisibleItemPosition();
+            boolean endReached = lastVisible == numItems;
+            boolean topReached = firstVisible == 0;
+
+            if (newState == recyclerView.SCROLL_STATE_SETTLING) {
+                if (topReached && endReached) {
                     mOffset += 10;
+                    mRefreshLayout.setEnabled(false);
                     presenter.getNews(mOffset);
+                } else {
+                    if (endReached && y > 0) {
+                        mOffset += 10;
+                        presenter.getNews(mOffset);
+                    }
                 }
             }
         }
@@ -138,22 +168,7 @@ public class TrendingFragment extends Fragment implements TrendingInterface.ITre
     private SwipeRefreshLayout.OnRefreshListener refreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
-           new refreshNews().execute();
+            presenter.refreshNews(0);
         }
     };
-
-    private class refreshNews extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            presenter.getNews(0);
-            mRefreshLayout.setRefreshing(false);
-        }
-    }
 }

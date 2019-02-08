@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.Request;
+import com.google.gson.JsonArray;
 import com.perez.ulises.esparpereznews.R;
 import com.perez.ulises.esparpereznews.model.News;
 import com.perez.ulises.esparpereznews.utils.IRequest;
@@ -38,8 +39,6 @@ public class TrendingInteractor implements TrendingInterface.ITrendingInteractor
     public void getNews(int offset) {
         String url = BING_NEWS_URL.concat(urlFormat(mContext, offset));
         this.mOffset = offset;
-//          String url = "https://api.cognitive.microsoft.com/bing/v7.0/news/?Category=Business&count=10&offset=10";
-//        String url =  "https://api.cognitive.microsoft.com/bing/v7.0/news/?freshness=Day&setLang=es&since=1546668000&sortBy=Date&cc=MX&safeSearch=Off&count=10&offset=0";
         Log.i("URL", url);
         if (offset == 0) {
             newsList.clear();
@@ -49,6 +48,8 @@ public class TrendingInteractor implements TrendingInterface.ITrendingInteractor
 
     @Override
     public void onResponse(JSONObject jsonObject) {
+        int listSize = newsList.size();
+        int j = listSize - 1;
         if (jsonObject != null) {
             // Como se tiene un solo objeto JSON, se crea un JSONarray a partir de la etiqueta value
             // .opt (JSONArray) devuelve el objeto mapeado con el nombre de la etiqueta
@@ -57,16 +58,36 @@ public class TrendingInteractor implements TrendingInterface.ITrendingInteractor
             for (int i=0; i<jsonArray.length();i++) {
                 try {
                     News news = new News(jsonArray.getJSONObject(i));
-                    newsList.add(news);
+                    if (mOffset != 0) {
+                        while(j >= 0) {
+                            if (news.getUrl().equals(newsList.get(j).getUrl())) {
+                                j = listSize - 1;
+                                break;
+                            }
+                            if (j == 0) {
+                                newsList.add(news);
+                                j = listSize - 1;
+                                break;
+                            }
+                            j--;
+                        }
+                    } else {
+                        newsList.add(news);
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         }
+
         if (newsList.isEmpty()) {
             listener.onNoNews();
         } else {
-            listener.onNewsRetrieved(newsList, mOffset);
+            if (listSize == newsList.size() && mOffset != 0) {
+                listener.onNoMoreNews(mContext.getString(R.string.trending_no_more_news));
+            } else {
+                listener.onNewsRetrieved(newsList, mOffset);
+            }
         }
     }
 
@@ -85,7 +106,6 @@ public class TrendingInteractor implements TrendingInterface.ITrendingInteractor
         }
         if (newsList.isEmpty()) {
             listener.onNoNews();
-            System.out.print(newsList.get(1));
         } else {
             listener.onNewsRetrieved(newsList, mOffset);
         }

@@ -18,7 +18,7 @@
 
     <Spinner
         android:id="@+id/pref_category"
-        style="@style/Preferences"
+        style="@style/EditTextPreferences"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/item_pref_switch"
@@ -26,7 +26,7 @@
 
     <Spinner
         android:id="@+id/pref_freshnes"
-        style="@style/Preferences"
+        style="@style/EditTextPreferences"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pref_category"
@@ -34,7 +34,7 @@
 
     <Spinner
         android:id="@+id/pref_language"
-        style="@style/Preferences"
+        style="@style/EditTextPreferences"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/item_pref_switch"
@@ -43,20 +43,19 @@
 
     <TextView
         android:id="@+id/pref_since"
-        style="@style/Preferences"
         android:hint="@string/pref_label_since"
+        style="@style/EditTextPreferences"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/pref_language" />
 
     <TextView
         android:id="@+id/pref_location"
-        style="@style/Preferences"
+        style="@style/EditTextPreferences"
         android:hint="@string/pref_label_location"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pref_since" />
+        app:layout_constraintTop_toBottomOf="@+id/pref_freshnes" />
 
     <FrameLayout
         android:id="@+id/map_container"
@@ -75,21 +74,24 @@
 
     <Button
         android:id="@+id/btn_reset"
+        style="@style/ButtonPreferences"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/material_margin"
         android:text="@string/pref_label_reset"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/map_container" />
 
     <Button
         android:id="@+id/btn_save"
+        style="@style/ButtonPreferences"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/material_margin"
+        android:background="@drawable/button_preferences"
         android:text="@string/pref_label_save"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/map_container" />
 
